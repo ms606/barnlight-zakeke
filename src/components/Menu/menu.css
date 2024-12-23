@@ -23,7 +23,7 @@
     font-size: 16px;
     font-weight: 400;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 60px;
+    border-radius: 1px;
     margin-left: 8px;
     cursor: pointer;
     margin-right: 4px;
@@ -32,8 +32,8 @@
 }
 
 .selected {
-    background-color: rgb(244, 14, 14);
-    color: #fff;
+    background-color: rgb(255, 251, 251);
+    color: rgb(6, 3, 3);
 }
 
 .menu_choice_steps {

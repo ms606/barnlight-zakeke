@@ -44,20 +44,20 @@ export const swap = (group: Group[], i: number, j: number) => {
   return group;
 };
 
-export const customizeGroup: Group = {
-  id: -2,
-  guid: "0000-0000-0000-0000",
-  name: "LINING TEXT",
-  enabled: true,
-  attributes: [],
-  steps: [],
-  cameraLocationId: "4f500be3-14f3-4226-cfd6-e1bbf4e390d4",
-  displayOrder: 3,
-  direction: 0,
-  attributesAlwaysOpened: false,
-  imageUrl: "",
-  templateGroups: [],
-};
+//export const customizeGroup: Group = {
+  // id: -2,
+  // guid: "0000-0000-0000-0000",
+  // name: "LINING TEXT",
+  // enabled: true,
+  // attributes: [],
+  // steps: [],
+  // cameraLocationId: "4f500be3-14f3-4226-cfd6-e1bbf4e390d4",
+  // displayOrder: 3,
+  // direction: 0,
+  // attributesAlwaysOpened: false,
+  // imageUrl: "",
+  // templateGroups: [],
+//};
 
 export const useDefinitiveGroups = (
   groups: Group[],
@@ -68,20 +68,20 @@ export const useDefinitiveGroups = (
   const { isEditorMode, isViewerMode, isDraftEditor } = useStore();
   const definitiveGroups: Group[] = [];
 
-  const customizeGroup: Group = {
-    id: -2,
-    guid: "0000-0000-0000-0000",
-    name: "LINING TEXT",
-    enabled: true,
-    attributes: [],
-    steps: [],
-    cameraLocationId: "4f500be3-14f3-4226-cfd6-e1bbf4e390d4",
-    displayOrder: groups.length - 1,
-    direction: 0,
-    attributesAlwaysOpened: false,
-    imageUrl: "",
-    templateGroups: [],
-  };
+  // const customizeGroup: Group = {
+  //   id: -2,
+  //   guid: "0000-0000-0000-0000",
+  //   name: "LINING TEXT",
+  //   enabled: true,
+  //   attributes: [],
+  //   steps: [],
+  //   cameraLocationId: "4f500be3-14f3-4226-cfd6-e1bbf4e390d4",
+  //   displayOrder: groups.length - 1,
+  //   direction: 0,
+  //   attributesAlwaysOpened: false,
+  //   imageUrl: "",
+  //   templateGroups: [],
+  // };
 
   const savedConfigurationsGroup: Group = {
     id: -3,

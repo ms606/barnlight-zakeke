@@ -57,7 +57,7 @@ div {
     justify-content: center;
     align-items: center;
     padding: 16px;
-    border-radius: 16px;
+    /* border-radius: 16px; */
 }
 
 .btn.btn-primary, .btn.btn-secondary {
@@ -171,7 +171,9 @@ div {
 
 .menu_btn_cart {
     margin-right: 10px;
-    background-color: var(--template-boundary-color) !important;
+    background-color: var(--template-add-to-cart-background-color) !important;
+    font-size: 15px;
+    color: #ffffffff
 }
 
 .menu_btn_share_icon {

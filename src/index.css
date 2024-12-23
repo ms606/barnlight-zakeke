@@ -15,8 +15,9 @@
   --template-default-box-shadow-color: rgba(0, 0, 0, 0.1);
   --template-loader-overlay: hsla(0, 0%, 95.7%, 0.4);
   --template-camera-box-shadow-color: rgba(0, 0, 0, 0.25);
-  --template-boundary-color: #900909;
-  --template-highlight-boundary-color: #900909;
+  --template-boundary-color: #323232;
+  --template-highlight-boundary-color: #0d0b0b;
+  --template-add-to-cart-background-color: #4f5b6c;
 }
 
 html,

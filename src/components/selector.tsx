@@ -25,7 +25,7 @@ import { ExplodeIconL } from "../assets/icons/ExplodeIcon";
 import { Icon } from "./Atomic";
 import MenuFooter from "./Footer/MenuFooter";
 import Designer from "./Layout/Designer";
-import { customizeGroup } from "../Helpers";
+// import { customizeGroup } from "../Helpers";
 import { AiIcon, ArIcon } from "../components/Layout/LayoutStyles";
 
 import {
@@ -77,17 +77,20 @@ const Selector: FunctionComponent<SelectorProps> = ({
     productName,
   } = useZakeke();
 
-  //console.log(groups, "groups");
+  console.log(groups, "groups");
 
   const { showDialog, closeDialog } = useDialogManager();
 
-  const idsToRemove = [10483, 10482, -1, 10852, 10856, 11209];
+  // const idsToRemove = [10483, 10482, -1, 10852, 10856, 11209];
 
-  idsToRemove.push(10640); // id to remove on only blazer product
+  // idsToRemove.push(10640); // id to remove on only blazer product
 
-  const groups1 = groups.filter((obj) => !idsToRemove.includes(obj.id));
+  // const groups1 = groups.filter((obj) => !idsToRemove.includes(obj.id));
 
-  if (product?.name != PRODUCT_PANT) groups1.push(customizeGroup);
+  const groups1 = groups;
+  
+
+  // if (product?.name != PRODUCT_PANT) groups1.push(customizeGroup);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -201,9 +204,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
         // console.log(selectedLiningTypeName, selectedLiningTypeHeadName, "selectedLiningTypeName");
 
-        if (
-          selectedStepName === "LINING TYPE"
-        ) {
+        if (selectedStepName === "LINING TYPE") {
           groups[1].steps[3].attributes[0].options.map((x) => {
             if (x.selected === true) selectLiningTypeName(x.name);
           });
@@ -211,7 +212,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
           if (selectedLiningTypeName === "Stretch") {
             groups[1].steps[3].attributes[1].options.map((x) => {
               if (x.selected === true) {
-                
                 let Previewdata = {
                   image: x.imageUrl,
                   optionName: x.id,
@@ -279,11 +279,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
   // Camera for left icons
   useEffect(() => {
     if (selectedCameraID) setCamera(selectedCameraID);
-    if (selectedCameraAngle === "pant") {
-      setSelectedExplodedStatese(false);
-    } else {
-      setSelectedExplodedStatese(true);
-    }
 
     setSelectedCameraID("");
   }, [selectedCameraID]);
@@ -300,49 +295,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAttribute, !isSceneLoading]);
-
-  // useEffect(() => {
-
-  //     // selectedGroup?.groups1.forEach((group) => {
-  //     //   if (instanceOfViewerGroupAttribute(group)) {
-  //     //     group.attributes.forEach((attr) => {
-  //     //       attr.options.forEach((option) => {
-  //     //         if (option.selected && !!option.imageUrl) {
-  //     //           const Previewdata = {
-  //     //             image: option.imageUrl,
-  //     //             optionName: option.id,
-  //     //             attributeName: attr.id,
-  //     //             stepName: undefined,
-  //     //             groupName: group.id,
-  //     //           };
-  //     //           setPreviewImage(Previewdata);
-  //     //         }
-  //     //       });
-  //     //     });
-  //     //   }
-
-  //       selectedGroup?.steps.forEach((step) => {
-  //           step.attributes.forEach((attr) => {
-  //             attr.options.forEach((option) => {
-  //               if (option.selected && !!option.imageUrl) {
-  //                 const Previewdata = {
-  //                   image: option.imageUrl,
-  //                   optionName: option.id,
-  //                   attributeName: attr.id,
-  //                   stepName: step.id,
-  //                   groupName: 'Kuch bhi' //group.id,
-  //                 };
-  //                 setPreviewImage(Previewdata);
-  //               }
-  //             });
-  //           });
-  //         });
-
-  //         console.log('previewwwwwwwwwwwwwwww', previewImage);
-  //        // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [ selectedAttributeId, previewImage]);
-
-  // console.log(product);
 
   if (isSceneLoading || !groups1 || groups1.length === 0 || isLoading)
     return <Loader visible={true} />;
@@ -443,7 +395,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
           onCameraAngle={setSelectedCameraAngle}
           selectedCameraAngle={selectedCameraAngle}
         /> */}
-        {previewImage?.image && <Preview PreviewImage={previewImage} />}
+        {/* {previewImage?.image && <Preview PreviewImage={previewImage} />} */}
 
         <Zoom zoomIn={zoomIn} zoomOut={zoomOut} />
 
@@ -455,45 +407,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
           {groups1.map((group) => {
             const handleGroupClick = (group: any) => {
               selectGroup(group.id);
-
-              const isBlazerViewOrLiningText =
-                (group.name.toLowerCase() === "blazer view" ||
-                  group.name.toLowerCase() === "lining text") &&
-                (product?.name === PRODUCT_FULL_SUIT ||
-                  product?.name === PRODUCT_BLAZER);
-
-              // console.log(isBlazerViewOrLiningText,'isBlazerViewOrLiningText');
-
-              selectOptionName("");
-              if (group.name.toLowerCase() === "pant") {
-                setExplodedMode(true);
-                setSelectedExplodedStatese(false);
-              } else {
-                setExplodedMode(false);
-                setSelectedExplodedStatese(true);
-              }
-
-              if (product?.name === PRODUCT_FULL_SUIT) {
-                if (
-                  group.name.toLowerCase() === "blazer view" ||
-                  group.name.toLowerCase() === "lining text"
-                ) {
-                  selectOption(1363645); // Open jacket comm
-                } else {
-                  selectOption(1363646);
-                }
-              }
-
-              if (product?.name === PRODUCT_BLAZER) {
-                if (
-                  group.name.toLowerCase() === "blazer view" ||
-                  group.name.toLowerCase() === "lining text"
-                ) {
-                  selectOption(1382103); // Open jacket comm
-                } else {
-                  selectOption(1382104);
-                }
-              }
             };
 
             return (
@@ -514,10 +427,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         </div>
         <br />
         {selectedGroup && selectedGroup.steps.length > 0 && (
-          <div
-            className="menu_choice_steps"
-            // onClick={() => {setCloseAttribute(true)}}
-          >
+          <div className="menu_choice_steps">
             {selectedGroup.steps.map((step) => {
               return (
                 <div
@@ -530,7 +440,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
                     if (selectedStepId != step.id) {
                       selectOptionName("");
                     }
-                    if (step.name === "LINING TYPE") selectCollapse(false);
                   }}
                 >
                   <div
@@ -553,18 +462,18 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         marginRight: "auto",
                       }}
                     >
-                      {step.name}
+                      {step.name} stepname
                     </div>
                     <div
                       className="menu_choice_step_toggle"
                       style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                         fontSize: "12px",
                         lineHeight: "16px",
                         textTransform: "uppercase",
-                        color: "var(--template-boundary-color)"
+                        color: "var(--template-boundary-color)",
                       }}
                       onClick={() => {
                         setCloseAttribute(!closeAttribute);
@@ -581,7 +490,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
                   {closeAttribute &&
                     step.id === selectedStepId &&
                     step.attributes.map((attribute) => {
-                      // if((attribute.code === 'Stretch' || attribute.code === 'Lining Style_1')) return <></>
                       if (attribute.enabled === false) return <></>;
                       return (
                         <>
@@ -607,47 +515,32 @@ const Selector: FunctionComponent<SelectorProps> = ({
                               selectCollapse(!selectedCollapse);
 
                               selectLiningTypeHeadName(attribute.code);
-
-                              if (attribute.code === "Stretch - Non stretch") {
-                                selectLiningTypeHeadName(attribute.code);
-
-                                attribute.options.map((x) => {
-                                  if (x.selected === true)
-                                    selectLiningTypeName(x.name);
-                                });
-                              }
-
-                              if (attribute.name === "Stretch") {
-                                showDialog(
-                                  "error",
-                                  <ErrorDialog
-                                    error={
-                                      "Stretch Lining style will add $50 to the total cost"
-                                    }
-                                    onCloseClick={() => closeDialog("error")}
-                                  />
-                                );
-                              }
                             }}
                           >
                             <br />
-                            {attribute.name != 'Select Your Lining Type' && <div
-                              className="menu_choice_attribute_selection_icon"
-                              style={{
-                                width: "21px",
-                                height: "21px",
-                                marginRight: "12px",
-                                fill:
-                                  selectedAttributeId === attribute.id
-                                    ? "var(--template-primary--900)"
-                                    : "var(--template-primary--600)",
-                              }}
-                            >
-                              <SelectionIcon />
-                            </div>}
+                            {attribute.name != "Select Your Lining Type" && (
+                              <div
+                                className="menu_choice_attribute_selection_icon"
+                                style={{
+                                  width: "21px",
+                                  height: "21px",
+                                  marginRight: "12px",
+                                  fill:
+                                    selectedAttributeId === attribute.id
+                                      ? "var(--template-primary--900)"
+                                      : "var(--template-primary--600)",
+                                }}
+                              >
+                                <SelectionIcon />
+                              </div>
+                            )}
 
                             <div
-                              className= {`menu_choice_attribute_description ${attribute.name === 'Select Your Lining Type' ? `menu_light_bold` : ''}`}
+                              className={`menu_choice_attribute_description ${
+                                attribute.name === "Select Your Lining Type"
+                                  ? `menu_light_bold`
+                                  : ""
+                              }`}
                               style={{
                                 display: "flex",
                                 alignItems: "center",
@@ -674,7 +567,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
                               style={{ width: "21px", height: "21px" }}
                             >
                               <div
-                                className = {`${attribute.name === 'Select Your Lining Type' ? `menu_light_bold` : ''}`}
+                                className={`${
+                                  attribute.name === "Select Your Lining Type"
+                                    ? `menu_light_bold`
+                                    : ""
+                                }`}
                                 style={{
                                   transform:
                                     attribute.id === selectedAttributeId &&
@@ -813,114 +710,224 @@ const Selector: FunctionComponent<SelectorProps> = ({
               );
             })}
 
-            {screenWidth < 500 && (<MenuFooter viewFooter={viewFooter} />)}
-
+            {screenWidth < 500 && <MenuFooter viewFooter={viewFooter} />}
           </div>
-          
         )}
+        {/* NEW CODE */}
 
-        {/* // FOR ONLY STRETCH / NON STRETCH -- HAVE TO REFACTOR LATER */}
-        {/* <div style={{ display: "flex", flexDirection: "row" }}>
-          {!selectedCollapse &&
-            selectedLiningTypeName === "Stretch" &&
-            groups[1].steps[3].attributes[1].options.map((option) => {
-              // if(attribute.enabled === true) return <></>
+        {selectedGroup && (
+          <>
+            {selectedGroup.attributes.map((step) => {
+              if (step.enabled == false) {
+                return <></>;
+              }
 
+              // console.log(step, "stepppp");
               return (
-                <>
-                  {option.enabled == true && (
+                <div
+                  className="menu_choice_step_step"
+                  key={step.id}
+                  onClick={() => {
+                    selectStepName(step.name);
+                    selectStep(step.id);
+                    selectOptionName("");
+                  }}
+                >
+                  <div
+                    className="menu_choice_step_title"
+                    style={{
+                      display: "flex",
+                      borderBottom:
+                        selectedStepId != step.id || !closeAttribute
+                          ? "1px solid var(--template-primary--400)"
+                          : "",
+                    }}
+                  >
                     <div
+                      className="menu_choice_step_description"
+                      onClick={() => {
+                        setCloseAttribute(true);
+                      }}
                       style={{
-                        marginLeft: "5px",
-                        width: "23%",
+                        paddingBottom: "1em",
+                        marginRight: "auto",
                       }}
                     >
-                      <div>
-                        {option.imageUrl && (
-                          <ListItem
-                            key={option.id}
-                            onClick={() => {
-                              selectOption(option.id);
-                              selectOptionName(option.name);
-                            }}
-                            selected={option.selected}
-                            className="menu_choice_option"
-                          >
-                            <div className="menu_choice_option_image_container">
-                              {option.imageUrl && (
-                                <ListItemImage src={option.imageUrl} />
-                              )}
-                            </div>
-
-                            <div className="menu_choice_option_description">
-                              yo yoy {option.name}
-                            </div>
-                          </ListItem>
-                        )}
-                      </div>
+                      {step.name}
                     </div>
-                  )}
-                </>
-              );
-            })} */}
-
-        {/* {!selectedCollapse &&
-            // (attribute.code === 'Stretch' || attribute.code === 'Lining Style_1' ) &&
-            // selectedLiningTypeName?.toLowerCase() === attribute.name.toLowerCase() &&
-            selectedLiningTypeName === "Non stretch" &&
-            groups[1].steps[3].attributes[2].options.map((option) => {
-              // if(attribute.enabled === true) return <></>
-
-              return (
-                <>
-                  {option.enabled == true && (
                     <div
+                      className="menu_choice_step_toggle"
                       style={{
-                        marginLeft: "5px",
-                        width: "23%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "12px",
+                        lineHeight: "16px",
+                        textTransform: "uppercase",
+                        color: "var(--template-boundary-color)",
+                      }}
+                      onClick={() => {
+                        setCloseAttribute(!closeAttribute);
                       }}
                     >
-                      <div>
-                        {option.imageUrl && (
-                          <ListItem
-                            key={option.id}
-                            onClick={() => {
-                              selectOption(option.id);
-                              selectOptionName(option.name);
-                            }}
-                            selected={option.selected}
-                            className="menu_choice_option"
-                          >
-                            <div className="menu_choice_option_image_container">
-                              {option.imageUrl && (
-                                <ListItemImage src={option.imageUrl} />
-                              )}
-                            </div>
+                      <div className="triangle"></div>
 
-                            <div className="menu_choice_option_description">
-                              {option.name}
-                            </div>
-                          </ListItem>
-                        )}
-                      </div>
+                      {selectedStepId != step.id || !closeAttribute
+                        ? "Customize"
+                        : "Close"}
                     </div>
-                  )}
-                </>
+                  </div>
+
+                  {/* {console.log(selectedStepId,step,'ddfdfdfsfds')} */}
+                  <div className="x" style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>                  
+                  {closeAttribute &&
+                    step.id === selectedStepId &&
+                    step.options.map((attribute) => {                 
+                      // {console.log(attribute, selectedStepId, step, 'attribute')}  
+                      {console.log(attribute, 'attribute')}     
+                      if (attribute.enabled === false) return <></>;                    
+                      return (
+                        <>
+                          {/* {step.options.map((attribute) => ( */}
+                            <ListItem
+                              key={attribute.id}
+                              onClick={() => {
+                                selectOption(attribute.id);
+                                selectOptionName(attribute.name);
+                              }}
+                              selected={attribute.selected}
+                            //  className="menu_choice_option"
+                            >
+                              <div className="menu_choice_option_image_container">
+                                {attribute.imageUrl && (
+                                  <ListItemImage src={attribute.imageUrl} />
+                                )}
+                              </div>
+
+                              {/* <div className="menu_choice_option_description">
+                                {attribute.name}
+                              </div> */}
+                            </ListItem>
+                          {/* ))} */}
+                        </>
+                        
+                        // <>
+                        //   <div
+                        //     className="menu_choice_attribute_title"
+                        //     style={{
+                        //       color:
+                        //         selectedAttributeId === attribute.id
+                        //           ? "var(--template-primary--900)"
+                        //           : "var(--template-primary--600)",
+                        //       borderBottom:
+                        //         selectedAttributeId != attribute.id
+                        //           ? "1px solid var(--template-primary--400)"
+                        //           : "",
+                        //     }}
+                        //     onClick={() => {
+                        //       if (selectedAttributeId === attribute.id) {
+                        //         selectAttribute(null);
+                        //       } else {
+                        //         selectAttribute(attribute.id);
+                        //         selectOptionName("");
+                        //       }
+                        //     }}
+                        //   >
+                        //     <br />
+                        //     {attribute.name != "Select Your Lining Type" && (
+                        //       <div
+                        //         className="menu_choice_attribute_selection_icon"
+                        //         style={{
+                        //           width: "21px",
+                        //           height: "21px",
+                        //           marginRight: "12px",
+                        //           fill:
+                        //             selectedAttributeId === attribute.id
+                        //               ? "var(--template-primary--900)"
+                        //               : "var(--template-primary--600)",
+                        //         }}
+                        //       >
+                        //         <SelectionIcon />
+                        //       </div>
+                        //     )}
+
+                        //     <div
+                        //       className={`menu_choice_attribute_description ${
+                        //         attribute.name === "Select Your Lining Type"
+                        //           ? `menu_light_bold`
+                        //           : ""
+                        //       }`}
+                        //       style={{
+                        //         display: "flex",
+                        //         alignItems: "center",
+                        //         marginRight: "auto",
+                        //       }}
+                        //     >
+                        //       {attribute.name}
+                        //     </div>
+                        //     <br />
+                        //     <div
+                        //       style={{
+                        //         display: "flex",
+                        //         alignItems: "center",
+                        //         marginRight: "1em",
+                        //       }}
+                        //       className="menu_choice_attribute_selected_option"
+                        //     >
+                        //       {selectedAttributeId === attribute.id
+                        //         ? selectedOptionName
+                        //         : ""}
+                        //     </div>
+                        //     <div
+                        //       className="menu_choice_attribute_state_icon"
+                        //       style={{ width: "21px", height: "21px" }}
+                        //     >
+                        //       <div
+                        //         className={`${
+                        //           attribute.name === "Select Your Lining Type"
+                        //             ? `menu_light_bold`
+                        //             : ""
+                        //         }`}
+                        //         style={{
+                        //           transform:
+                        //             attribute.id === selectedAttributeId &&
+                        //             !selectedCollapse
+                        //               ? "rotate(-180deg)"
+                        //               : "",
+                        //           fill:
+                        //             attribute.id === selectedAttributeId
+                        //               ? "var(--template-primary--900)"
+                        //               : "var(--template-primary--600)",
+                        //         }}
+                        //       >
+                        //         <SvgArrowDown />
+                        //       </div>
+                        //     </div>
+                        //   </div>
+
+                        // </>
+                      );
+                    })}
+                    </div>      
+                </div>
               );
             })}
-        </div> */}
+          </>
+        )}
 
         {selectedGroup?.id === -2 && (
           <div>
-          <div
-            className="textEditor"
-            style={{ overflowX: "hidden", height: "100%" }}
-          >
-            <Designer />
-          </div>
-           <div style={{position: 'relative', bottom: '370px', left: '20px'}}>
-           {screenWidth < 500 && (<MenuFooter viewFooter={viewFooter} />)}
-           </div>
+            <div
+              className="textEditor"
+              style={{ overflowX: "hidden", height: "100%" }}
+            >
+              <Designer />
+            </div>
+            <div
+              style={{ position: "relative", bottom: "370px", left: "20px" }}
+            >
+              {screenWidth < 500 && <MenuFooter viewFooter={viewFooter} />}
+            </div>
           </div>
         )}
 
@@ -928,7 +935,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         <br />
         <br />
         {/* closed recently */}
-        {screenWidth > 500 && (<MenuFooter viewFooter={viewFooter} />)}
+        {screenWidth > 500 && <MenuFooter viewFooter={viewFooter} />}
 
         {/* ----------------------------------------- */}
 

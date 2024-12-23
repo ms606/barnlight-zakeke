@@ -15,15 +15,14 @@ export const ListItem = styled.div<{ selected?: boolean }>`
      //width: calc(22% - 18px);
      justify-content: flex-start;
      align-items: center;
-     padding: 8px 1px 1px 1px;
-     background: #fff;
+    //  padding: 8px 1px 1px 1px;
+    //  background: #fff;
      box-shadow: 0 4px 16px rgba(0,0,0,0.1);;
      border-radius: 16px;
      margin-bottom: 12px;
      margin-right: 8px;
-    // border: 1px solid transparent;
      cursor: pointer;
-     border: ${props => props.selected ? '1px solid var(--template-highlight-boundary-color)' : ''};
+    //  border: ${props => props.selected ? '1px solid var(--template-highlight-boundary-color)' : ''};
        @media screen and (max-width: 568px) {
          font-size: 24px;
        }
@@ -37,6 +36,7 @@ export const ListItem = styled.div<{ selected?: boolean }>`
       background-position: 50%;
       background-repeat: no-repeat;
       position: relative;
+      border-radius: 9px;
         @media screen and (max-width: 1013px) {
           width: 60px;
           height: 60px;
