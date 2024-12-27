@@ -81,15 +81,13 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
   const { showDialog, closeDialog } = useDialogManager();
 
-  // const idsToRemove = [10483, 10482, -1, 10852, 10856, 11209];
+  const idsToRemove = [ -1];
 
   // idsToRemove.push(10640); // id to remove on only blazer product
 
-  // const groups1 = groups.filter((obj) => !idsToRemove.includes(obj.id));
+  const groups1 = groups.filter((obj) => !idsToRemove.includes(obj.id));
 
-  const groups1 = groups;
   
-
   // if (product?.name != PRODUCT_PANT) groups1.push(customizeGroup);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
