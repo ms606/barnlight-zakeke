@@ -19,6 +19,8 @@ import ExplodeSolid from "../../assets/icons/expand-arrows-alt-solid.js";
 import { ReactComponent as RedoSolid } from "../../assets/icons/redo-solid.svg";
 import { ReactComponent as ResetSolid } from "../../assets/icons/arrow-right-solid.svg";
 import { ReactComponent as SearchMinusSolid } from "../../assets/icons/search-minus-solid.svg";
+import { ReactComponent as CrossIcon } from "../../assets/icons/cross.svg";
+import { ReactComponent as MenuIcon } from "../../assets/icons/menu.svg";
 import { ReactComponent as SearchPlusSolid } from "../../assets/icons/search-plus-solid.svg";
 import { ReactComponent as UndoSolid } from "../../assets/icons/undo-solid.svg";
 import arIcon from "../../assets/images/ar_icon.png";
@@ -178,6 +180,12 @@ const Viewer = () => {
 
   const actualGroups = useActualGroups() ?? [];
 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
   // const handleUndoSingleStep = (actualUndoStep: UndoRedoStep) => {
   // 	if (actualUndoStep.id === null && !isMobile) return;
   // 	if (actualUndoStep.type === 'group')
@@ -217,19 +225,19 @@ const Viewer = () => {
   // };
 
   // console.log(document.fullscreenElement,'full screen check');
-  
+
   if (isSceneLoading)
-  return <Loader visible={isSceneLoading} />;
+    return <Loader visible={isSceneLoading} />;
 
   return (
     <ViewerContainer ref={ref}>
       {/* {!isSceneLoading && <ZakekeViewer backgroundColor="#ffffff" />} */}
 
-     
+
 
       {/* {!isInfoPointContentVisible && ( */}
-     
-     
+
+
       {/* {!document.fullscreenElement &&   */}
       <>
         {/* <div style={{ position: "absolute", left: "10px", top: "1%" }}>
@@ -256,6 +264,29 @@ const Viewer = () => {
         >
           <SearchMinusSolid />
         </ZoomOutIcon>
+
+
+        <div className="app">
+          <button className="menu-button" onClick={togglePopup}>
+            Menu
+          </button>
+
+          {isPopupOpen && (
+            <div className="popup">
+              <button className="close-button" onClick={togglePopup}>
+                ✖
+              </button>
+              <div className="popup-buttons">
+                <button onClick={() => alert("Full Screen triggered")}>
+                  Show Full Screen
+                </button>
+                <button onClick={() => alert("Print triggered")}>Print</button>
+                <button onClick={() => alert("Reset triggered")}>Reset</button>
+                <button onClick={() => alert("Share triggered")}>Share</button>
+              </div>
+            </div>
+          )}
+        </div>
         {/* {sellerSettings?.canUndoRedo && (
 						<ResetIcon isMobile={isMobile} key={'reset'} hoverable onClick={reset}>
 							<ResetSolid />
@@ -285,61 +316,61 @@ const Viewer = () => {
               justifyContent: "space-between",
             }}
           >
-           {product?.name === 'FlexFabrix™ By DA Suit' && ( 
-            <div className="bubble_button">
-              <div className="bubble_button_button">
-                <ExplodeIcon
-                  hoverable
-                  onClick={() => {
-                    {
-                      selectedExplodedState == true
-                        ? setSelectedExplodedStatese(false)
-                        : setSelectedExplodedStatese(true);
-                    }
-                    {
-                      selectedExplodedState == true
-                        ? setExplodedMode(true)
-                        : setExplodedMode(false);
-                    }
-                  }}
-                >
-                  <ExplodeSolid />
-                </ExplodeIcon>
-              </div>
+            {product?.name === 'FlexFabrix™ By DA Suit' && (
+              <div className="bubble_button">
+                <div className="bubble_button_button">
+                  <ExplodeIcon
+                    hoverable
+                    onClick={() => {
+                      {
+                        selectedExplodedState == true
+                          ? setSelectedExplodedStatese(false)
+                          : setSelectedExplodedStatese(true);
+                      }
+                      {
+                        selectedExplodedState == true
+                          ? setExplodedMode(true)
+                          : setExplodedMode(false);
+                      }
+                    }}
+                  >
+                    <ExplodeSolid />
+                  </ExplodeIcon>
+                </div>
 
-              <div className="bubble_button_text">
-                {!selectedExplodedState ? "Close" : "Open"}
-              </div>
-            </div>)
-          }
+                <div className="bubble_button_text">
+                  {!selectedExplodedState ? "Close" : "Open"}
+                </div>
+              </div>)
+            }
 
             {!document.fullscreenElement && (
-            <div
-              className="bubble_button_fullScreen"
-              onClick={() => {
-                ref.current?.requestFullscreen();
-              }}
-            >
-              <div className="bubble_button_button">
-                <ExplodeIcon>
-                  <svg
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M8 2H2v6h2V4h4V2zM24 2h6v6h-2V4h-4V2zM8 30H2v-6h2v4h4v2zM24 30h6v-6h-2v4h-4v2zM24 24H8a2.002 2.002 0 01-2-2V10a2.002 2.002 0 012-2h16a2.002 2.002 0 012 2v12a2.002 2.002 0 01-2 2zM8 10v12h16V10H8z"
-                      fill="#838383"
-                    ></path>
-                  </svg>
-                </ExplodeIcon>
-              </div>
+              <div
+                className="bubble_button_fullScreen"
+                onClick={() => {
+                  ref.current?.requestFullscreen();
+                }}
+              >
+                <div className="bubble_button_button">
+                  <ExplodeIcon>
+                    <svg
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8 2H2v6h2V4h4V2zM24 2h6v6h-2V4h-4V2zM8 30H2v-6h2v4h4v2zM24 30h6v-6h-2v4h-4v2zM24 24H8a2.002 2.002 0 01-2-2V10a2.002 2.002 0 012-2h16a2.002 2.002 0 012 2v12a2.002 2.002 0 01-2 2zM8 10v12h16V10H8z"
+                        fill="#838383"
+                      ></path>
+                    </svg>
+                  </ExplodeIcon>
+                </div>
 
-              <div className="bubble_button_text">Full Screen</div>
-            </div>)
+                <div className="bubble_button_text">Full Screen</div>
+              </div>)
             }
-            </div>
-            
+          </div>
+
 
           {/* {hasExplodedMode() && product && !isSceneLoading && (
             <>
