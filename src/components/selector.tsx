@@ -22,19 +22,24 @@ import SelectionIcon from "../icons/SelectionIcon";
 import ExplodeSolid from "../assets/icons/expand-arrows-alt-solid.js";
 
 import { ExplodeIconL } from "../assets/icons/ExplodeIcon";
+// import { ResetIcon } from "../assets/icons/reset.jpg";
 import { Icon } from "./Atomic";
 import MenuFooter from "./Footer/MenuFooter";
 import Designer from "./Layout/Designer";
+import { ReactComponent as CrossIcon } from "../assets/icons/cross.svg";
+import { ReactComponent as MenuIcon } from "../assets/icons/menu.svg";
 // import { customizeGroup } from "../Helpers";
 import { AiIcon, ArIcon } from "../components/Layout/LayoutStyles";
 
-import {
-  PRODUCT_FULL_SUIT,
-  PRODUCT_BLAZER,
-  PRODUCT_PANT,
-  scrollDownOnClick,
-} from "../Helpers";
+// import {
+//   PRODUCT_FULL_SUIT,
+//   PRODUCT_BLAZER,
+//   PRODUCT_PANT,
+//   scrollDownOnClick,
+// } from "../../Helpers";
 import Zoom from "./Zoom/Zoom";
+import ShareDialog from "./dialogs/ShareDialog";
+import { PRODUCT_FULL_SUIT, scrollDownOnClick } from "../Helpers";
 
 const Container = styled.div`
   height: 839px;
@@ -44,6 +49,11 @@ const Container = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 16px;
+
+  @media (max-width: 768px) {
+    height: auto;
+    overflow: auto;
+  }
 `;
 
 export const ExplodeIcon = styled(Icon)`
@@ -65,12 +75,14 @@ const Selector: FunctionComponent<SelectorProps> = ({
     groups,
     selectOption,
     setCamera,
+    setCameraByName,
     setExplodedMode,
     zoomIn,
     zoomOut,
     product,
     IS_IOS,
     IS_ANDROID,
+    reset,
     getMobileArUrl,
     openArMobile,
     isSceneArEnabled,
@@ -81,13 +93,13 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
   const { showDialog, closeDialog } = useDialogManager();
 
-  const idsToRemove = [ -1];
+  const idsToRemove = [-1];
 
   // idsToRemove.push(10640); // id to remove on only blazer product
 
   const groups1 = groups.filter((obj) => !idsToRemove.includes(obj.id));
 
-  
+
   // if (product?.name != PRODUCT_PANT) groups1.push(customizeGroup);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -126,7 +138,10 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
   const [closeAttribute, setCloseAttribute] = useState<boolean | null>(null);
 
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const viewFooter = useRef<HTMLDivElement | null>(null);
+
 
   var selectedGroup = groups1.find((group) => group.id === selectedGroupId);
   var selectedStep = selectedGroup
@@ -258,7 +273,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
     setSelectedAttributeOptionName(
       selectedAttribute && selectedAttribute.options
         ? selectedAttribute.options.find((x) => x.selected === true)?.name ||
-            null
+        null
         : null
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -297,6 +312,16 @@ const Selector: FunctionComponent<SelectorProps> = ({
   if (isSceneLoading || !groups1 || groups1.length === 0 || isLoading)
     return <Loader visible={true} />;
 
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
+  const handleShareClick = async () => {
+    setCameraByName('buy_screenshot_camera', false, false);
+    showDialog('share', <ShareDialog />);
+  };
+
   // if (isLoading)
   // return <Loader visible={isSceneLoading} />;
 
@@ -318,64 +343,132 @@ const Selector: FunctionComponent<SelectorProps> = ({
        </div>
 			)} */}
 
-      {product?.name === PRODUCT_FULL_SUIT && (
-        <div className="bubble_button">
-          <div className="bubble_button_button">
-            <ExplodeIcon
-              hoverable
-              onClick={() => {
-                setSelectedExplodedStatese(!selectedExplodedState);
-                {
-                  selectedExplodedState == true
-                    ? setExplodedMode(true)
-                    : setExplodedMode(false);
-                }
-              }}
-            >
-              <ExplodeSolid />
-            </ExplodeIcon>
+
+      <div className="app">
+        <button className="menu-button" onClick={togglePopup}>
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 12C1 11.4477 1.44772 11 2 11H22C22.5523 11 23 11.4477 23 12C23 12.5523 22.5523 13 22 13H2C1.44772 13 1 12.5523 1 12Z" fill="#0F0F0F"></path> <path d="M1 4C1 3.44772 1.44772 3 2 3H22C22.5523 3 23 3.44772 23 4C23 4.55228 22.5523 5 22 5H2C1.44772 5 1 4.55228 1 4Z" fill="#0F0F0F"></path> <path d="M1 20C1 19.4477 1.44772 19 2 19H22C22.5523 19 23 19.4477 23 20C23 20.5523 22.5523 21 22 21H2C1.44772 21 1 20.5523 1 20Z" fill="#0F0F0F"></path> </g></svg>
+        </button>
+
+        {isPopupOpen && (
+          <div className="popup">
+            <button className="close-button" onClick={togglePopup}>
+              X
+            </button>
+            <div className="popup-buttons">
+              <button key={'reset'} onClick={reset}>Reset View</button>
+              <button
+                onClick={() => {
+                  const element = refViewer.current;
+
+                  if (document.fullscreenElement) {
+                    // Exit fullscreen if already in fullscreen mode
+                    document.exitFullscreen();
+                  } else if (element) {
+                    // Enter fullscreen mode
+                    if (element.requestFullscreen) {
+                      element.requestFullscreen();
+                    } else if (element.webkitRequestFullscreen) {
+                      element.webkitRequestFullscreen();
+                    } else if (element.mozRequestFullScreen) {
+                      element.mozRequestFullScreen();
+                    } else if (element.msRequestFullscreen) {
+                      element.msRequestFullscreen();
+                    }
+                  }
+                }}
+              >
+                Full Screen
+              </button>
+              <button onClick={() => window.print()}>Print Your Design</button>
+              {/* {!isEditorMode && sellerSettings && sellerSettings.shareType !== 0 && ( */}
+              <button onClick={handleShareClick}>
+                Share Your Design
+              </button>
+              {/* )}  */}
+            </div>
           </div>
+        )}
+      </div>
 
-          <div className="bubble_button_text">
-            {!selectedExplodedState ? "Close" : "Open"}
+      {
+        product?.name === PRODUCT_FULL_SUIT && (
+          <div className="bubble_button">
+            <div className="bubble_button_button">
+              <ExplodeIcon
+                hoverable
+                onClick={() => {
+                  setSelectedExplodedStatese(!selectedExplodedState);
+                  {
+                    selectedExplodedState == true
+                      ? setExplodedMode(true)
+                      : setExplodedMode(false);
+                  }
+                }}
+              >
+                <ExplodeSolid />
+              </ExplodeIcon>
+            </div>
+
+            <div className="bubble_button_text">
+              {!selectedExplodedState ? "Close" : "Open"}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
+      {
+        !IS_IOS && (
+          <div
+            className="bubble_button_resetScreen"
+            onClick={reset}
+          >
+            <div className="bubble_button_button">
+              <ExplodeIcon>
+                Reset Icon
+                {/* <ExplodeIconL /> */}
+              </ExplodeIcon>
+            </div>
 
-      {!IS_IOS && (
-        <div
-          className="bubble_button_fullScreen"
-          onClick={() => {
-            refViewer.current?.requestFullscreen();
+            <div className="bubble_button_text">Reset View</div>
+          </div>
+        )
+      }
 
-            if (refViewer.current?.webkitRequestFullscreen) {
-              refViewer.current.webkitRequestFullscreen();
-            }
+      {
+        !IS_IOS && (
+          <div
+            className="bubble_button_fullScreen"
+            onClick={() => {
+              refViewer.current?.requestFullscreen();
 
-            const element = refViewer.current;
-
-            if (element) {
-              if (element.requestFullscreen) {
-                // element.requestFullscreen();
-              } else if (element.webkitEnterFullscreen) {
-                element.webkitEnterFullscreen(); // Use webkitEnterFullscreen for iOS Safari
-              } else if (element.mozRequestFullScreen) {
-                element.mozRequestFullScreen(); // For older Firefox
-              } else if (element.msRequestFullscreen) {
-                element.msRequestFullscreen(); // For Internet Explorer
+              if (refViewer.current?.webkitRequestFullscreen) {
+                refViewer.current.webkitRequestFullscreen();
               }
-            }
-          }}
-        >
-          <div className="bubble_button_button">
-            <ExplodeIcon>
-              <ExplodeIconL />
-            </ExplodeIcon>
-          </div>
 
-          <div className="bubble_button_text">Full Screen</div>
-        </div>
-      )}
+              const element = refViewer.current;
+
+              if (element) {
+                if (element.requestFullscreen) {
+                  // element.requestFullscreen();
+                } else if (element.webkitEnterFullscreen) {
+                  element.webkitEnterFullscreen(); // Use webkitEnterFullscreen for iOS Safari
+                } else if (element.mozRequestFullScreen) {
+                  element.mozRequestFullScreen(); // For older Firefox
+                } else if (element.msRequestFullscreen) {
+                  element.msRequestFullscreen(); // For Internet Explorer
+                }
+              }
+            }}
+          >
+            <div className="bubble_button_button">
+              <ExplodeIcon>
+                <ExplodeIconL />
+              </ExplodeIcon>
+            </div>
+
+            <div className="bubble_button_text">Full Screen</div>
+          </div>
+        )
+      }
 
       <div
         className="left-keys"
@@ -409,9 +502,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
             return (
               <div
-                className={`menu_item ${
-                  group.id === selectedGroupId ? "selected" : ""
-                }`}
+                className={`menu_item ${group.id === selectedGroupId ? "selected" : ""
+                  }`}
                 key={group.id}
                 onClick={() => {
                   scrollDownOnClick(checkOnce, setCheckOnce);
@@ -534,11 +626,10 @@ const Selector: FunctionComponent<SelectorProps> = ({
                             )}
 
                             <div
-                              className={`menu_choice_attribute_description ${
-                                attribute.name === "Select Your Lining Type"
-                                  ? `menu_light_bold`
-                                  : ""
-                              }`}
+                              className={`menu_choice_attribute_description ${attribute.name === "Select Your Lining Type"
+                                ? `menu_light_bold`
+                                : ""
+                                }`}
                               style={{
                                 display: "flex",
                                 alignItems: "center",
@@ -565,15 +656,14 @@ const Selector: FunctionComponent<SelectorProps> = ({
                               style={{ width: "21px", height: "21px" }}
                             >
                               <div
-                                className={`${
-                                  attribute.name === "Select Your Lining Type"
-                                    ? `menu_light_bold`
-                                    : ""
-                                }`}
+                                className={`${attribute.name === "Select Your Lining Type"
+                                  ? `menu_light_bold`
+                                  : ""
+                                  }`}
                                 style={{
                                   transform:
                                     attribute.id === selectedAttributeId &&
-                                    !selectedCollapse
+                                      !selectedCollapse
                                       ? "rotate(-180deg)"
                                       : "",
                                   fill:
@@ -777,16 +867,16 @@ const Selector: FunctionComponent<SelectorProps> = ({
                   </div>
 
                   {/* {console.log(selectedStepId,step,'ddfdfdfsfds')} */}
-                  <div className="x" style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>                  
-                  {closeAttribute &&
-                    step.id === selectedStepId &&
-                    step.options.map((attribute) => {                 
-                      // {console.log(attribute, selectedStepId, step, 'attribute')}  
-                      {console.log(attribute, 'attribute')}     
-                      if (attribute.enabled === false) return <></>;                    
-                      return (
-                        <>
-                          {/* {step.options.map((attribute) => ( */}
+                  <div className="x" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+                    {closeAttribute &&
+                      step.id === selectedStepId &&
+                      step.options.map((attribute) => {
+                        // {console.log(attribute, selectedStepId, step, 'attribute')}  
+                        { console.log(attribute, 'attribute') }
+                        if (attribute.enabled === false) return <></>;
+                        return (
+                          <>
+                            {/* {step.options.map((attribute) => ( */}
                             {/* <ListItem
                               key={attribute.id}
                               onClick={() => {
@@ -801,111 +891,111 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                 )}
                               </div> */}
 
-                              {/* <div className="menu_choice_option_description">
+                            {/* <div className="menu_choice_option_description">
                                 {attribute.name}
                               </div> */}
                             {/* </ListItem> .*/}
-                          {/* ))} */}
-                        </>
-                        
-                        // <>
-                        //   <div
-                        //     className="menu_choice_attribute_title"
-                        //     style={{
-                        //       color:
-                        //         selectedAttributeId === attribute.id
-                        //           ? "var(--template-primary--900)"
-                        //           : "var(--template-primary--600)",
-                        //       borderBottom:
-                        //         selectedAttributeId != attribute.id
-                        //           ? "1px solid var(--template-primary--400)"
-                        //           : "",
-                        //     }}
-                        //     onClick={() => {
-                        //       if (selectedAttributeId === attribute.id) {
-                        //         selectAttribute(null);
-                        //       } else {
-                        //         selectAttribute(attribute.id);
-                        //         selectOptionName("");
-                        //       }
-                        //     }}
-                        //   >
-                        //     <br />
-                        //     {attribute.name != "Select Your Lining Type" && (
-                        //       <div
-                        //         className="menu_choice_attribute_selection_icon"
-                        //         style={{
-                        //           width: "21px",
-                        //           height: "21px",
-                        //           marginRight: "12px",
-                        //           fill:
-                        //             selectedAttributeId === attribute.id
-                        //               ? "var(--template-primary--900)"
-                        //               : "var(--template-primary--600)",
-                        //         }}
-                        //       >
-                        //         <SelectionIcon />
-                        //       </div>
-                        //     )}
+                            {/* ))} */}
+                          </>
 
-                        //     <div
-                        //       className={`menu_choice_attribute_description ${
-                        //         attribute.name === "Select Your Lining Type"
-                        //           ? `menu_light_bold`
-                        //           : ""
-                        //       }`}
-                        //       style={{
-                        //         display: "flex",
-                        //         alignItems: "center",
-                        //         marginRight: "auto",
-                        //       }}
-                        //     >
-                        //       {attribute.name}
-                        //     </div>
-                        //     <br />
-                        //     <div
-                        //       style={{
-                        //         display: "flex",
-                        //         alignItems: "center",
-                        //         marginRight: "1em",
-                        //       }}
-                        //       className="menu_choice_attribute_selected_option"
-                        //     >
-                        //       {selectedAttributeId === attribute.id
-                        //         ? selectedOptionName
-                        //         : ""}
-                        //     </div>
-                        //     <div
-                        //       className="menu_choice_attribute_state_icon"
-                        //       style={{ width: "21px", height: "21px" }}
-                        //     >
-                        //       <div
-                        //         className={`${
-                        //           attribute.name === "Select Your Lining Type"
-                        //             ? `menu_light_bold`
-                        //             : ""
-                        //         }`}
-                        //         style={{
-                        //           transform:
-                        //             attribute.id === selectedAttributeId &&
-                        //             !selectedCollapse
-                        //               ? "rotate(-180deg)"
-                        //               : "",
-                        //           fill:
-                        //             attribute.id === selectedAttributeId
-                        //               ? "var(--template-primary--900)"
-                        //               : "var(--template-primary--600)",
-                        //         }}
-                        //       >
-                        //         <SvgArrowDown />
-                        //       </div>
-                        //     </div>
-                        //   </div>
+                          // <>
+                          //   <div
+                          //     className="menu_choice_attribute_title"
+                          //     style={{
+                          //       color:
+                          //         selectedAttributeId === attribute.id
+                          //           ? "var(--template-primary--900)"
+                          //           : "var(--template-primary--600)",
+                          //       borderBottom:
+                          //         selectedAttributeId != attribute.id
+                          //           ? "1px solid var(--template-primary--400)"
+                          //           : "",
+                          //     }}
+                          //     onClick={() => {
+                          //       if (selectedAttributeId === attribute.id) {
+                          //         selectAttribute(null);
+                          //       } else {
+                          //         selectAttribute(attribute.id);
+                          //         selectOptionName("");
+                          //       }
+                          //     }}
+                          //   >
+                          //     <br />
+                          //     {attribute.name != "Select Your Lining Type" && (
+                          //       <div
+                          //         className="menu_choice_attribute_selection_icon"
+                          //         style={{
+                          //           width: "21px",
+                          //           height: "21px",
+                          //           marginRight: "12px",
+                          //           fill:
+                          //             selectedAttributeId === attribute.id
+                          //               ? "var(--template-primary--900)"
+                          //               : "var(--template-primary--600)",
+                          //         }}
+                          //       >
+                          //         <SelectionIcon />
+                          //       </div>
+                          //     )}
 
-                        // </>
-                      );
-                    })}
-                    </div>      
+                          //     <div
+                          //       className={`menu_choice_attribute_description ${
+                          //         attribute.name === "Select Your Lining Type"
+                          //           ? `menu_light_bold`
+                          //           : ""
+                          //       }`}
+                          //       style={{
+                          //         display: "flex",
+                          //         alignItems: "center",
+                          //         marginRight: "auto",
+                          //       }}
+                          //     >
+                          //       {attribute.name}
+                          //     </div>
+                          //     <br />
+                          //     <div
+                          //       style={{
+                          //         display: "flex",
+                          //         alignItems: "center",
+                          //         marginRight: "1em",
+                          //       }}
+                          //       className="menu_choice_attribute_selected_option"
+                          //     >
+                          //       {selectedAttributeId === attribute.id
+                          //         ? selectedOptionName
+                          //         : ""}
+                          //     </div>
+                          //     <div
+                          //       className="menu_choice_attribute_state_icon"
+                          //       style={{ width: "21px", height: "21px" }}
+                          //     >
+                          //       <div
+                          //         className={`${
+                          //           attribute.name === "Select Your Lining Type"
+                          //             ? `menu_light_bold`
+                          //             : ""
+                          //         }`}
+                          //         style={{
+                          //           transform:
+                          //             attribute.id === selectedAttributeId &&
+                          //             !selectedCollapse
+                          //               ? "rotate(-180deg)"
+                          //               : "",
+                          //           fill:
+                          //             attribute.id === selectedAttributeId
+                          //               ? "var(--template-primary--900)"
+                          //               : "var(--template-primary--600)",
+                          //         }}
+                          //       >
+                          //         <SvgArrowDown />
+                          //       </div>
+                          //     </div>
+                          //   </div>
+
+                          // </>
+                        );
+                      })}
+                  </div>
                 </div>
               );
             })}
@@ -957,7 +1047,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         // share={onShare}
           /> */}
       </div>
-    </Container>
+    </Container >
   );
 };
 

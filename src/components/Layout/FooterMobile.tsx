@@ -20,6 +20,7 @@ import { ReactComponent as SaveSolid } from '../../assets/icons/save-solid.svg';
 import React, { useEffect, useRef, useState } from 'react';
 import useDropdown from '../../hooks/useDropdown';
 import { TooltipContent } from '../../components/Atomic';
+import MenuFooter from '../Footer/MenuFooter';
 // import QuantityDialog from 'components/dialogs/QuantityDialog';
 
 const OutOfStockTooltipContent = styled(TooltipContent)`
@@ -123,7 +124,7 @@ const FooterMobile = () => {
 	} = useStore();
 
 	const { showDialog, closeDialog } = useDialogManager();
-
+	const viewFooter = useRef<HTMLDivElement | null>(null);
 	const isBuyVisibleForQuoteRule = product?.quoteRule ? product.quoteRule.allowAddToCart : true;
 	const isAddToCartDisabled = false;//isOutOfStock || isAddToCartLoading;
 
@@ -140,88 +141,88 @@ const FooterMobile = () => {
 		const cartMessage = eventMessages?.find((message) => message.eventID === 4);
 		// console.log("mandatory", isMandatoryPD)
 		// if (isMandatoryPD && pdValue < 1) {
-			setIsPDStartedFromCart(true);
-			// tryOnRef?.current?.setVisible?.(true);
-			// tryOnRef?.current?.changeMode?.(TryOnMode.PDTool);
-			// setTryOnMode(TryOnMode.PDTool);
-			return;
-		}
-		//if (cartMessage && cartMessage.visible && !isDraftEditor && !isEditorMode)
-			// showDialog(
-			// 	'question',
-			// 	<QuestionDialog
-			// 		alignButtons='center'
-			// 		eventMessage={cartMessage?.description}
-			// 		buttonNoLabel={T._('Cancel', 'Composer')}
-			// 		buttonYesLabel={T._('Add to cart', 'Composer')}
-			// 		onYesClick={() => {
-			// 			if (nftSettings && nftSettings.isNFTEnabled && !isDraftEditor)
-			// 				showDialog(
-			// 					'nft',
-			// 					<NftDialog
-			// 						nftTitle={T._(
-			// 							"You're purchasing a customized product together with an NFT.",
-			// 							'Composer'
-			// 						)}
-			// 						nftMessage={T._(
-			// 							'To confirm and mint your NFT you need an active wallet compatible with Ethereum. Confirm and add your email and wallet address.',
-			// 							'Composer'
-			// 						)}
-			// 						buttonNoLabel={T._('Skip and continue', 'Composer')}
-			// 						buttonYesLabel={T._('Confirm and Purchase', 'Composer')}
-			// 						price={nftSettings.priceToAdd + price}
-			// 						onYesClick={(nftForm: NftForm) => {
-			// 							closeDialog('nft');
-			// 							addToCart([], undefined, useLegacyScreenshot, nftForm);
-			// 						}}
-			// 						onNoClick={() => {
-			// 							closeDialog('nft');
-			// 							addToCart([], undefined, useLegacyScreenshot);
-			// 						}}
-			// 					/>
-			// 				);
-			// 			else addToCart([], undefined, useLegacyScreenshot);
-			// 			closeDialog('question');
-			// 		}}
-			// 	/>
-			// );
-		// else if (nftSettings && nftSettings.isNFTEnabled && !isDraftEditor)
-		// 	showDialog(
-		// 		'nft',
-		// 		<NftDialog
-		// 			nftTitle={T._("You're purchasing a customized product together with an NFT.", 'Composer')}
-		// 			nftMessage={T._(
-		// 				'To confirm and mint your NFT you need an active wallet compatible with Ethereum. Confirm and add your email and wallet address.',
-		// 				'Composer'
-		// 			)}
-		// 			price={nftSettings.priceToAdd + price}
-		// 			buttonNoLabel={T._('Skip and continue', 'Composer')}
-		// 			buttonYesLabel={T._('Confirm and Purchase', 'Composer')}
-		// 			onYesClick={(nftForm: NftForm) => {
-		// 				closeDialog('nft');
-		// 				addToCart([], undefined, useLegacyScreenshot, nftForm);
-		// 			}}
-		// 			onNoClick={() => {
-		// 				closeDialog('nft');
-		// 				addToCart([], undefined, useLegacyScreenshot);
-		// 			}}
-		// 		/>
-		// 	);
-		// else if (product && product.quantityRule)
-		// 	showDialog(
-		// 		'quantity',
-		// 		<QuantityDialog
-		// 			quantityRule={product.quantityRule}
-		// 			onClick={() => {
-		// 				closeDialog('quantity');
-		// 				addToCart([], undefined, useLegacyScreenshot);
-		// 			}}
-		// 		/>
-		// 	);
-		//else {
+		setIsPDStartedFromCart(true);
+		// tryOnRef?.current?.setVisible?.(true);
+		// tryOnRef?.current?.changeMode?.(TryOnMode.PDTool);
+		// setTryOnMode(TryOnMode.PDTool);
+		return;
+	}
+	//if (cartMessage && cartMessage.visible && !isDraftEditor && !isEditorMode)
+	// showDialog(
+	// 	'question',
+	// 	<QuestionDialog
+	// 		alignButtons='center'
+	// 		eventMessage={cartMessage?.description}
+	// 		buttonNoLabel={T._('Cancel', 'Composer')}
+	// 		buttonYesLabel={T._('Add to cart', 'Composer')}
+	// 		onYesClick={() => {
+	// 			if (nftSettings && nftSettings.isNFTEnabled && !isDraftEditor)
+	// 				showDialog(
+	// 					'nft',
+	// 					<NftDialog
+	// 						nftTitle={T._(
+	// 							"You're purchasing a customized product together with an NFT.",
+	// 							'Composer'
+	// 						)}
+	// 						nftMessage={T._(
+	// 							'To confirm and mint your NFT you need an active wallet compatible with Ethereum. Confirm and add your email and wallet address.',
+	// 							'Composer'
+	// 						)}
+	// 						buttonNoLabel={T._('Skip and continue', 'Composer')}
+	// 						buttonYesLabel={T._('Confirm and Purchase', 'Composer')}
+	// 						price={nftSettings.priceToAdd + price}
+	// 						onYesClick={(nftForm: NftForm) => {
+	// 							closeDialog('nft');
+	// 							addToCart([], undefined, useLegacyScreenshot, nftForm);
+	// 						}}
+	// 						onNoClick={() => {
+	// 							closeDialog('nft');
+	// 							addToCart([], undefined, useLegacyScreenshot);
+	// 						}}
+	// 					/>
+	// 				);
+	// 			else addToCart([], undefined, useLegacyScreenshot);
+	// 			closeDialog('question');
+	// 		}}
+	// 	/>
+	// );
+	// else if (nftSettings && nftSettings.isNFTEnabled && !isDraftEditor)
+	// 	showDialog(
+	// 		'nft',
+	// 		<NftDialog
+	// 			nftTitle={T._("You're purchasing a customized product together with an NFT.", 'Composer')}
+	// 			nftMessage={T._(
+	// 				'To confirm and mint your NFT you need an active wallet compatible with Ethereum. Confirm and add your email and wallet address.',
+	// 				'Composer'
+	// 			)}
+	// 			price={nftSettings.priceToAdd + price}
+	// 			buttonNoLabel={T._('Skip and continue', 'Composer')}
+	// 			buttonYesLabel={T._('Confirm and Purchase', 'Composer')}
+	// 			onYesClick={(nftForm: NftForm) => {
+	// 				closeDialog('nft');
+	// 				addToCart([], undefined, useLegacyScreenshot, nftForm);
+	// 			}}
+	// 			onNoClick={() => {
+	// 				closeDialog('nft');
+	// 				addToCart([], undefined, useLegacyScreenshot);
+	// 			}}
+	// 		/>
+	// 	);
+	// else if (product && product.quantityRule)
+	// 	showDialog(
+	// 		'quantity',
+	// 		<QuantityDialog
+	// 			quantityRule={product.quantityRule}
+	// 			onClick={() => {
+	// 				closeDialog('quantity');
+	// 				addToCart([], undefined, useLegacyScreenshot);
+	// 			}}
+	// 		/>
+	// 	);
+	//else {
 	//		addToCart([], undefined, useLegacyScreenshot);
 	//	}
-//	};
+	//	};
 
 	const showError = (error: string) => {
 		showDialog('error', <ErrorDialog error={error} onCloseClick={() => closeDialog('error')} />);
@@ -333,9 +334,10 @@ const FooterMobile = () => {
 
 	return (
 		<>
-			{!isSceneLoading && (
+			{/* {!isSceneLoading && ( */}
 				<FooterMobileContainer isQuoteEnable={product?.quoteRule !== null}>
-					<FooterMobileIcon gridArea='back' isHidden={selectedGroupId === null} onClick={handleBackClick}>
+					<MenuFooter viewFooter={viewFooter} />
+					{/* <FooterMobileIcon gridArea='back' isHidden={selectedGroupId === null} onClick={handleBackClick}>
 						<AngleLeftSolid />
 					</FooterMobileIcon>
 
@@ -343,7 +345,7 @@ const FooterMobile = () => {
 						<FooterMobileIcon gridArea='pdf' onClick={handlePdfClick}>
 							<PdfSolid />
 						</FooterMobileIcon>
-					}
+					} */}
 
 					{/* {!isDraftEditor && !isEditorMode && sellerSettings && sellerSettings.canSaveDraftComposition && (
 						<FooterMobileIcon gridArea='save' onClick={handleSaveClick}>
@@ -357,7 +359,7 @@ const FooterMobile = () => {
 						</FooterMobileIcon>
 					)} */}
 
-					{isBuyVisibleForQuoteRule && !isViewerMode && (
+					{/* {isBuyVisibleForQuoteRule && !isViewerMode && (
 						<FooterMobileIcon
 							gridArea='cart'
 							isCart
@@ -371,20 +373,20 @@ const FooterMobile = () => {
 							disabled={disableButtonsByVisibleMessages || isAddToCartDisabled}
 							backgroundColor='#313c46'
 							onClick={!isAddToCartDisabled ? () => handleAddToCart() : () => null}
-						>
-							{/* {!isOutOfStock &&
+						> */}
+					{/* {!isOutOfStock &&
 								price !== null &&
 								price > 0 &&
 								(!sellerSettings || !sellerSettings.hidePrice) && ( */}
-									<PriceContainer isMobile={isMobile}>{priceFormatter.format(price)}</PriceContainer>
-								{/* )} */}
+					{/* <PriceContainer isMobile={isMobile}>{priceFormatter.format(price)}</PriceContainer> */}
+					{/* )} */}
 
-							{/* {isOutOfStock && 'OUT OF STOCK'} */}
+					{/* {isOutOfStock && 'OUT OF STOCK'} */}
 
-                            <CartSolid />							
+					{/* <CartSolid />							
                             {isAddToCartLoading && <TailSpin color='#FFFFFF' height='25px' />}
 						</FooterMobileIcon>
-					)}
+					)} */}
 					{/* {product?.quoteRule && !isViewerMode && !isDraftEditor && !isEditorMode && (
 						<FooterMobileIcon
 							gridArea='quote'
@@ -399,7 +401,7 @@ const FooterMobile = () => {
 						</FooterMobileIcon>
 					)} */}
 				</FooterMobileContainer>
-			)}
+			{/* )} */}
 
 			{/* {isOutOfStockTooltipVisible && (
 				<Dropdown>

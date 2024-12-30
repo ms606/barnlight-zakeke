@@ -1,3 +1,4 @@
+
 // import { UndoRedoStep } from 'Interfaces';
 import _ from "lodash";
 import useStore from "./Store";
@@ -195,3 +196,39 @@ export function scrollDownOnClick(checkOnce: boolean | any, setCheckOnce: any) {
     });
   }
 }
+
+export interface Translations {
+	statics: Map<string, string>;
+	dynamics: Map<string, string>;
+}
+
+export class T {
+	public static translations: Translations  | null = null;
+
+	public static _(str: string, domain: string) {
+		if (this.translations?.statics) {
+			const keys = Array.from(this.translations?.statics.keys());
+			for (let key of keys) {
+				if (key.toLowerCase() === str.toLowerCase()) return this.translations.statics.get(key);
+			}
+		}
+
+		let gt = (window as any).gt;
+		return gt ? gt.dgettext(domain, str) : str;
+	}
+
+	public static _d(str: string) {
+		let string = str;
+		if (this.translations?.dynamics) {
+			const keys = Array.from(this.translations?.dynamics.keys());
+			for (let key of keys) {
+				if (key.toLowerCase() === str.toLowerCase()) {
+					if (this.translations.dynamics.get(key)) string = this.translations.dynamics.get(key) as string;
+				}
+			}
+		}
+		return string;
+	}
+}
+
+

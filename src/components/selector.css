@@ -60,7 +60,8 @@ div {
     /* border-radius: 16px; */
 }
 
-.btn.btn-primary, .btn.btn-secondary {
+.btn.btn-primary,
+.btn.btn-secondary {
     border: 1px solid var(--template-primary--900);
 }
 
@@ -93,11 +94,12 @@ div {
     /* /border: 1px solid lightgray; */
     border-radius: 50px;
     padding: 10px;
-    box-shadow: 0 4px 8px var(--template-default-box-shadow-color);;
+    box-shadow: 0 4px 8px var(--template-default-box-shadow-color);
+    ;
 }
 
 .bubble_button_text {
-    font-family: "Avenir Next",sans-serif;
+    font-family: "Avenir Next", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -115,7 +117,16 @@ div {
     flex-direction: column;
     align-items: center;
     left: 50%;
-    top: 45%;
+    top: 20%;
+}
+
+.bubble_button_resetScreen {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 50%;
+    top: 5%;
 }
 
 .menu_footer {
@@ -133,7 +144,7 @@ div {
 
 .menu_price {
     display: flex;
-    font-family: "Avenir Next",sans-serif;
+    font-family: "Avenir Next", sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 16px;
@@ -158,11 +169,9 @@ div {
 }
 
 
-.price_value {
+.price_value {}
 
-}
-
-.menu_actions { 
+.menu_actions {
     display: flex;
     margin-left: auto;
     color: var(--template-boundary-color) !important;
@@ -183,16 +192,24 @@ div {
 
 .scroll {
     display: none;
-} 
+}
 
 @media (min-width: 61.25em) {
-    .menu_btn_cart{
+    .menu_btn_cart {
+        width: 216px;
+    }
+
+    .menu_btn_list {
         width: 216px;
     }
 }
 
 @media screen and (max-width: 786px) {
-    .bubble_button, .bubble_button_button, .bubble_button_text, .bubble_button_fullScreen{
+
+    .bubble_button,
+    .bubble_button_button,
+    .bubble_button_text,
+    .bubble_button_fullScreen {
         /* position: relative; */
         /* top: 0; */
         right: 80%;
@@ -200,10 +217,10 @@ div {
         left: 0%;
     }
 
-    .bubble_button_ar{
-        position: absolute; 
-        top: 4%; 
-        right: 4%; 
+    .bubble_button_ar {
+        position: absolute;
+        top: 4%;
+        right: 4%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -218,8 +235,13 @@ div {
     }
 
     .bubble_button_fullScreen {
+        display: none !important;
         top: 56%;
         left: 90% !important;
+    }
+
+    .bubble_button_resetScreen {
+        display: none !important;
     }
 
     .viewer_zoom {
@@ -244,7 +266,8 @@ div {
         border-radius: 8px;
         display: flex;
         flex-flow: row;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.25);;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        ;
         padding: 0px;
     }
 }
@@ -253,13 +276,13 @@ div {
     .left-keys {
         display: none !important;
         /* position: static !important; */
-    } 
+    }
 
     .bubble_button {
         display: none !important;
     }
 
-    
+
 
     .menu_actions {
         padding-right: 0px !important;
@@ -269,83 +292,6 @@ div {
         padding-left: 10px;
         font-weight: 600;
         letter-spacing: 1px;
-        font-size: 35px;        
+        font-size: 35px;
     }
 }
-  
-
-.app {
-    position: relative; /* Ensure the menu button aligns properly */
-    height: 100vh;
-    background-color: #f9f9f9;
-  }
-  
-  .menu-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .menu-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    z-index: 1000;
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  
-  .popup-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .popup-buttons button {
-    padding: 10px 15px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .popup-buttons button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Media Query for Mobile View */
-  @media (min-width: 768px) {
-    .menu-button {
-      display: none;
-    }
-  }
-  
-  

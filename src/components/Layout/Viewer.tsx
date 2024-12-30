@@ -19,8 +19,6 @@ import ExplodeSolid from "../../assets/icons/expand-arrows-alt-solid.js";
 import { ReactComponent as RedoSolid } from "../../assets/icons/redo-solid.svg";
 import { ReactComponent as ResetSolid } from "../../assets/icons/arrow-right-solid.svg";
 import { ReactComponent as SearchMinusSolid } from "../../assets/icons/search-minus-solid.svg";
-import { ReactComponent as CrossIcon } from "../../assets/icons/cross.svg";
-import { ReactComponent as MenuIcon } from "../../assets/icons/menu.svg";
 import { ReactComponent as SearchPlusSolid } from "../../assets/icons/search-plus-solid.svg";
 import { ReactComponent as UndoSolid } from "../../assets/icons/undo-solid.svg";
 import arIcon from "../../assets/images/ar_icon.png";
@@ -33,6 +31,8 @@ import Cameras from "../Cameras/Cameras";
 import Preview from "../Preview/Preview";
 
 import Loader from "../Loader/Loader";
+
+
 
 // import Notifications from '../widgets/Notifications';
 import {
@@ -180,11 +180,6 @@ const Viewer = () => {
 
   const actualGroups = useActualGroups() ?? [];
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-
-  const togglePopup = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
 
   // const handleUndoSingleStep = (actualUndoStep: UndoRedoStep) => {
   // 	if (actualUndoStep.id === null && !isMobile) return;
@@ -266,27 +261,7 @@ const Viewer = () => {
         </ZoomOutIcon>
 
 
-        <div className="app">
-          <button className="menu-button" onClick={togglePopup}>
-            Menu
-          </button>
-
-          {isPopupOpen && (
-            <div className="popup">
-              <button className="close-button" onClick={togglePopup}>
-                ✖
-              </button>
-              <div className="popup-buttons">
-                <button onClick={() => alert("Full Screen triggered")}>
-                  Show Full Screen
-                </button>
-                <button onClick={() => alert("Print triggered")}>Print</button>
-                <button onClick={() => alert("Reset triggered")}>Reset</button>
-                <button onClick={() => alert("Share triggered")}>Share</button>
-              </div>
-            </div>
-          )}
-        </div>
+       
         {/* {sellerSettings?.canUndoRedo && (
 						<ResetIcon isMobile={isMobile} key={'reset'} hoverable onClick={reset}>
 							<ResetSolid />
