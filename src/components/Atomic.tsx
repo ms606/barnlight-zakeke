@@ -33,7 +33,7 @@ export const TextArea = styled.textarea`
 	background-color: transparent;
 	padding-top: 13px;
 	height: 39px;
-	font-family: "Avenir Next",sans-serif;
+	font-family:sans-serif;
 	// padding-left: 10px;
 	// padding: 10px 20px;
 	color: #414042;

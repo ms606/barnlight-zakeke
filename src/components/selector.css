@@ -10,7 +10,6 @@ div {
 
 .viewer_zoom {
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-direction: column;
     padding-top: 15px;
@@ -93,40 +92,30 @@ div {
 .bubble_button_button {
     /* /border: 1px solid lightgray; */
     border-radius: 50px;
-    padding: 10px;
+    padding: 9px;
     box-shadow: 0 4px 8px var(--template-default-box-shadow-color);
     ;
 }
 
 .bubble_button_text {
-    font-family: "Avenir Next", sans-serif;
+    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 16px;
     font-size: 12px;
     text-align: center;
     color: var(--template-primary--600);
-    margin-top: 8px;
+    margin-top: 4px;
     padding-top: "15px"
 }
 
-.bubble_button_fullScreen {
-    position: absolute;
+.bubble_buttons {
     display: flex;
     flex-direction: column;
     align-items: center;
-    left: 50%;
-    top: 12%;
-}
-
-.bubble_button_resetScreen {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    left: 50%;
-    top: 1%;
+    justify-content: center;
+    position: relative;
 }
 
 .menu_footer {
@@ -138,13 +127,13 @@ div {
     bottom: 3em;
     padding: 27px 0 0 20px;
     position: fixed;
-    bottom: 5px;
+    /* bottom: 5px; */
     z-index: 44;
 }
 
 .menu_price {
     display: flex;
-    font-family: "Avenir Next", sans-serif;
+    font-family: sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 16px;
@@ -159,7 +148,7 @@ div {
     position: relative;
     top: 16px;
     left: 30px;
-    font-family: Avenir Next;
+    font-family: sans-serif;
     font-size: 16px;
     font-style: italic;
     font-weight: 500;
@@ -174,6 +163,7 @@ div {
 .menu_actions {
     display: flex;
     margin-left: auto;
+    gap: 20px;
     color: var(--template-boundary-color) !important;
     padding-right: 15px;
 }
@@ -194,6 +184,9 @@ div {
     display: none;
 }
 
+
+  
+
 @media (min-width: 61.25em) {
     .menu_btn_cart {
         width: 216px;
@@ -202,6 +195,14 @@ div {
     .menu_btn_list {
         width: 216px;
     }
+}
+
+.left-keys {
+    top: 4%;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    left: 3%;
 }
 
 @media screen and (max-width: 786px) {
@@ -216,7 +217,13 @@ div {
         /* /bottom: 50px; */
         left: 0%;
     }
+    .menu_btn_list {
+        width: 170px;
+    }
 
+    .menu_btn_cart {
+        width: 180px;
+    }
     .bubble_button_ar {
         position: absolute;
         top: 4%;
@@ -240,7 +247,7 @@ div {
         left: 90% !important;
     }
 
-    .bubble_button_resetScreen {
+    .bubble_buttons {
         display: none !important;
     }
 
@@ -249,10 +256,12 @@ div {
     }
 
     .left-keys {
+        top: 1%;
         /* position: static !important; */
     }
 
     .scrollPosition {
+        display: none !important;
         /* position: absolute; */
         /* top: 45%; */
         left: 12%;
@@ -274,7 +283,7 @@ div {
 
 @media screen and (max-width: 600px) {
     .left-keys {
-        display: none !important;
+
         /* position: static !important; */
     }
 
@@ -285,6 +294,8 @@ div {
 
 
     .menu_actions {
+        margin: 0% !important;
+        gap: 15px;
         padding-right: 0px !important;
     }
 

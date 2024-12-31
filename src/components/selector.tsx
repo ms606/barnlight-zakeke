@@ -22,7 +22,9 @@ import SelectionIcon from "../icons/SelectionIcon";
 import ExplodeSolid from "../assets/icons/expand-arrows-alt-solid.js";
 
 import { ExplodeIconL } from "../assets/icons/ExplodeIcon";
-// import  ResetIcon  from "../assets/icons/reset.jpg";
+import Reset from "../assets/icons/reset.jpg";
+import PrintIcon from "../assets/icons/print.jpg";
+import ShareIcon from "../assets/icons/share.jpg";
 import { Icon } from "./Atomic";
 import MenuFooter from "./Footer/MenuFooter";
 import Designer from "./Layout/Designer";
@@ -44,7 +46,7 @@ import { PRODUCT_FULL_SUIT, scrollDownOnClick } from "../Helpers";
 const Container = styled.div`
   height: 839px;
   overflow: auto;
-  font-family: "Avenir Next", sans-serif;
+  font-family: sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -390,7 +392,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         )}
       </div>
 
-      {
+      {/* {
         product?.name === PRODUCT_FULL_SUIT && (
           <div className="bubble_button">
             <div className="bubble_button_button">
@@ -414,71 +416,166 @@ const Selector: FunctionComponent<SelectorProps> = ({
             </div>
           </div>
         )
-      }
-      {
-        !IS_IOS && (
-          <div
-            className="bubble_button_resetScreen"
-            onClick={reset}
-          >
-            <div className="bubble_button_button">
-              <ExplodeIcon>
-                Reset Icon
-                {/* <ExplodeIconL /> */}
-              </ExplodeIcon>
+      } */}
+
+      <div className="" style={{ display: 'flex', flexDirection: 'column', position: 'absolute', left: '50%', gap: '12px' }}>
+        {
+          !IS_IOS && (
+            <div
+              className="bubble_buttons"
+              onClick={reset}
+            >
+              <div className="bubble_button_button">
+                <ExplodeIcon>
+                  <svg
+                    version="1.0"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="150.000000pt"
+                    height="150.000000pt"
+                    viewBox="0 0 150.000000 150.000000"
+                    preserveAspectRatio="xMidYMid meet"
+                  >
+                    <g
+                      transform="translate(0.000000,150.000000) scale(0.100000,-0.100000)"
+                      fill="#9a9898"
+                      stroke="#000000"
+                      stroke-width="3"
+                    >
+                      <path
+                        d="M705 1060 c-98 -16 -195 -62 -195 -92 0 -28 23 -31 61 -9 97 56 239
+65 351 22 73 -28 156 -103 193 -174 l28 -53 -28 -53 c-38 -70 -121 -144 -193
+-172 -45 -19 -77 -23 -152 -23 -127 0 -191 24 -274 106 -65 63 -65 61 -11 93
+14 9 4 19 -65 68 -45 32 -85 55 -91 52 -11 -7 -12 -192 -1 -199 4 -2 18 2 32
+9 23 12 28 10 86 -50 224 -230 603 -165 733 126 18 39 18 46 5 79 -76 183
+-283 300 -479 270z"
+                      />
+                      <path
+                        d="M709 821 c-21 -22 -29 -39 -29 -66 0 -48 44 -95 90 -95 46 0 90 47
+90 95 0 27 -8 44 -29 66 -40 39 -82 39 -122 0z"
+                      />
+                    </g>
+                  </svg>
+
+                </ExplodeIcon>
+              </div>
+
+              <div className="bubble_button_text">Reset View</div>
             </div>
+          )
+        }
 
-            <div className="bubble_button_text">Reset View</div>
-          </div>
-        )
-      }
+        {
+          !IS_IOS && (
+            <div
+              className="bubble_buttons"
+              onClick={() => {
+                refViewer.current?.requestFullscreen();
 
-      {
-        !IS_IOS && (
-          <div
-            className="bubble_button_fullScreen"
-            onClick={() => {
-              refViewer.current?.requestFullscreen();
-
-              if (refViewer.current?.webkitRequestFullscreen) {
-                refViewer.current.webkitRequestFullscreen();
-              }
-
-              const element = refViewer.current;
-
-              if (element) {
-                if (element.requestFullscreen) {
-                  // element.requestFullscreen();
-                } else if (element.webkitEnterFullscreen) {
-                  element.webkitEnterFullscreen(); // Use webkitEnterFullscreen for iOS Safari
-                } else if (element.mozRequestFullScreen) {
-                  element.mozRequestFullScreen(); // For older Firefox
-                } else if (element.msRequestFullscreen) {
-                  element.msRequestFullscreen(); // For Internet Explorer
+                if (refViewer.current?.webkitRequestFullscreen) {
+                  refViewer.current.webkitRequestFullscreen();
                 }
-              }
-            }}
-          >
-            <div className="bubble_button_button">
-              <ExplodeIcon>
-                <ExplodeIconL />
-              </ExplodeIcon>
-            </div>
 
-            <div className="bubble_button_text">Full Screen</div>
-          </div>
-        )
-      }
+                const element = refViewer.current;
+
+                if (element) {
+                  if (element.requestFullscreen) {
+                    // element.requestFullscreen();
+                  } else if (element.webkitEnterFullscreen) {
+                    element.webkitEnterFullscreen(); // Use webkitEnterFullscreen for iOS Safari
+                  } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen(); // For older Firefox
+                  } else if (element.msRequestFullscreen) {
+                    element.msRequestFullscreen(); // For Internet Explorer
+                  }
+                }
+              }}
+            >
+              <div className="bubble_button_button">
+                <ExplodeIcon>
+                  <ExplodeIconL />
+                </ExplodeIcon>
+              </div>
+
+              <div className="bubble_button_text">Full Screen</div>
+            </div>
+          )
+        }
+
+        {
+          !IS_IOS && (
+            <div
+              className="bubble_buttons"
+              onClick={() => window.print()}
+            >
+              <div className="bubble_button_button">
+                <ExplodeIcon>
+                  <svg
+                    width="143px"
+                    height="143px"
+                    viewBox="0 0 48 48"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    // xmlns:xlink="http://www.w3.org/1999/xlink"
+                    fill="#9b979a"
+                    stroke="#9b979a"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <g id="ic_fluent_print_48_regular" fill="#9b979a" fill-rule="nonzero">
+                        <path
+                          d="M16.25,8 L31.75,8 C33.483,8 34.899,9.356 34.995,11.066 L35,11.25 L35,14 L36.75,14 C39.649,14 42,16.351 42,19.25 L42,32.75 C42,34.545 40.545,36 38.75,36 L35,36 L35,37.75 C35,39.545 33.545,41 31.75,41 L16.25,41 C14.455,41 13,39.545 13,37.75 L13,36 L9.25,36 C7.455,36 6,34.545 6,32.75 L6,19.25 C6,16.351 8.351,14 11.25,14 L13,14 L13,11.25 C13,9.517 14.356,8.101 16.066,8.005 L16.25,8 Z M31.75,28.5 L16.25,28.5 C15.836,28.5 15.5,28.836 15.5,29.25 L15.5,37.75 C15.5,38.164 15.836,38.5 16.25,38.5 L31.75,38.5 C32.164,38.5 32.5,38.164 32.5,37.75 L32.5,29.25 C32.5,28.836 32.164,28.5 31.75,28.5 Z M36.75,16.5 L11.25,16.5 C9.731,16.5 8.5,17.731 8.5,19.25 L8.5,32.75 C8.5,33.164 8.836,33.5 9.25,33.5 L13,33.5 L13,29.25 C13,27.455 14.455,26 16.25,26 L31.75,26 C33.545,26 35,27.455 35,29.25 L35,33.5 L38.75,33.5 C39.164,33.5 39.5,33.164 39.5,32.75 L39.5,19.25 C39.5,17.731 38.269,16.5 36.75,16.5 Z M31.75,10.5 L16.25,10.5 C15.87,10.5 15.557,10.782 15.507,11.148 L15.5,11.25 L15.5,14 L32.5,14 L32.5,11.25 C32.5,10.87 32.218,10.557 31.852,10.507 L31.75,10.5 Z"
+                        ></path>
+                      </g>
+                    </g>
+                  </svg>
+                </ExplodeIcon>
+              </div>
+
+              <div className="bubble_button_text">Print</div>
+            </div>
+          )
+        }
+
+        {
+          !IS_IOS && (
+            <div
+              className="bubble_buttons"
+              onClick={handleShareClick}
+            >
+              <div className="bubble_button_button">
+                <ExplodeIcon>
+                  <svg
+                    width="146px"
+                    height="146px"
+                    viewBox="0 0 24 24"
+                    fill="#ffff"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier">
+                      <path
+                        d="M20 13V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V13M16 8L12 4M12 4L8 8M12 4V16"
+                        stroke="#9a9898"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      ></path>
+                    </g>
+                  </svg>
+                </ExplodeIcon>
+              </div>
+
+              <div className="bubble_button_text">Share</div>
+            </div>
+          )
+        }
+      </div>
+
 
       <div
         className="left-keys"
-        style={{
-          display: "flex",
-          position: "absolute",
-          left: "3%",
-          flexDirection: "column",
-          top: "0%",
-        }}
       >
         {/* <Cameras
           cameras={groups}
@@ -487,6 +584,21 @@ const Selector: FunctionComponent<SelectorProps> = ({
           selectedCameraAngle={selectedCameraAngle}
         /> */}
         {/* {previewImage?.image && <Preview PreviewImage={previewImage} />} */}
+
+        <div className=""
+          style={{
+
+          }}
+        >
+          <div style={{ color: '#322332', gap: '2px', display: 'flex', flexDirection: 'column' }}>
+            <h1 style={{ fontFamily: "Crimson", fontSize: '38px', fontWeight: 400, margin: '2px' }}>
+              The Original<sup>™</sup>
+            </h1>
+            <h2 style={{ fontFamily: 'Open Sans ,sans-serif', fontSize: '18px', fontWeight: 600, }}>
+              Warehouse Gooseneck Light
+            </h2>
+          </div>
+        </div>
 
         <Zoom zoomIn={zoomIn} zoomOut={zoomOut} />
 
@@ -921,7 +1033,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
         <br />
         <br />
         {/* closed recently */}
-        {screenWidth > 500 && <MenuFooter viewFooter={viewFooter} />}
+        {/* {screenWidth > 500 && <MenuFooter viewFooter={viewFooter} />} */}
+        <MenuFooter viewFooter={viewFooter} />
 
         {/* ----------------------------------------- */}
 
