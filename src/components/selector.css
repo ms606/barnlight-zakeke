@@ -117,7 +117,7 @@ div {
     flex-direction: column;
     align-items: center;
     left: 50%;
-    top: 20%;
+    top: 12%;
 }
 
 .bubble_button_resetScreen {
@@ -126,7 +126,7 @@ div {
     flex-direction: column;
     align-items: center;
     left: 50%;
-    top: 5%;
+    top: 1%;
 }
 
 .menu_footer {

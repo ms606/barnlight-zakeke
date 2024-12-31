@@ -22,7 +22,7 @@ import SelectionIcon from "../icons/SelectionIcon";
 import ExplodeSolid from "../assets/icons/expand-arrows-alt-solid.js";
 
 import { ExplodeIconL } from "../assets/icons/ExplodeIcon";
-// import { ResetIcon } from "../assets/icons/reset.jpg";
+// import  ResetIcon  from "../assets/icons/reset.jpg";
 import { Icon } from "./Atomic";
 import MenuFooter from "./Footer/MenuFooter";
 import Designer from "./Layout/Designer";
@@ -867,17 +867,18 @@ const Selector: FunctionComponent<SelectorProps> = ({
                   </div>
 
                   {/* {console.log(selectedStepId,step,'ddfdfdfsfds')} */}
-                  <div className="x" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-                    {closeAttribute &&
-                      step.id === selectedStepId &&
-                      step.options.map((attribute) => {
-                        // {console.log(attribute, selectedStepId, step, 'attribute')}  
-                        { console.log(attribute, 'attribute') }
-                        if (attribute.enabled === false) return <></>;
-                        return (
-                          <>
-                            {/* {step.options.map((attribute) => ( */}
-                            {/* <ListItem
+                  <div
+                    className="x"
+                    style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
+                  >
+                    {closeAttribute && step.id === selectedStepId && (
+                      <>
+                        {Array.from(
+                          new Map(step.options.map((attribute) => [attribute.id, attribute])).values()
+                        )
+                          .filter((attribute) => attribute.enabled !== false) // Only include enabled attributes
+                          .map((attribute) => (
+                            <ListItem
                               key={attribute.id}
                               onClick={() => {
                                 selectOption(attribute.id);
@@ -886,115 +887,13 @@ const Selector: FunctionComponent<SelectorProps> = ({
                               selected={attribute.selected}
                             >
                               <div className="menu_choice_option_image_container">
-                                {attribute.imageUrl && (
-                                  <ListItemImage src={attribute.imageUrl} />
-                                )}
-                              </div> */}
-
-                            {/* <div className="menu_choice_option_description">
-                                {attribute.name}
-                              </div> */}
-                            {/* </ListItem> .*/}
-                            {/* ))} */}
-                          </>
-
-                          // <>
-                          //   <div
-                          //     className="menu_choice_attribute_title"
-                          //     style={{
-                          //       color:
-                          //         selectedAttributeId === attribute.id
-                          //           ? "var(--template-primary--900)"
-                          //           : "var(--template-primary--600)",
-                          //       borderBottom:
-                          //         selectedAttributeId != attribute.id
-                          //           ? "1px solid var(--template-primary--400)"
-                          //           : "",
-                          //     }}
-                          //     onClick={() => {
-                          //       if (selectedAttributeId === attribute.id) {
-                          //         selectAttribute(null);
-                          //       } else {
-                          //         selectAttribute(attribute.id);
-                          //         selectOptionName("");
-                          //       }
-                          //     }}
-                          //   >
-                          //     <br />
-                          //     {attribute.name != "Select Your Lining Type" && (
-                          //       <div
-                          //         className="menu_choice_attribute_selection_icon"
-                          //         style={{
-                          //           width: "21px",
-                          //           height: "21px",
-                          //           marginRight: "12px",
-                          //           fill:
-                          //             selectedAttributeId === attribute.id
-                          //               ? "var(--template-primary--900)"
-                          //               : "var(--template-primary--600)",
-                          //         }}
-                          //       >
-                          //         <SelectionIcon />
-                          //       </div>
-                          //     )}
-
-                          //     <div
-                          //       className={`menu_choice_attribute_description ${
-                          //         attribute.name === "Select Your Lining Type"
-                          //           ? `menu_light_bold`
-                          //           : ""
-                          //       }`}
-                          //       style={{
-                          //         display: "flex",
-                          //         alignItems: "center",
-                          //         marginRight: "auto",
-                          //       }}
-                          //     >
-                          //       {attribute.name}
-                          //     </div>
-                          //     <br />
-                          //     <div
-                          //       style={{
-                          //         display: "flex",
-                          //         alignItems: "center",
-                          //         marginRight: "1em",
-                          //       }}
-                          //       className="menu_choice_attribute_selected_option"
-                          //     >
-                          //       {selectedAttributeId === attribute.id
-                          //         ? selectedOptionName
-                          //         : ""}
-                          //     </div>
-                          //     <div
-                          //       className="menu_choice_attribute_state_icon"
-                          //       style={{ width: "21px", height: "21px" }}
-                          //     >
-                          //       <div
-                          //         className={`${
-                          //           attribute.name === "Select Your Lining Type"
-                          //             ? `menu_light_bold`
-                          //             : ""
-                          //         }`}
-                          //         style={{
-                          //           transform:
-                          //             attribute.id === selectedAttributeId &&
-                          //             !selectedCollapse
-                          //               ? "rotate(-180deg)"
-                          //               : "",
-                          //           fill:
-                          //             attribute.id === selectedAttributeId
-                          //               ? "var(--template-primary--900)"
-                          //               : "var(--template-primary--600)",
-                          //         }}
-                          //       >
-                          //         <SvgArrowDown />
-                          //       </div>
-                          //     </div>
-                          //   </div>
-
-                          // </>
-                        );
-                      })}
+                                {attribute.imageUrl && <ListItemImage src={attribute.imageUrl} />}
+                              </div>
+                              {/* <div className="menu_choice_option_description">{attribute.name}</div> */}
+                            </ListItem>
+                          ))}
+                      </>
+                    )}
                   </div>
                 </div>
               );
