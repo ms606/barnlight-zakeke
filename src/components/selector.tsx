@@ -630,7 +630,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         <br />
         {/* NEW CODE */}
 
-        <div className=""   style={{ background: 'white', padding:'17px 18px', overflow:'auto'}}>
+        <div className=""   style={{ background: 'white', padding:'20px 18px', }}>
           {selectedGroup && (
             <>
               {selectedGroup.attributes.map((step) => {
