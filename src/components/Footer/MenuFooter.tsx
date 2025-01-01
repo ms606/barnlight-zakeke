@@ -19,7 +19,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
       {/* <div className="price_text">Price: </div> */}
       <div className="price_value" >{priceFormatter.format(price)}</div>
     </div>
-    <div className="menu_footer" ref={viewFooter} style={{ position: 'relative', bottom: '5px', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+    <div className="menu_footer" ref={viewFooter}>
       <div className="menu_actions">
 
         {/* {isAddToCartLoading ? (
