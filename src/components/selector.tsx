@@ -46,7 +46,7 @@ import { PRODUCT_FULL_SUIT, scrollDownOnClick } from "../Helpers";
 const Container = styled.div`
   height: 839px;
   overflow: auto;
-  font-family: sans-serif;
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -418,7 +418,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         )
       } */}
 
-      <div className="" style={{ display: 'flex', flexDirection: 'column', position: 'absolute', left: '50%', gap: '12px' }}>
+      <div className="" style={{ display: 'flex', flexDirection: 'column', position: 'absolute', left: '50%', gap: '22px' }}>
         {
           !IS_IOS && (
             <div
@@ -594,7 +594,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
             <h1 style={{ fontFamily: "Crimson", fontSize: '38px', fontWeight: 400, margin: '2px' }}>
               The Original<sup>™</sup>
             </h1>
-            <h2 style={{ fontFamily: 'Open Sans ,sans-serif', fontSize: '18px', fontWeight: 600, }}>
+            <h2 style={{ fontFamily: 'Open Sans', fontSize: '18px', fontWeight: 600, }}>
               Warehouse Gooseneck Light
             </h2>
           </div>
@@ -628,390 +628,137 @@ const Selector: FunctionComponent<SelectorProps> = ({
           })}
         </div>
         <br />
-        {selectedGroup && selectedGroup.steps.length > 0 && (
-          <div className="menu_choice_steps">
-            {selectedGroup.steps.map((step) => {
-              return (
-                <div
-                  className="menu_choice_step_step"
-                  key={step.id}
-                  onClick={() => {
-                    selectStepName(step.name);
-                    selectStep(step.id);
-                    setCamera(step?.cameraLocationID || "");
-                    if (selectedStepId != step.id) {
-                      selectOptionName("");
-                    }
-                  }}
-                >
-                  <div
-                    className="menu_choice_step_title"
-                    style={{
-                      display: "flex",
-                      borderBottom:
-                        selectedStepId != step.id || !closeAttribute
-                          ? "1px solid var(--template-primary--400)"
-                          : "",
-                    }}
-                  >
-                    <div
-                      className="menu_choice_step_description"
-                      onClick={() => {
-                        setCloseAttribute(true);
-                      }}
-                      style={{
-                        paddingBottom: "1em",
-                        marginRight: "auto",
-                      }}
-                    >
-                      {step.name} stepname
-                    </div>
-                    <div
-                      className="menu_choice_step_toggle"
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "12px",
-                        lineHeight: "16px",
-                        textTransform: "uppercase",
-                        color: "var(--template-boundary-color)",
-                      }}
-                      onClick={() => {
-                        setCloseAttribute(!closeAttribute);
-                      }}
-                    >
-                      <div className="triangle"></div>
-
-                      {selectedStepId != step.id || !closeAttribute
-                        ? "Customize"
-                        : "Close"}
-                    </div>
-                  </div>
-
-                  {closeAttribute &&
-                    step.id === selectedStepId &&
-                    step.attributes.map((attribute) => {
-                      if (attribute.enabled === false) return <></>;
-                      return (
-                        <>
-                          <div
-                            className="menu_choice_attribute_title"
-                            style={{
-                              color:
-                                selectedAttributeId === attribute.id
-                                  ? "var(--template-primary--900)"
-                                  : "var(--template-primary--600)",
-                              borderBottom:
-                                selectedAttributeId != attribute.id
-                                  ? "1px solid var(--template-primary--400)"
-                                  : "",
-                            }}
-                            onClick={() => {
-                              if (selectedAttributeId === attribute.id) {
-                                selectAttribute(null);
-                              } else {
-                                selectAttribute(attribute.id);
-                                selectOptionName("");
-                              }
-                              selectCollapse(!selectedCollapse);
-
-                              selectLiningTypeHeadName(attribute.code);
-                            }}
-                          >
-                            <br />
-                            {attribute.name != "Select Your Lining Type" && (
-                              <div
-                                className="menu_choice_attribute_selection_icon"
-                                style={{
-                                  width: "21px",
-                                  height: "21px",
-                                  marginRight: "12px",
-                                  fill:
-                                    selectedAttributeId === attribute.id
-                                      ? "var(--template-primary--900)"
-                                      : "var(--template-primary--600)",
-                                }}
-                              >
-                                <SelectionIcon />
-                              </div>
-                            )}
-
-                            <div
-                              className={`menu_choice_attribute_description ${attribute.name === "Select Your Lining Type"
-                                ? `menu_light_bold`
-                                : ""
-                                }`}
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                marginRight: "auto",
-                              }}
-                            >
-                              {attribute.name}
-                            </div>
-                            <br />
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                marginRight: "1em",
-                              }}
-                              className="menu_choice_attribute_selected_option"
-                            >
-                              {selectedAttributeId === attribute.id
-                                ? selectedOptionName
-                                : ""}
-                            </div>
-                            <div
-                              className="menu_choice_attribute_state_icon"
-                              style={{ width: "21px", height: "21px" }}
-                            >
-                              <div
-                                className={`${attribute.name === "Select Your Lining Type"
-                                  ? `menu_light_bold`
-                                  : ""
-                                  }`}
-                                style={{
-                                  transform:
-                                    attribute.id === selectedAttributeId &&
-                                      !selectedCollapse
-                                      ? "rotate(-180deg)"
-                                      : "",
-                                  fill:
-                                    attribute.id === selectedAttributeId
-                                      ? "var(--template-primary--900)"
-                                      : "var(--template-primary--600)",
-                                }}
-                              >
-                                <SvgArrowDown />
-                              </div>
-                            </div>
-                          </div>
-
-                          <div
-                            style={{
-                              marginTop: "10px",
-                              display: "flex",
-                              flexDirection: "row",
-                              flexWrap: "wrap",
-                            }}
-                          >
-                            {!selectedCollapse &&
-                              // (attribute.code != 'Stretch' && attribute.code != 'Lining Style_1') &&
-                              attribute.options.map((option) => {
-                                return (
-                                  <>
-                                    {option.enabled == true && (
-                                      <div
-                                        style={{
-                                          marginLeft: "5px",
-                                          width: "23%",
-                                        }}
-                                      >
-                                        <div>
-                                          {selectedAttributeId ===
-                                            option.attribute.id &&
-                                            option.imageUrl && (
-                                              <ListItem
-                                                key={option.id}
-                                                onClick={() => {
-                                                  attribute.options.map((x) => {
-                                                    if (x.selected === true)
-                                                      selectLiningTypeName(
-                                                        x.name
-                                                      );
-                                                  });
-
-                                                  selectOption(option.id);
-                                                  selectOptionName(option.name);
-                                                }}
-                                                selected={option.selected}
-                                                className="menu_choice_option"
-                                              >
-                                                <div className="menu_choice_option_image_container">
-                                                  {option.imageUrl && (
-                                                    <ListItemImage
-                                                      src={option.imageUrl}
-                                                    />
-                                                  )}
-                                                </div>
-
-                                                <div className="menu_choice_option_description">
-                                                  {option.name}
-                                                </div>
-                                              </ListItem>
-                                            )}
-                                        </div>
-                                      </div>
-                                    )}
-                                  </>
-                                );
-                              })}
-
-                            {/* FOR ONLY STRETCH / NON STRETCH -- HAVE TO REFACTOR LATER */}
-                            {/* {!selectedCollapse &&
-                              (attribute.code === "Stretch" ||
-                                attribute.code === "Lining Style_1") &&
-                               attribute.options.map((option) => {
-                                console.log(
-                                  selectedLiningTypeName,
-                                  "selectLiningTypeName"
-                                );
-
-                                // if(attribute.enabled === true) return <></>
-
-                                return (
-                                  <>
-                                    {option.enabled == true && (
-                                      <div
-                                        style={{
-                                          marginLeft: "5px",
-                                          width: "23%",
-                                        }}
-                                      >
-                                        <div>
-                                          {selectedAttributeId ===
-                                            option.attribute.id &&
-                                            option.imageUrl && (
-                                              <ListItem
-                                                key={option.id}
-                                                onClick={() => {
-                                                  selectOption(option.id);
-                                                  selectOptionName(option.name);
-                                                }}
-                                                selected={option.selected}
-                                                className="menu_choice_option"
-                                              >
-                                                <div className="menu_choice_option_image_container">
-                                                  {option.imageUrl && (
-                                                    <ListItemImage
-                                                      src={option.imageUrl}
-                                                    />
-                                                  )}
-                                                </div>
-
-                                                <div className="menu_choice_option_description">
-                                                  {option.name}
-                                                </div>
-                                              </ListItem>
-                                            )}
-                                        </div>
-                                      </div>
-                                    )}
-                                  </>
-                                );
-                              })} */}
-                          </div>
-                        </>
-                      );
-                    })}
-                </div>
-              );
-            })}
-
-            {screenWidth < 500 && <MenuFooter viewFooter={viewFooter} />}
-          </div>
-        )}
         {/* NEW CODE */}
 
-        {selectedGroup && (
-          <>
-            {selectedGroup.attributes.map((step) => {
-              if (step.enabled == false) {
-                return <></>;
-              }
+        <div className=""   style={{ background: 'white', padding:'20px 18px'}}>
+          {selectedGroup && (
+            <>
+              {selectedGroup.attributes.map((step) => {
+                if (step.enabled == false) {
+                  return <></>;
+                }
 
-              // console.log(step, "stepppp");
-              return (
-                <div
-                  className="menu_choice_step_step"
-                  key={step.id}
-                  onClick={() => {
-                    selectStepName(step.name);
-                    selectStep(step.id);
-                    selectOptionName("");
-                  }}
-                >
+                // console.log(step, "stepppp");
+                return (
                   <div
-                    className="menu_choice_step_title"
-                    style={{
-                      display: "flex",
-                      borderBottom:
-                        selectedStepId != step.id || !closeAttribute
-                          ? "1px solid var(--template-primary--400)"
-                          : "",
+                    className="menu_choice_step_step"
+                    key={step.id}
+                    onClick={() => {
+                      selectStepName(step.name);
+                      selectStep(step.id);
+                      selectOptionName("");
                     }}
+                  
                   >
                     <div
-                      className="menu_choice_step_description"
-                      onClick={() => {
-                        setCloseAttribute(true);
-                      }}
-                      style={{
-                        paddingBottom: "1em",
-                        marginRight: "auto",
-                      }}
-                    >
-                      {step.name}
-                    </div>
-                    <div
-                      className="menu_choice_step_toggle"
+                      className="menu_choice_step_title"
                       style={{
                         display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "12px",
-                        lineHeight: "16px",
-                        textTransform: "uppercase",
-                        color: "var(--template-boundary-color)",
-                      }}
-                      onClick={() => {
-                        setCloseAttribute(!closeAttribute);
+                        borderBottom:
+                          selectedStepId != step.id || !closeAttribute
+                            ? "1px solid var(--template-primary--400)"
+                            : "",
                       }}
                     >
-                      <div className="triangle"></div>
+                      <div
+                        className="menu_choice_step_description"
+                        onClick={() => {
+                          setCloseAttribute(true);
+                        }}
+                        style={{
+                          paddingBottom: "1em",
+                          marginRight: "auto",
+                          textTransform: 'uppercase'
+                        }}
+                      >
+                        {step.name}
+                      </div>
+                      <div
+                        className="menu_choice_step_toggle"
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "14px",
+                          fontWeight: '600',
+                          lineHeight: "16px",
+                          textTransform: "uppercase",
+                          color: "#b4b5b8",
+                          cursor: "pointer", // Add cursor pointer for better UX
+                        }}
+                        onClick={() => {
+                          setCloseAttribute(!closeAttribute);
+                        }}
+                      >
+                        {step.options.some((option) => option.selected)
+                          ? step.options.find((option) => option.selected)?.name
+                          : "Select Option"}
+                        <div
+                          // className="triangle"
+                          style={{
+                            marginLeft: "8px", // Add space between text and arrow
+                            display: "flex",
+                            alignItems: "center",
+                          }}
+                        >
+                          {closeAttribute ? (
+                            // Arrow SVG for "open" state
+                            <svg height="12px" width="12px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" fill="#000000">
+                              <g transform="rotate(270, 62.652, 62.652)">
+                                <polygon points="21.409,62.652 103.895,125.304 103.895,0"></polygon>
+                              </g>
+                            </svg>
+                          ) : (
+                            // Arrow SVG for "closed" state
+                            <svg height="12px" width="12px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" fill="#000000">
+                              <g transform="rotate(180, 62.652, 62.652)">
+                                <polygon points="21.409,62.652 103.895,125.304 103.895,0"></polygon>
+                              </g>
+                            </svg>
+                          )}
+                        </div>
+                      </div>
+                    </div>
 
-                      {selectedStepId != step.id || !closeAttribute
-                        ? "Customize"
-                        : "Close"}
+                    {/* {console.log(selectedStepId,step,'ddfdfdfsfds')} */}
+                    <div
+                      className="menu_options"
+                    >
+                      {closeAttribute && step.id === selectedStepId && (
+                        <>
+                          {Array.from(
+                            new Map(step.options.map((attribute) => [attribute.id, attribute])).values()
+                          )
+                            .filter((attribute) => attribute.enabled !== false) // Only include enabled attributes
+                            .map((attribute) => (
+                              <ListItem
+                                key={attribute.id}
+                                onClick={() => {
+                                  selectOption(attribute.id);
+                                  selectOptionName(attribute.name);
+                                }}
+                                selected={attribute.selected}
+                                style={{
+                                  backgroundColor: attribute.selected ? '#f4f4f4' : 'none',
+                                  // padding: '5px',
+                                 
+                                }}
+                              >
+                                <div className="menu_choice_option_image_container">
+                                  {attribute.imageUrl && <ListItemImage src={attribute.imageUrl} />}
+                                </div>
+                                {/* <div className="menu_choice_option_description">{attribute.name}</div> */}
+                              </ListItem>
+                            ))}
+                        </>
+                      )}
                     </div>
                   </div>
-
-                  {/* {console.log(selectedStepId,step,'ddfdfdfsfds')} */}
-                  <div
-                    className="x"
-                    style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
-                  >
-                    {closeAttribute && step.id === selectedStepId && (
-                      <>
-                        {Array.from(
-                          new Map(step.options.map((attribute) => [attribute.id, attribute])).values()
-                        )
-                          .filter((attribute) => attribute.enabled !== false) // Only include enabled attributes
-                          .map((attribute) => (
-                            <ListItem
-                              key={attribute.id}
-                              onClick={() => {
-                                selectOption(attribute.id);
-                                selectOptionName(attribute.name);
-                              }}
-                              selected={attribute.selected}
-                            >
-                              <div className="menu_choice_option_image_container">
-                                {attribute.imageUrl && <ListItemImage src={attribute.imageUrl} />}
-                              </div>
-                              {/* <div className="menu_choice_option_description">{attribute.name}</div> */}
-                            </ListItem>
-                          ))}
-                      </>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </>
-        )}
+                );
+              })}
+            </>
+          )}
+        </div>
 
         {selectedGroup?.id === -2 && (
           <div>

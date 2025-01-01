@@ -10,7 +10,7 @@
 .menu_group {
     height: 58px;
     white-space: nowrap;
-    font-family: sans-serif;
+    font-family: 'Open Sans';
     top: 30px;
     font-weight: 500;
 }
@@ -20,9 +20,9 @@
     padding: 16px;
     background: var(--template-boundary-color);
     color: #fff;
-    font-family: "Open Sans", serif;
+    font-family: 'Open Sans';
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 1px;
     margin-left: 8px;
@@ -53,10 +53,10 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 12px 4px;
-    font-family: sans-serif;
+    padding: 12px 7px;
+    font-family: 'Open Sans';
     font-style: normal;
-    line-height: 10px;
+   
     font-weight: 400;
     font-size: 20px;
     color: var(--template-primary--900);
@@ -67,10 +67,10 @@
     margin-right: auto;
     /* padding: 1em 0em 1em 0em; */
     line-height: 16px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 17px;
-    font-family: sans-serif;
-    color: var(--template-primary--800);
+    font-family: 'Open Sans';
+    color: #323232;
 }
 
 .menu_light_bold {
@@ -84,7 +84,7 @@
     width: 100%;
     cursor: pointer;
     padding: 12px 4px;
-    font-family: sans-serif;
+    font-family: 'Open Sans';
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -92,8 +92,11 @@
 }
 
 .menu_choice_option_image_container {
-    width: 70px;
-    height: 70px;
+    width: 92px;
+    height: 92px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0 auto;
     border-radius: 8px;
 }
@@ -108,8 +111,8 @@
 
 @media screen and (max-width: 996px){
     .menu_choice_option_image_container {
-        width: 60px;
-        height: 60px;
+        width: 52px;
+        height: 52px;
         margin: 0 auto;
         border-radius: 8px;
     }

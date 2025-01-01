@@ -33,7 +33,7 @@ export const TextArea = styled.textarea`
 	background-color: transparent;
 	padding-top: 13px;
 	height: 39px;
-	font-family:sans-serif;
+	 font-family: 'Open Sans';
 	// padding-left: 10px;
 	// padding: 10px 20px;
 	color: #414042;
@@ -43,7 +43,7 @@ export const TextArea = styled.textarea`
 	width: 100%;
 	// min-height: 35px;
 	margin-top: 14px;
-	font-family: 'Montserrat', sans-serif;
+	 font-family: 'Open Sans';
 	outline: none;
 	resize: none;
 

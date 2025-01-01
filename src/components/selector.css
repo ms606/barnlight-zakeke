@@ -98,14 +98,14 @@ div {
 }
 
 .bubble_button_text {
-    font-family: sans-serif;
+    font-family: 'Open Sans';
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
     line-height: 16px;
     font-size: 12px;
     text-align: center;
-    color: var(--template-primary--600);
+    color: #7c7c7c;
     margin-top: 4px;
     padding-top: "15px"
 }
@@ -133,9 +133,8 @@ div {
 
 .menu_price {
     display: flex;
-    font-family: sans-serif;
-    font-weight: 400;
-    font-size: 16px;
+    font-family: 'Open Sans';
+    font-weight: 600;
     line-height: 16px;
     font-size: 24px;
     font-style: normal;
@@ -148,7 +147,7 @@ div {
     position: relative;
     top: 16px;
     left: 30px;
-    font-family: sans-serif;
+    font-family: 'Open Sans';
     font-size: 16px;
     font-style: italic;
     font-weight: 500;
@@ -165,14 +164,26 @@ div {
     margin-left: auto;
     gap: 20px;
     color: var(--template-boundary-color) !important;
-    padding-right: 15px;
+    /* padding-right: 15px; */
 }
 
 .menu_btn_cart {
-    margin-right: 10px;
-    background-color: var(--template-add-to-cart-background-color) !important;
-    font-size: 15px;
-    color: #ffffffff
+    /* margin-right: 10px; */
+    font-family: 'Open Sans';
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #4f5b6c !important;
+    color: #ffffffff;
+    border: 2px solid gray
+}
+
+.menu_btn_list {
+    /* margin-right: 10px; */
+    font-family: 'Open Sans';
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #f2f2f2 !important;
+    color: #323232
 }
 
 .menu_btn_share_icon {
@@ -185,7 +196,7 @@ div {
 }
 
 
-  
+
 
 @media (min-width: 61.25em) {
     .menu_btn_cart {
@@ -217,6 +228,7 @@ div {
         /* /bottom: 50px; */
         left: 0%;
     }
+
     .menu_btn_list {
         width: 170px;
     }
@@ -224,6 +236,7 @@ div {
     .menu_btn_cart {
         width: 180px;
     }
+
     .bubble_button_ar {
         position: absolute;
         top: 4%;
@@ -304,5 +317,19 @@ div {
         font-weight: 600;
         letter-spacing: 1px;
         font-size: 35px;
+    }
+}
+
+
+.menu_options {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+@media screen and (max-width: 568px) {
+    .menu_options {
+        gap: 1px;
     }
 }

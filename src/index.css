@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  
 }
 
 #root {
@@ -33,7 +32,7 @@ html {
 } 
 
 .triangle {
-  margin-right: 7px;
+  margin-left: 7px;
   margin-bottom: 2px;
   width: 10px;
   height: 10px;
@@ -101,17 +100,22 @@ html {
   padding-top: 10px;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  box-shadow: 2px;
 }
 
+
 .popup-buttons button {
-  padding: 10px 15px;
+  padding: 10px 10px;
   font-size: 18px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   background: none;
   display: flex;
+  font-family: 'Open Sans';
+  font-size: 18px;
+  font-weight: 600;
+  color: #323232;
 }
 
 .popup-buttons button:hover {
