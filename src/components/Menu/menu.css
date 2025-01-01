@@ -5,6 +5,7 @@
     max-height: calc(100% - 3px);
     height: calc(100vh - 72px);
     color: var(--template-primary--600);
+    overflow: hidden;
 }
 
 .menu_group {
