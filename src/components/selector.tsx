@@ -826,7 +826,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         // share={onShare}
           /> */}
         </div>
-        <div className="" style={{paddingTop:'6px'}}>
+        <div className="" style={{marginTop:'12px'}}>
           <MenuFooter viewFooter={viewFooter} />
         </div>
       </div>
