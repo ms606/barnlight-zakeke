@@ -44,7 +44,7 @@ import ShareDialog from "./dialogs/ShareDialog";
 import { PRODUCT_FULL_SUIT, scrollDownOnClick } from "../Helpers";
 
 const Container = styled.div`
-  height: 839px;
+  height: auto;
   overflow: auto;
   font-family: 'Open Sans';
   font-style: normal;
@@ -84,6 +84,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
     product,
     IS_IOS,
     IS_ANDROID,
+    sellerSettings,
     reset,
     getMobileArUrl,
     openArMobile,
@@ -109,6 +110,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
   //console.log(groups,'groups');
 
   // Keep saved the ID and not the refereces, they will change on each update
+  const [isRecapPanelOpened, setRecapPanelOpened] = useState(
+    sellerSettings?.isCompositionRecapVisibleFromStart ?? false
+  );
   const [selectedGroupId, selectGroup] = useState<number | null>(null);
   const [selectedStepId, selectStep] = useState<number | null>(null);
   const [selectedStepName, selectStepName] = useState<string | null>(null);
@@ -143,7 +147,12 @@ const Selector: FunctionComponent<SelectorProps> = ({
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const viewFooter = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (sellerSettings && sellerSettings?.isCompositionRecapVisibleFromStart)
+      setRecapPanelOpened(sellerSettings.isCompositionRecapVisibleFromStart);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sellerSettings]);
 
   var selectedGroup = groups1.find((group) => group.id === selectedGroupId);
   var selectedStep = selectedGroup
@@ -322,6 +331,12 @@ const Selector: FunctionComponent<SelectorProps> = ({
   const handleShareClick = async () => {
     setCameraByName('buy_screenshot_camera', false, false);
     showDialog('share', <ShareDialog />);
+    togglePopup();
+  };
+
+  const handlePrint = () => {
+    window.print(); // Print your design
+    togglePopup(); // Close the popup after printing
   };
 
   // if (isLoading)
@@ -357,7 +372,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
               X
             </button>
             <div className="popup-buttons">
-              <button key={'reset'} onClick={reset}>Reset View</button>
+              {sellerSettings?.canUndoRedo && (
+                <button key={'reset'} onClick={reset}>Reset View</button>
+              )}
               <button
                 onClick={() => {
                   const element = refViewer.current;
@@ -377,11 +394,12 @@ const Selector: FunctionComponent<SelectorProps> = ({
                       element.msRequestFullscreen();
                     }
                   }
+                  togglePopup();
                 }}
               >
                 Full Screen
               </button>
-              <button onClick={() => window.print()}>Print Your Design</button>
+              <button onClick={handlePrint}>Print Your Design</button>
               {/* {!isEditorMode && sellerSettings && sellerSettings.shareType !== 0 && ( */}
               <button onClick={handleShareClick}>
                 Share Your Design
@@ -605,187 +623,189 @@ const Selector: FunctionComponent<SelectorProps> = ({
         <Scroll upRef={refViewer.current} downRef={viewFooter.current} />
       </div>
 
-      <div className="menu">
-        <div className="menu_group">
-          {groups1.map((group) => {
-            const handleGroupClick = (group: any) => {
-              selectGroup(group.id);
-            };
+      <div className="" style={{display:'flex', flexDirection:'column', justifyContent:'space-between', height:'100%', gap:'12px'}}>
+        <div className="menu">
+          <div className="menu_group">
+            {groups1.map((group) => {
+              const handleGroupClick = (group: any) => {
+                selectGroup(group.id);
+              };
 
-            return (
-              <div
-                className={`menu_item ${group.id === selectedGroupId ? "selected" : ""
-                  }`}
-                key={group.id}
-                onClick={() => {
-                  scrollDownOnClick(checkOnce, setCheckOnce);
-                  handleGroupClick(group);
-                }}
-              >
-                {group.id === -1 ? "Other" : group.name}
-              </div>
-            );
-          })}
-        </div>
-        <br />
-        {/* NEW CODE */}
+              return (
+                <div
+                  className={`menu_item ${group.id === selectedGroupId ? "selected" : ""
+                    }`}
+                  key={group.id}
+                  onClick={() => {
+                    scrollDownOnClick(checkOnce, setCheckOnce);
+                    handleGroupClick(group);
+                  }}
+                >
+                  {group.id === -1 ? "Other" : group.name}
+                </div>
+              );
+            })}
+          </div>
+          <br />
+          {/* NEW CODE */}
 
-        <div className=""   style={{ background: 'white', padding:'20px 18px', }}>
-          {selectedGroup && (
-            <>
-              {selectedGroup.attributes.map((step) => {
-                if (step.enabled == false) {
-                  return <></>;
-                }
+          <div className="" style={{ background: 'white', padding: '20px 18px',}}>
+            {selectedGroup && (
+              <>
+                {selectedGroup.attributes.map((step) => {
+                  if (step.enabled == false) {
+                    return <></>;
+                  }
 
-                // console.log(step, "stepppp");
-                return (
-                  <div
-                    className="menu_choice_step_step"
-                    key={step.id}
-                    onClick={() => {
-                      selectStepName(step.name);
-                      selectStep(step.id);
-                      selectOptionName("");
-                    }}
-                  
-                  >
+                  // console.log(step, "stepppp");
+                  return (
                     <div
-                      className="menu_choice_step_title"
-                      style={{
-                        display: "flex",
-                        borderBottom:
-                          selectedStepId != step.id || !closeAttribute
-                            ? "1px solid var(--template-primary--400)"
-                            : "",
+                      className="menu_choice_step_step"
+                      key={step.id}
+                      onClick={() => {
+                        selectStepName(step.name);
+                        selectStep(step.id);
+                        selectOptionName("");
                       }}
+
                     >
                       <div
-                        className="menu_choice_step_description"
-                        onClick={() => {
-                          setCloseAttribute(true);
-                        }}
-                        style={{
-                          paddingBottom: "1em",
-                          marginRight: "auto",
-                          textTransform: 'uppercase'
-                        }}
-                      >
-                        {step.name}
-                      </div>
-                      <div
-                        className="menu_choice_step_toggle"
+                        className="menu_choice_step_title"
                         style={{
                           display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          fontSize: "14px",
-                          fontWeight: '600',
-                          lineHeight: "16px",
-                          textTransform: "uppercase",
-                          color: "#b4b5b8",
-                          cursor: "pointer", // Add cursor pointer for better UX
-                        }}
-                        onClick={() => {
-                          setCloseAttribute(!closeAttribute);
+                          borderBottom:
+                            selectedStepId != step.id || !closeAttribute
+                              ? "1px solid var(--template-primary--400)"
+                              : "",
                         }}
                       >
-                        {step.options.some((option) => option.selected)
-                          ? step.options.find((option) => option.selected)?.name
-                          : "Select Option"}
                         <div
-                          // className="triangle"
+                          className="menu_choice_step_description"
+                          onClick={() => {
+                            setCloseAttribute(true);
+                          }}
                           style={{
-                            marginLeft: "8px", // Add space between text and arrow
-                            display: "flex",
-                            alignItems: "center",
+                            paddingBottom: ".5em",
+                            marginRight: "auto",
+                            textTransform: 'uppercase'
                           }}
                         >
-                          {closeAttribute ? (
-                            // Arrow SVG for "open" state
-                            <svg height="12px" width="12px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" fill="#000000">
-                              <g transform="rotate(270, 62.652, 62.652)">
-                                <polygon points="21.409,62.652 103.895,125.304 103.895,0"></polygon>
-                              </g>
-                            </svg>
-                          ) : (
-                            // Arrow SVG for "closed" state
-                            <svg height="12px" width="12px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" fill="#000000">
-                              <g transform="rotate(180, 62.652, 62.652)">
-                                <polygon points="21.409,62.652 103.895,125.304 103.895,0"></polygon>
-                              </g>
-                            </svg>
-                          )}
+                          {step.name}
+                        </div>
+                        <div
+                          className="menu_choice_step_toggle"
+                          style={{
+                            display: "flex",
+                            paddingBottom: '.5em',
+                            justifyContent: "center",
+                            alignItems: "center",
+                            fontSize: "13px",
+                            fontWeight: '600',
+                            lineHeight: "16px",
+                            textTransform: "uppercase",
+                            color: "#b4b5b8",
+                            cursor: "pointer", // Add cursor pointer for better UX
+                          }}
+                          onClick={() => {
+                            setCloseAttribute(!closeAttribute);
+                          }}
+                        >
+                          {step.options.some((option) => option.selected)
+                            ? step.options.find((option) => option.selected)?.name
+                            : "Select Option"}
+                          <div
+                            // className="triangle"
+                            style={{
+                              marginLeft: "8px", // Add space between text and arrow
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            {closeAttribute ? (
+                              // Arrow SVG for "open" state
+                              <svg height="12px" width="12px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" fill="#000000">
+                                <g transform="rotate(270, 62.652, 62.652)">
+                                  <polygon points="21.409,62.652 103.895,125.304 103.895,0"></polygon>
+                                </g>
+                              </svg>
+                            ) : (
+                              // Arrow SVG for "closed" state
+                              <svg height="12px" width="12px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" fill="#000000">
+                                <g transform="rotate(180, 62.652, 62.652)">
+                                  <polygon points="21.409,62.652 103.895,125.304 103.895,0"></polygon>
+                                </g>
+                              </svg>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    {/* {console.log(selectedStepId,step,'ddfdfdfsfds')} */}
-                    <div
-                      className="menu_options"
-                    >
-                      {closeAttribute && step.id === selectedStepId && (
-                        <>
-                          {Array.from(
-                            new Map(step.options.map((attribute) => [attribute.id, attribute])).values()
-                          )
-                            .filter((attribute) => attribute.enabled !== false) // Only include enabled attributes
-                            .map((attribute) => (
-                              <ListItem
-                                key={attribute.id}
-                                onClick={() => {
-                                  selectOption(attribute.id);
-                                  selectOptionName(attribute.name);
-                                }}
-                                selected={attribute.selected}
-                                style={{
-                                  backgroundColor: attribute.selected ? '#f4f4f4' : 'none',
-                                  // padding: '5px',
-                                 
-                                }}
-                              >
-                                <div className="menu_choice_option_image_container">
-                                  {attribute.imageUrl && <ListItemImage src={attribute.imageUrl} />}
-                                </div>
-                                {/* <div className="menu_choice_option_description">{attribute.name}</div> */}
-                              </ListItem>
-                            ))}
-                        </>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </>
-          )}
-        </div>
+                      {/* {console.log(selectedStepId,step,'ddfdfdfsfds')} */}
+                      <div
+                        className="menu_options"
+                      >
+                        {closeAttribute && step.id === selectedStepId && (
+                          <>
+                            {Array.from(
+                              new Map(step.options.map((attribute) => [attribute.id, attribute])).values()
+                            )
+                              .filter((attribute) => attribute.enabled !== false) // Only include enabled attributes
+                              .map((attribute) => (
+                                <ListItem
+                                  key={attribute.id}
+                                  onClick={() => {
+                                    selectOption(attribute.id);
+                                    selectOptionName(attribute.name);
+                                  }}
+                                  selected={attribute.selected}
+                                  style={{
+                                    backgroundColor: attribute.selected ? '#f4f4f4' : 'none',
+                                    // padding: '5px',
 
-        {selectedGroup?.id === -2 && (
-          <div>
-            <div
-              className="textEditor"
-              style={{ overflowX: "hidden", height: "100%" }}
-            >
-              <Designer />
-            </div>
-            <div
-              style={{ position: "relative", bottom: "370px", left: "20px" }}
-            >
-              {screenWidth < 500 && <MenuFooter viewFooter={viewFooter} />}
-            </div>
+                                  }}
+                                >
+                                  <div className="menu_choice_option_image_container">
+                                    {attribute.imageUrl && <ListItemImage src={attribute.imageUrl} />}
+                                  </div>
+                                  {/* <div className="menu_choice_option_description">{attribute.name}</div> */}
+                                </ListItem>
+                              ))}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
+            )}
           </div>
-        )}
 
-        <br />
-        <br />
-        <br />
-        {/* closed recently */}
-        {/* {screenWidth > 500 && <MenuFooter viewFooter={viewFooter} />} */}
-        <MenuFooter viewFooter={viewFooter} />
+          {selectedGroup?.id === -2 && (
+            <div>
+              <div
+                className="textEditor"
+                style={{ overflowX: "hidden", height: "100%" }}
+              >
+                <Designer />
+              </div>
+              <div
+                style={{ position: "relative", bottom: "370px", left: "20px" }}
+              >
+                {screenWidth < 500 && <MenuFooter viewFooter={viewFooter} />}
+              </div>
+            </div>
+          )}
 
-        {/* ----------------------------------------- */}
+          {/* <br />
+        <br />
+        <br /> */}
+          {/* closed recently */}
+          {/* {screenWidth > 500 && <MenuFooter viewFooter={viewFooter} />} */}
 
-        {/* <Menu
+
+          {/* ----------------------------------------- */}
+
+          {/* <Menu
          //  groups1={groups1}
            //price={price}
          //  selectedGroupId={selectedGroupId || null}
@@ -805,6 +825,10 @@ const Selector: FunctionComponent<SelectorProps> = ({
         // params={customizationParams}
         // share={onShare}
           /> */}
+        </div>
+        <div className="" style={{paddingTop:'6px'}}>
+          <MenuFooter viewFooter={viewFooter} />
+        </div>
       </div>
     </Container >
   );

@@ -28,6 +28,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
         <button
           // onClick={() => addToCart([], undefined, useLegacyScreenshot)}
           className="btn menu_btn_list"
+          style={{cursor:'pointer'}}
         >
           Return To listing
         </button>
@@ -40,6 +41,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
           <button
             onClick={() => addToCart([], undefined, useLegacyScreenshot)}
             className="btn btn-primary menu_btn_cart"
+            style={{cursor:'pointer'}}
           >
             Add to cart
           </button>

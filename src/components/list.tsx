@@ -19,13 +19,14 @@ export const ListItem = styled.div<{ selected?: boolean }>`
     //  background: #fff;
      border:2px solid #cccc;
      border-radius: 16px;
-     margin-bottom: 12px;
-     margin-right: 10px;
+    //  margin-top:6px;
+    //  margin-bottom: 12px;
+    //  margin-right: px;
      cursor: pointer;
-     @media screen and (max-width: 1013px) {
-     margin-bottom: 9px;
-     margin-right: 9px;
-        }
+    //  @media screen and (max-width: 1013px) {
+    //  margin-bottom: 9px;
+    //  margin-right: 9px;
+    //     }
     
 `;
 

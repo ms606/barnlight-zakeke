@@ -124,7 +124,7 @@ html {
 
 /* Media Query for Mobile View */
 @media (min-width: 768px) {
-  .menu-button {
+  .app {
     display: none;
   }
 }
