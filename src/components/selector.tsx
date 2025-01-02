@@ -780,7 +780,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
             )}
           </div>
 
-          {selectedGroup?.id === -2 && (
+          {/* {selectedGroup?.id === -2 && (
             <div>
               <div
                 className="textEditor"
@@ -794,9 +794,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
                 {screenWidth < 500 && <MenuFooter viewFooter={viewFooter} />}
               </div>
             </div>
-          )}
+          )} */}
 
-          {screenWidth > 500 && <MenuFooter viewFooter={viewFooter} />}
+          <div className="" style={{marginTop:'24px'}}>
+            {screenWidth < 500 && <MenuFooter viewFooter={viewFooter} />}
+          </div>
 
           {/* <br />
         <br />
@@ -828,8 +830,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
         // share={onShare}
           /> */}
         </div>
-        {screenWidth < 500 && (
-          <div className="" style={{ marginTop: '12px' }}>
+        {screenWidth > 500 && (
+          <div className="" style={{ marginTop: '7px' }}>
             <MenuFooter viewFooter={viewFooter} />
           </div>
         )}
