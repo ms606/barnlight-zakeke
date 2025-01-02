@@ -623,7 +623,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         <Scroll upRef={refViewer.current} downRef={viewFooter.current} />
       </div>
 
-      <div className="" style={{display:'flex', flexDirection:'column', justifyContent:'space-between', height:'100%', gap:'12px'}}>
+      <div className="" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', gap: '12px' }}>
         <div className="menu">
           <div className="menu_group">
             {groups1.map((group) => {
@@ -649,7 +649,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
           <br />
           {/* NEW CODE */}
 
-          <div className="" style={{ background: 'white', padding: '20px 18px',}}>
+          <div className="" style={{ background: 'white', padding: '20px 18px', }}>
             {selectedGroup && (
               <>
                 {selectedGroup.attributes.map((step) => {
@@ -796,6 +796,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
             </div>
           )}
 
+          {screenWidth > 500 && <MenuFooter viewFooter={viewFooter} />}
+
           {/* <br />
         <br />
         <br /> */}
@@ -826,9 +828,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
         // share={onShare}
           /> */}
         </div>
-        <div className="" style={{marginTop:'12px'}}>
-          <MenuFooter viewFooter={viewFooter} />
-        </div>
+        {screenWidth < 500 && (
+          <div className="" style={{ marginTop: '12px' }}>
+            <MenuFooter viewFooter={viewFooter} />
+          </div>
+        )}
       </div>
     </Container >
   );
