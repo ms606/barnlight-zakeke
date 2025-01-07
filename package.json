@@ -21,7 +21,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^19.0.0",
-    "react-loader-spinner": "^5.4.5",
+    "react-loader-spinner": "^6.1.6",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.7",
     "react-spring": "^9.7.3",
