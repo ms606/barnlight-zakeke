@@ -92,7 +92,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
     productName,
   } = useZakeke();
 
-  console.log(groups, "groups");
+  // console.log(groups, refViewer, "groups");
 
   const { showDialog, closeDialog } = useDialogManager();
 
@@ -334,8 +334,67 @@ const Selector: FunctionComponent<SelectorProps> = ({
     togglePopup();
   };
 
+  const canvas = document.querySelector("canvas");
+
   const handlePrint = () => {
-    window.print(); // Print your design
+    
+    const canvas = document.querySelector("canvas");
+    // const context = canvas?.getContext("2d");
+
+    if (canvas) {
+
+    // Save the original dimensions
+    const originalDimensions = {
+      width: canvas.width,
+      height: canvas.height,
+      styleWidth: canvas.style.width,
+      styleHeight: canvas.style.height,
+    };
+
+    console.log(window.innerWidth,window.innerHeight);
+    
+    const adjustViewerForPrint = () => {
+  
+      // Set the canvas dimensions to fill the page
+      // const printWidth = window.innerWidth;
+      // const printHeight = window.innerHeight;
+  
+      // // Adjust canvas rendering dimensions
+      // canvas.width = printWidth;
+      // canvas.height = printHeight;
+      // console.log(canvas.width,canvas.height,'canvas.height');
+      
+      // Adjust canvas CSS dimensions
+      canvas.style.width = '829px' //`${printWidth}px`;
+      canvas.style.height = '608px' //`${printHeight}px`;
+  
+      return originalDimensions; // Return the original dimensions for restoration
+    };
+
+    const restoreViewerAfterPrint = (originalDimensions:any) => {
+     
+      // Restore the original canvas dimensions
+      canvas.width = originalDimensions.width;
+      canvas.height = originalDimensions.height;
+  
+      // Restore the original CSS dimensions
+      canvas.style.width = originalDimensions.styleWidth;
+      canvas.style.height = originalDimensions.styleHeight;
+    };
+
+    // Adjust the canvas for printing
+   const originalDimensions_save = adjustViewerForPrint();
+
+   // Trigger the print dialog
+   window.print();
+
+   // Restore the canvas after printing
+   restoreViewerAfterPrint(originalDimensions_save);
+  
+  }
+
+
+   
     togglePopup(); // Close the popup after printing
   };
 
@@ -523,7 +582,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
           !IS_IOS && (
             <div
               className="bubble_buttons"
-              onClick={() => window.print()}
+              onClick={() => handlePrint()}
             >
               <div className="bubble_button_button">
                 <ExplodeIcon>
