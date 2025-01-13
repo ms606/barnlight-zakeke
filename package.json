@@ -27,7 +27,7 @@
     "react-spring": "^9.7.3",
     "styled-components": "^5.3.10",
     "typescript": "^5.0.4",
-    "zakeke-configurator-react": "0.1.256",
+    "zakeke-configurator-react": "0.1.300",
     "zustand": "^4.4.3"
   },
   "scripts": {
