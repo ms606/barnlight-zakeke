@@ -122,6 +122,9 @@ html {
   background-color: #f4f4f4;
 }
 
+.sup {
+  font-size: 10px;
+}
 /* Media Query for Mobile View */
 @media (min-width: 768px) {
   .app {

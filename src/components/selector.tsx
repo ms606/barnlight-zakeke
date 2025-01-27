@@ -92,8 +92,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
     productName,
   } = useZakeke();
 
-  // console.log(groups, refViewer, "groups");
-
   const { showDialog, closeDialog } = useDialogManager();
 
   const idsToRemove = [-1];
@@ -106,8 +104,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
   // if (product?.name != PRODUCT_PANT) groups1.push(customizeGroup);
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
-  //console.log(groups,'groups');
 
   // Keep saved the ID and not the refereces, they will change on each update
   const [isRecapPanelOpened, setRecapPanelOpened] = useState(
@@ -146,6 +142,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
+  const [resetCameraID, setResetCameraID] = useState<string | null>(null);
   const viewFooter = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (sellerSettings && sellerSettings?.isCompositionRecapVisibleFromStart)
@@ -287,13 +284,18 @@ const Selector: FunctionComponent<SelectorProps> = ({
         null
         : null
     );
+    if (groups && !selectedAttribute) {
+      setResetCameraID(groups[0]?.cameraLocationId)
+    }
+    
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAttribute, attributes]);
 
   useEffect(() => {
     if (selectedGroup) {
       const camera = selectedGroup.cameraLocationId;
-
+  
       if (camera) setCamera(camera);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -351,7 +353,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
       styleHeight: canvas.style.height,
     };
 
-    console.log(window.innerWidth,window.innerHeight);
     
     const adjustViewerForPrint = () => {
   
@@ -500,7 +501,10 @@ const Selector: FunctionComponent<SelectorProps> = ({
           !IS_IOS && (
             <div
               className="bubble_buttons"
-              onClick={reset}
+              // onClick={reset}
+              onClick={()=> 
+                {if(resetCameraID) setCamera(resetCameraID)}
+              }
             >
               <div className="bubble_button_button">
                 <ExplodeIcon>
@@ -758,7 +762,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                             paddingBottom: '.5em',
                             justifyContent: "center",
                             alignItems: "center",
-                            fontSize: "13px",
+                            fontSize: "14px",
                             fontWeight: '600',
                             lineHeight: "16px",
                             textTransform: "uppercase",
@@ -772,6 +776,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
                           {step.options.some((option) => option.selected)
                             ? step.options.find((option) => option.selected)?.name
                             : "Select Option"}
+
+                            {/* {console.log(step.name,  step.id, selectedStepId, selectedOptionName ,'option')} */}
                           <div
                             // className="triangle"
                             style={{
@@ -780,7 +786,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                               alignItems: "center",
                             }}
                           >
-                            {closeAttribute ? (
+                            {closeAttribute && (step.id === selectedStepId) ? (
                               // Arrow SVG for "open" state
                               <svg height="12px" width="12px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" fill="#000000">
                                 <g transform="rotate(270, 62.652, 62.652)">

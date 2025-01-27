@@ -17,7 +17,7 @@ export const ListItem = styled.div<{ selected?: boolean }>`
      align-items: center;
     //  padding: 8px 1px 1px 1px;
     //  background: #fff;
-     border:2px solid #cccc;
+    //  border:2px solid #cccc;
      border-radius: 16px;
     //  margin-top:6px;
     //  margin-bottom: 12px;
@@ -39,7 +39,7 @@ export const ListItemImage = styled.img`
       position: relative;
       border-radius: 9px;
         @media screen and (max-width: 1013px) {
-          width: 52px;
-          height: 52px;
+          width: 60px;
+          height: 60px;
         }
     `
