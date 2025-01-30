@@ -510,16 +510,16 @@ const Selector: FunctionComponent<SelectorProps> = ({
                   <svg
                     version="1.0"
                     xmlns="http://www.w3.org/2000/svg"
-                    width="150.000000pt"
-                    height="150.000000pt"
+                    width="200.000000pt"
+                    height="200.000000pt"
                     viewBox="0 0 150.000000 150.000000"
                     preserveAspectRatio="xMidYMid meet"
                   >
                     <g
                       transform="translate(0.000000,150.000000) scale(0.100000,-0.100000)"
-                      fill="#9a9898"
-                      stroke="#000000"
-                      stroke-width="12"
+                      fill="#9b979a"
+                      stroke="#9b979a"
+                      stroke-width="50"
                     >
                       <path
                         d="M705 1060 c-98 -16 -195 -62 -195 -92 0 -28 23 -31 61 -9 97 56 239
@@ -625,7 +625,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
               <div className="bubble_button_button">
                 <ExplodeIcon>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path fill="none" stroke="#9B979A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 15 L3 19 L21 19 L21 15 M12 3 L12 15 M6 9 L12 3 L18 9" />
+                    <path fill="none" stroke="#9b979a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 15 L3 19 L21 19 L21 15 M12 3 L12 15 M6 9 L12 3 L18 9" />
                   </svg>
                 </ExplodeIcon>
               </div>
@@ -634,7 +634,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
             </div>
           )
         }
-      </div>
+      </div >
 
 
       <div
@@ -709,7 +709,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                     "SHADE FINISH TYPE",
                     "SHADE FINISH",
                     "MOUNTING FINISH TYPE",
-                    "MOUNTING FINISH", 
+                    "MOUNTING FINISH",
                     "LENS STYLE"
                   ];
                   const isNoBorderStep = noBorderSteps.includes(normalizedStepName);
