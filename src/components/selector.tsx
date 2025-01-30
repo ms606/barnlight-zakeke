@@ -625,7 +625,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
               <div className="bubble_button_button">
                 <ExplodeIcon>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path fill="none" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 15 L3 19 L21 19 L21 15 M12 3 L12 15 M6 9 L12 3 L18 9" />
+                    <path fill="none" stroke="#9B979A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 15 L3 19 L21 19 L21 15 M12 3 L12 15 M6 9 L12 3 L18 9" />
                   </svg>
                 </ExplodeIcon>
               </div>
