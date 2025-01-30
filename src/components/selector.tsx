@@ -45,7 +45,7 @@ import { PRODUCT_FULL_SUIT, scrollDownOnClick } from "../Helpers";
 
 const Container = styled.div`
   height: auto;
-  overflow: auto;
+  // overflow: auto;
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
@@ -54,7 +54,7 @@ const Container = styled.div`
 
   @media (max-width: 768px) {
     height: auto;
-    overflow: auto;
+    // overflow: auto;
   }
 `;
 
@@ -287,15 +287,15 @@ const Selector: FunctionComponent<SelectorProps> = ({
     if (groups && !selectedAttribute) {
       setResetCameraID(groups[0]?.cameraLocationId)
     }
-    
-    
+
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAttribute, attributes]);
 
   useEffect(() => {
     if (selectedGroup) {
       const camera = selectedGroup.cameraLocationId;
-  
+
       if (camera) setCamera(camera);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -339,63 +339,63 @@ const Selector: FunctionComponent<SelectorProps> = ({
   const canvas = document.querySelector("canvas");
 
   const handlePrint = () => {
-    
+
     const canvas = document.querySelector("canvas");
     // const context = canvas?.getContext("2d");
 
     if (canvas) {
 
-    // Save the original dimensions
-    const originalDimensions = {
-      width: canvas.width,
-      height: canvas.height,
-      styleWidth: canvas.style.width,
-      styleHeight: canvas.style.height,
-    };
-
-    
-    const adjustViewerForPrint = () => {
-  
-      // Set the canvas dimensions to fill the page
-      // const printWidth = window.innerWidth;
-      // const printHeight = window.innerHeight;
-  
-      // // Adjust canvas rendering dimensions
-      // canvas.width = printWidth;
-      // canvas.height = printHeight;
-      // console.log(canvas.width,canvas.height,'canvas.height');
-      
-      // Adjust canvas CSS dimensions
-      canvas.style.width = '829px' //`${printWidth}px`;
-      canvas.style.height = '608px' //`${printHeight}px`;
-  
-      return originalDimensions; // Return the original dimensions for restoration
-    };
-
-    const restoreViewerAfterPrint = (originalDimensions:any) => {
-     
-      // Restore the original canvas dimensions
-      canvas.width = originalDimensions.width;
-      canvas.height = originalDimensions.height;
-  
-      // Restore the original CSS dimensions
-      canvas.style.width = originalDimensions.styleWidth;
-      canvas.style.height = originalDimensions.styleHeight;
-    };
-
-    // Adjust the canvas for printing
-   const originalDimensions_save = adjustViewerForPrint();
-
-   // Trigger the print dialog
-   window.print();
-
-   // Restore the canvas after printing
-   restoreViewerAfterPrint(originalDimensions_save);
-  
-  }
+      // Save the original dimensions
+      const originalDimensions = {
+        width: canvas.width,
+        height: canvas.height,
+        styleWidth: canvas.style.width,
+        styleHeight: canvas.style.height,
+      };
 
 
-   
+      const adjustViewerForPrint = () => {
+
+        // Set the canvas dimensions to fill the page
+        // const printWidth = window.innerWidth;
+        // const printHeight = window.innerHeight;
+
+        // // Adjust canvas rendering dimensions
+        // canvas.width = printWidth;
+        // canvas.height = printHeight;
+        // console.log(canvas.width,canvas.height,'canvas.height');
+
+        // Adjust canvas CSS dimensions
+        canvas.style.width = '829px' //`${printWidth}px`;
+        canvas.style.height = '608px' //`${printHeight}px`;
+
+        return originalDimensions; // Return the original dimensions for restoration
+      };
+
+      const restoreViewerAfterPrint = (originalDimensions: any) => {
+
+        // Restore the original canvas dimensions
+        canvas.width = originalDimensions.width;
+        canvas.height = originalDimensions.height;
+
+        // Restore the original CSS dimensions
+        canvas.style.width = originalDimensions.styleWidth;
+        canvas.style.height = originalDimensions.styleHeight;
+      };
+
+      // Adjust the canvas for printing
+      const originalDimensions_save = adjustViewerForPrint();
+
+      // Trigger the print dialog
+      window.print();
+
+      // Restore the canvas after printing
+      restoreViewerAfterPrint(originalDimensions_save);
+
+    }
+
+
+
     togglePopup(); // Close the popup after printing
   };
 
@@ -435,7 +435,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
               {sellerSettings?.canUndoRedo && (
                 <button key={'reset'} onClick={reset}>Reset View</button>
               )}
-              <button
+              {/* <button
                 onClick={() => {
                   const element = refViewer.current;
 
@@ -458,7 +458,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                 }}
               >
                 Full Screen
-              </button>
+              </button> */}
               <button onClick={handlePrint}>Print Your Design</button>
               {/* {!isEditorMode && sellerSettings && sellerSettings.shareType !== 0 && ( */}
               <button onClick={handleShareClick}>
@@ -502,8 +502,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
             <div
               className="bubble_buttons"
               // onClick={reset}
-              onClick={()=> 
-                {if(resetCameraID) setCamera(resetCameraID)}
+              onClick={() => { if (resetCameraID) setCamera(resetCameraID) }
               }
             >
               <div className="bubble_button_button">
@@ -520,23 +519,22 @@ const Selector: FunctionComponent<SelectorProps> = ({
                       transform="translate(0.000000,150.000000) scale(0.100000,-0.100000)"
                       fill="#9a9898"
                       stroke="#000000"
-                      stroke-width="3"
+                      stroke-width="12"
                     >
                       <path
                         d="M705 1060 c-98 -16 -195 -62 -195 -92 0 -28 23 -31 61 -9 97 56 239
-65 351 22 73 -28 156 -103 193 -174 l28 -53 -28 -53 c-38 -70 -121 -144 -193
--172 -45 -19 -77 -23 -152 -23 -127 0 -191 24 -274 106 -65 63 -65 61 -11 93
-14 9 4 19 -65 68 -45 32 -85 55 -91 52 -11 -7 -12 -192 -1 -199 4 -2 18 2 32
-9 23 12 28 10 86 -50 224 -230 603 -165 733 126 18 39 18 46 5 79 -76 183
--283 300 -479 270z"
+      65 351 22 73 -28 156 -103 193 -174 l28 -53 -28 -53 c-38 -70 -121 -144 -193
+      -172 -45 -19 -77 -23 -152 -23 -127 0 -191 24 -274 106 -65 63 -65 61 -11 93
+      14 9 4 19 -65 68 -45 32 -85 55 -91 52 -11 -7 -12 -192 -1 -199 4 -2 18 2 32
+      9 23 12 28 10 86 -50 224 -230 603 -165 733 126 18 39 18 46 5 79 -76 183
+      -283 300 -479 270z"
                       />
                       <path
                         d="M709 821 c-21 -22 -29 -39 -29 -66 0 -48 44 -95 90 -95 46 0 90 47
-90 95 0 27 -8 44 -29 66 -40 39 -82 39 -122 0z"
+      90 95 0 27 -8 44 -29 66 -40 39 -82 39 -122 0z"
                       />
                     </g>
                   </svg>
-
                 </ExplodeIcon>
               </div>
 
@@ -626,24 +624,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
             >
               <div className="bubble_button_button">
                 <ExplodeIcon>
-                  <svg
-                    width="146px"
-                    height="146px"
-                    viewBox="0 0 24 24"
-                    fill="#ffff"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                      <path
-                        d="M20 13V18C20 19.1046 19.1046 20 18 20H6C4.89543 20 4 19.1046 4 18V13M16 8L12 4M12 4L8 8M12 4V16"
-                        stroke="#9a9898"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </g>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path fill="none" stroke="#808080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 15 L3 19 L21 19 L21 15 M12 3 L12 15 M6 9 L12 3 L18 9" />
                   </svg>
                 </ExplodeIcon>
               </div>
@@ -671,9 +653,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
           }}
         >
-          <div style={{ color: '#322332', gap: '2px', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ color: '#322332', gap: '2px', display: 'flex', flexDirection: 'column', marginTop: '4px' }}>
             <h1 style={{ fontFamily: "Crimson", fontSize: '38px', fontWeight: 400, margin: '2px' }}>
-              The Original<sup>™</sup>
+              The Original<sup style={{ fontSize: '22px', fontWeight: 700, fontFamily: 'Open Sans', position: 'absolute', top: '1px' }}>™</sup>
             </h1>
             <h2 style={{ fontFamily: 'Open Sans', fontSize: '18px', fontWeight: 600, }}>
               Warehouse Gooseneck Light
@@ -694,6 +676,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
                 selectGroup(group.id);
               };
 
+              // Log the group data
+              console.log("Group:", group);
+
               return (
                 <div
                   className={`menu_item ${group.id === selectedGroupId ? "selected" : ""
@@ -711,16 +696,25 @@ const Selector: FunctionComponent<SelectorProps> = ({
           </div>
           <br />
           {/* NEW CODE */}
-
-          <div className="" style={{ background: 'white', padding: '20px 18px', }}>
+          <div className="" style={{ background: 'white', padding: '20px 18px' }}>
             {selectedGroup && (
               <>
                 {selectedGroup.attributes.map((step) => {
-                  if (step.enabled == false) {
-                    return <></>;
-                  }
+                  if (!step.enabled) return null;
 
-                  // console.log(step, "stepppp");
+                  const normalizedStepName = String(step.name).trim().toUpperCase();
+                  const isSpecialStep = ["SOURCE", "BRIGHTNESS", "SHADE SIZE"].includes(normalizedStepName);
+                  const noBorderSteps = [
+                    "COLOR TEMPERATURE",
+                    "SHADE FINISH TYPE",
+                    "SHADE FINISH",
+                    "MOUNTING FINISH TYPE",
+                    "MOUNTING FINISH", 
+                    "LENS STYLE"
+                  ];
+                  const isNoBorderStep = noBorderSteps.includes(normalizedStepName);
+                  const isShadeSize = normalizedStepName === "SHADE SIZE";
+
                   return (
                     <div
                       className="menu_choice_step_step"
@@ -730,23 +724,17 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         selectStep(step.id);
                         selectOptionName("");
                       }}
-
                     >
                       <div
                         className="menu_choice_step_title"
                         style={{
                           display: "flex",
-                          borderBottom:
-                            selectedStepId != step.id || !closeAttribute
-                              ? "1px solid var(--template-primary--400)"
-                              : "",
+                          borderBottom: selectedStepId !== step.id || !closeAttribute ? "1px solid var(--template-primary--400)" : "",
                         }}
                       >
                         <div
                           className="menu_choice_step_description"
-                          onClick={() => {
-                            setCloseAttribute(true);
-                          }}
+                          onClick={() => setCloseAttribute(true)}
                           style={{
                             paddingBottom: ".5em",
                             marginRight: "auto",
@@ -767,35 +755,23 @@ const Selector: FunctionComponent<SelectorProps> = ({
                             lineHeight: "16px",
                             textTransform: "uppercase",
                             color: "#b4b5b8",
-                            cursor: "pointer", // Add cursor pointer for better UX
+                            cursor: "pointer",
                           }}
-                          onClick={() => {
-                            setCloseAttribute(!closeAttribute);
-                          }}
+                          onClick={() => setCloseAttribute(!closeAttribute)}
                         >
                           {step.options.some((option) => option.selected)
                             ? step.options.find((option) => option.selected)?.name
                             : "Select Option"}
 
-                            {/* {console.log(step.name,  step.id, selectedStepId, selectedOptionName ,'option')} */}
-                          <div
-                            // className="triangle"
-                            style={{
-                              marginLeft: "8px", // Add space between text and arrow
-                              display: "flex",
-                              alignItems: "center",
-                            }}
-                          >
-                            {closeAttribute && (step.id === selectedStepId) ? (
-                              // Arrow SVG for "open" state
-                              <svg height="12px" width="12px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" fill="#000000">
+                          <div style={{ marginLeft: "8px", display: "flex", alignItems: "center" }}>
+                            {closeAttribute && step.id === selectedStepId ? (
+                              <svg height="12px" width="12px" viewBox="0 0 125.304 125.304" fill="#000000">
                                 <g transform="rotate(270, 62.652, 62.652)">
                                   <polygon points="21.409,62.652 103.895,125.304 103.895,0"></polygon>
                                 </g>
                               </svg>
                             ) : (
-                              // Arrow SVG for "closed" state
-                              <svg height="12px" width="12px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 125.304 125.304" fill="#000000">
+                              <svg height="12px" width="12px" viewBox="0 0 125.304 125.304" fill="#000000">
                                 <g transform="rotate(180, 62.652, 62.652)">
                                   <polygon points="21.409,62.652 103.895,125.304 103.895,0"></polygon>
                                 </g>
@@ -805,16 +781,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         </div>
                       </div>
 
-                      {/* {console.log(selectedStepId,step,'ddfdfdfsfds')} */}
-                      <div
-                        className="menu_options"
-                      >
+                      <div className="menu_options">
                         {closeAttribute && step.id === selectedStepId && (
                           <>
-                            {Array.from(
-                              new Map(step.options.map((attribute) => [attribute.id, attribute])).values()
-                            )
-                              .filter((attribute) => attribute.enabled !== false) // Only include enabled attributes
+                            {Array.from(new Map(step.options.map((attribute) => [attribute.id, attribute])).values())
+                              .filter((attribute) => attribute.enabled !== false)
                               .map((attribute) => (
                                 <ListItem
                                   key={attribute.id}
@@ -824,15 +795,64 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                   }}
                                   selected={attribute.selected}
                                   style={{
-                                    backgroundColor: attribute.selected ? '#f4f4f4' : 'none',
-                                    // padding: '5px',
-
+                                    backgroundColor: attribute.selected ? 'rgb(121 136 156)' : 'white',
+                                    color: attribute.selected ? 'white' : 'inherit',
+                                    borderRadius: '14px',
+                                    border: isNoBorderStep ? "none" : (attribute.selected ? '2px solid rgb(121 136 156)' : '2px solid lightGray'),
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    padding: '2px',
+                                    fontWeight: isShadeSize ? '700' : 'auto',
+                                    fontSize: isShadeSize ? '20px' : 'auto',
+                                    height: isShadeSize ? '85px' : 'auto',
+                                    width: isShadeSize ? '85px' : 'auto',
+                                    textAlign: isShadeSize ? 'center' : 'inherit',
                                   }}
                                 >
-                                  <div className="menu_choice_option_image_container">
-                                    {attribute.imageUrl && <ListItemImage src={attribute.imageUrl} />}
-                                  </div>
-                                  {/* <div className="menu_choice_option_description">{attribute.name}</div> */}
+                                  {isSpecialStep ? (
+                                    <div className="menu_choice_option_description"
+                                      style={{
+                                        borderRadius: '14px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        padding: '8px 18px',
+                                        textAlign: isShadeSize ? 'center' : 'inherit', // Ensure text is centered for SHADE SIZE
+                                      }}
+                                    >
+                                      {attribute.name}
+                                    </div>
+                                  ) : (
+                                    <div className="menu_choice_option_image_container">
+                                      {attribute.imageUrl && <ListItemImage src={attribute.imageUrl} />}
+                                    </div>
+                                  )}
+
+                                  {!isSpecialStep && attribute.selected && (
+                                    <div
+                                      className="backgroundSvg"
+                                      style={{
+                                        position: 'absolute',
+                                        borderRadius: '8px',
+                                        backgroundColor: 'rgb(121 136 156)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                      }}
+                                    >
+                                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                                        <path
+                                          d="M20 6L9 17L4 12"
+                                          stroke="white"
+                                          strokeWidth="2"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        />
+                                      </svg>
+                                    </div>
+                                  )}
                                 </ListItem>
                               ))}
                           </>
@@ -844,7 +864,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
               </>
             )}
           </div>
-
           {/* {selectedGroup?.id === -2 && (
             <div>
               <div
@@ -861,7 +880,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
             </div>
           )} */}
 
-          <div className="" style={{marginTop:'24px'}}>
+          <div className="" style={{ marginTop: '24px' }}>
             {screenWidth < 500 && <MenuFooter viewFooter={viewFooter} />}
           </div>
 

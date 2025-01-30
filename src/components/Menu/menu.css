@@ -3,7 +3,7 @@
     flex-flow: column;
     position: relative;
     max-height: calc(100% - 3px);
-    height: calc(100vh - 72px);
+    height: calc(90vh - 72px);
     color: var(--template-primary--600);
 }
 
@@ -25,10 +25,10 @@
     font-family: 'Open Sans';
     font-size: 16px;
     font-weight: 600;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 1px;
     cursor: pointer;
-    
+
 }
 
 .selected {
@@ -55,12 +55,12 @@
     padding: 12px 7px;
     font-family: 'Open Sans';
     font-style: normal;
-   
+
     font-weight: 400;
     font-size: 20px;
     color: var(--template-primary--900);
     cursor: pointer;
-} 
+}
 
 .menu_choice_step_description {
     margin-right: auto;
@@ -73,10 +73,11 @@
 }
 
 .menu_light_bold {
-    font-weight: 500;  
+    font-weight: 500;
     color: var(--template-primary--800);
 
 }
+
 .menu_choice_attribute_title {
     display: flex;
     flex-direction: row;
@@ -91,8 +92,8 @@
 }
 
 .menu_choice_option_image_container {
-    width: 92px;
-    height: 92px;
+    /* width: 92px;
+    height: 92px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -104,11 +105,17 @@
     font-size: 16px;
     line-height: 1.4em;
     text-align: center;
-    margin-top: 8px;
-    color: var(--template-primary--600);
+    /* margin-top: 8px; */
+    /* color: var(--template-primary--600); */
 }
 
-@media screen and (max-width: 996px){
+
+.backgroundSvg {
+    width: 85px;
+    height: 85px
+}
+
+@media screen and (max-width: 996px) {
     .menu_choice_option_image_container {
         width: 52px;
         height: 52px;
@@ -119,14 +126,23 @@
 
 @media screen and (max-width: 842px) {
     .menu_choice_option_image_container {
-    width: 50px;
-    height: 50px;
+        width: 50px;
+        height: 50px;
     }
-  }
+}
 
 
-@media screen and (max-width: 786px){
+@media screen and (max-width: 786px) {
+    .backgroundSvg {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+
+@media screen and (max-width: 786px) {
     .menu {
+        height: auto;
         left: 2px;
         width: 98vw;
     }
@@ -136,23 +152,23 @@
         gap: 8px;
     }
 
-    .menu_choice_steps{
+    .menu_choice_steps {
         height: '';
         position: relative;
         bottom: 4%;
         /* bottom: 27%; */
-    } 
+    }
 
     .menu_choice_option_image_container {
         width: 60px;
         height: 60px;
     }
-    
+
     .menu_choice_option_description {
         font-size: 13px;
     }
 
-    .menu_choice_attribute_selected_option{
+    .menu_choice_attribute_selected_option {
         font-size: 13px;
     }
 

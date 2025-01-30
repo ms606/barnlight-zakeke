@@ -20,7 +20,7 @@
 }
 
 .ff_viewer_zakeke {
-    background-color: #f4f4f4;
+    background-color: #f4f4f4 !important;
     /* background-color: var(--template-background-color); */
     position: absolute;
     width: 100%;
