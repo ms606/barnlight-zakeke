@@ -144,6 +144,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
   const [resetCameraID, setResetCameraID] = useState<string | null>(null);
   const viewFooter = useRef<HTMLDivElement | null>(null);
+
+
   useEffect(() => {
     if (sellerSettings && sellerSettings?.isCompositionRecapVisibleFromStart)
       setRecapPanelOpened(sellerSettings.isCompositionRecapVisibleFromStart);
@@ -677,7 +679,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
               };
 
               // Log the group data
-              console.log("Group:", group);
+              // console.log("Group:", group);
 
               return (
                 <div
@@ -781,7 +783,16 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         </div>
                       </div>
 
-                      <div className="menu_options">
+                      <div className="menu_options"
+                        style={{
+                          maxHeight: closeAttribute && step.id === selectedStepId ? "500px" : "0px",
+                          opacity: closeAttribute && step.id === selectedStepId ? 1 : 0,
+                          transform: closeAttribute && step.id === selectedStepId ? "translateY(0)" : "translateY(-10px)",
+                          overflow: "hidden",
+                          transition: "all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)",
+                          transitionDelay: closeAttribute && step.id === selectedStepId ? "0.2s" : "0s"
+                        }}
+                      >
                         {closeAttribute && step.id === selectedStepId && (
                           <>
                             {Array.from(new Map(step.options.map((attribute) => [attribute.id, attribute])).values())
@@ -795,7 +806,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                   }}
                                   selected={attribute.selected}
                                   style={{
-                                    backgroundColor: attribute.selected ? 'rgb(121 136 156)' : 'white',
+                                    backgroundColor: attribute.selected ? '#7f8c9d' : 'white',
                                     color: attribute.selected ? 'white' : 'inherit',
                                     borderRadius: '14px',
                                     border: isNoBorderStep ? "none" : (attribute.selected ? '2px solid rgb(121 136 156)' : '2px solid lightGray'),
@@ -804,8 +815,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                     justifyContent: 'center',
                                     position: 'relative',
                                     padding: '2px',
-                                    fontWeight: isShadeSize ? '700' : 'auto',
-                                    fontSize: isShadeSize ? '20px' : 'auto',
+                                    fontWeight: isShadeSize ? '600' : '600',
+                                    fontSize: isShadeSize ? '26px !important' : 'auto',
                                     height: isShadeSize ? '85px' : 'auto',
                                     width: isShadeSize ? '85px' : 'auto',
                                     textAlign: isShadeSize ? 'center' : 'inherit',
@@ -819,10 +830,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         padding: '8px 18px',
+                                        fontSize: isShadeSize ? '26px' : '15px', // Ens
                                         textAlign: isShadeSize ? 'center' : 'inherit', // Ensure text is centered for SHADE SIZE
                                       }}
                                     >
-                                      {attribute.name}
+                                      {isShadeSize ? attribute.name.replace(/[a-zA-Z]/g, '') : attribute.name}
                                     </div>
                                   ) : (
                                     <div className="menu_choice_option_image_container">
