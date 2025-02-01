@@ -712,7 +712,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
                     "SHADE FINISH",
                     "MOUNTING FINISH TYPE",
                     "MOUNTING FINISH",
-                    "LENS STYLE"
+                    "LENS STYLE",
+                    "ACCESSORY FINISH TYPE",
+                    "ACCESSORY FINISH",
                   ];
                   const isNoBorderStep = noBorderSteps.includes(normalizedStepName);
                   const isShadeSize = normalizedStepName === "SHADE SIZE";
