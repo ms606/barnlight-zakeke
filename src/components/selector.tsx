@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useState,
   useRef,
+  useCallback,
 } from "react";
 import styled from "styled-components";
 import { useZakeke } from "zakeke-configurator-react";
@@ -164,6 +165,46 @@ const Selector: FunctionComponent<SelectorProps> = ({
     [selectedGroup, selectedStep]
   );
 
+  // const handleGroupClick = useCallback((group: any) => {
+  //   selectGroup(group.id);
+  // }, [selectGroup]);
+
+  const handleStepClick = useCallback((step: any) => {
+    selectStepName(step.name);
+    selectStep(step.id);
+    selectOptionName("");
+  }, [selectStepName, selectStep, selectOptionName]);
+
+  const handleOptionClick = useCallback((attribute: any) => {
+    selectOption(attribute.id);
+    selectOptionName(attribute.name);
+  }, [selectOption, selectOptionName]);
+
+  const filteredAttributes = useMemo(() => {
+    if (!selectedGroup) return [];
+    return selectedGroup.attributes.filter((step) => {
+      if (!step.enabled) return false;
+
+      const mountingAccessoryStep = selectedGroup?.attributes.find(
+        (attr) => attr.name.trim().toUpperCase() === "MOUNTING ACCESSORY"
+      );
+
+      const isMountingAccessoryNone = mountingAccessoryStep?.options?.some(
+        (option) => option.selected && option.name.trim().toUpperCase() === "NONE"
+      );
+
+      if (
+        isMountingAccessoryNone &&
+        ["MOUNTING ACCESSORY FINISH TYPE", "MOUNTING ACCESSORY FINISH"].includes(
+          step.name.trim().toUpperCase()
+        )
+      ) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [selectedGroup]);
   const handleArClick = async (arOnFlyUrl: string) => {
     if (IS_ANDROID || IS_IOS) {
       setIsLoading(true);
@@ -396,10 +437,10 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
     }
 
-
-
     togglePopup(); // Close the popup after printing
   };
+
+
 
   // if (isLoading)
   // return <Loader visible={isSceneLoading} />;
@@ -701,9 +742,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
           <div className="" style={{ background: 'white', padding: '20px 18px' }}>
             {selectedGroup && (
               <>
-                {selectedGroup.attributes.map((step) => {
-                  if (!step.enabled) return null;
-
+                {filteredAttributes.map((step) => {
                   const normalizedStepName = String(step.name).trim().toUpperCase();
                   const isSpecialStep = ["SOURCE", "BRIGHTNESS", "SHADE SIZE"].includes(normalizedStepName);
                   const noBorderSteps = [
@@ -712,9 +751,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
                     "SHADE FINISH",
                     "MOUNTING FINISH TYPE",
                     "MOUNTING FINISH",
+                    "MOUNTING ACCESSORY FINISH TYPE",
+                    "MOUNTING ACCESSORY FINISH",
                     "LENS STYLE",
-                    "ACCESSORY FINISH TYPE",
-                    "ACCESSORY FINISH",
+                    "SHADE ACCESSORY FINISH TYPE",
+                    "SHADE ACCESSORY FINISH",
                   ];
                   const isNoBorderStep = noBorderSteps.includes(normalizedStepName);
                   const isShadeSize = normalizedStepName === "SHADE SIZE";
@@ -723,11 +764,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                     <div
                       className="menu_choice_step_step"
                       key={step.id}
-                      onClick={() => {
-                        selectStepName(step.name);
-                        selectStep(step.id);
-                        selectOptionName("");
-                      }}
+                      onClick={() => handleStepClick(step)}
                     >
                       <div
                         className="menu_choice_step_title"
@@ -802,10 +839,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                               .map((attribute) => (
                                 <ListItem
                                   key={attribute.id}
-                                  onClick={() => {
-                                    selectOption(attribute.id);
-                                    selectOptionName(attribute.name);
-                                  }}
+                                  onClick={() => handleOptionClick(attribute)}
                                   selected={attribute.selected}
                                   style={{
                                     backgroundColor: attribute.selected ? '#7f8c9d' : 'white',
@@ -832,8 +866,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                         alignItems: 'center',
                                         justifyContent: 'center',
                                         padding: '8px 18px',
-                                        fontSize: isShadeSize ? '26px' : '15px', // Ens
-                                        textAlign: isShadeSize ? 'center' : 'inherit', // Ensure text is centered for SHADE SIZE
+                                        fontSize: isShadeSize ? '26px' : '15px',
+                                        textAlign: isShadeSize ? 'center' : 'inherit',
                                       }}
                                     >
                                       {isShadeSize ? attribute.name.replace(/[a-zA-Z]/g, '') : attribute.name}
