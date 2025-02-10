@@ -25,7 +25,7 @@ import ExplodeSolid from "../assets/icons/expand-arrows-alt-solid.js";
 import { ExplodeIconL } from "../assets/icons/ExplodeIcon";
 import Reset from "../assets/icons/reset.jpg";
 import PrintIcon from "../assets/icons/print.jpg";
-import ShareIcon from "../assets/icons/share.jpg";
+import ShareIcon from "../assets/icons/share.svg";
 import { Icon } from "./Atomic";
 import MenuFooter from "./Footer/MenuFooter";
 import Designer from "./Layout/Designer";
@@ -551,30 +551,23 @@ const Selector: FunctionComponent<SelectorProps> = ({
               <div className="bubble_button_button">
                 <ExplodeIcon>
                   <svg
-                    version="1.0"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="200.000000pt"
-                    height="200.000000pt"
-                    viewBox="0 0 150.000000 150.000000"
+                    width="220"
+                    height="220"
+                    viewBox="16 16 110 110"
                     preserveAspectRatio="xMidYMid meet"
+                    stroke="#838383"
+                    stroke-width="24"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   >
-                    <g
-                      transform="translate(0.000000,150.000000) scale(0.100000,-0.100000)"
-                      fill="#9b979a"
-                      stroke="#9b979a"
-                      stroke-width="50"
-                    >
+                    <g transform="translate(0, 150) scale(0.1, -0.1)">
                       <path
-                        d="M705 1060 c-98 -16 -195 -62 -195 -92 0 -28 23 -31 61 -9 97 56 239
-      65 351 22 73 -28 156 -103 193 -174 l28 -53 -28 -53 c-38 -70 -121 -144 -193
-      -172 -45 -19 -77 -23 -152 -23 -127 0 -191 24 -274 106 -65 63 -65 61 -11 93
-      14 9 4 19 -65 68 -45 32 -85 55 -91 52 -11 -7 -12 -192 -1 -199 4 -2 18 2 32
-      9 23 12 28 10 86 -50 224 -230 603 -165 733 126 18 39 18 46 5 79 -76 183
-      -283 300 -479 270z"
+                        d="M705 1060 c-98 -16 -195 -62 -195 -92 0 -28 23 -31 61 -9 97 56 239 65 351 22 73 -28 156 -103 193 -174 l28 -53 -28 -53 c-38 -70 -121 -144 -193 -172 -45 -19 -77 -23 -152 -23 -127 0 -191 24 -274 106 -65 63 -65 61 -11 93 14 9 4 19 -65 68 -45 32 -85 55 -91 52 -11 -7 -12 -192 -1 -199 4 -2 18 2 32 9 23 12 28 10 86 -50 224 -230 603 -165 733 126 18 39 18 46 5 79 -76 183 -283 300 -479 270z"
+                        fill="#838383"
                       />
                       <path
-                        d="M709 821 c-21 -22 -29 -39 -29 -66 0 -48 44 -95 90 -95 46 0 90 47
-      90 95 0 27 -8 44 -29 66 -40 39 -82 39 -122 0z"
+                        d="M709 821 c-21 -22 -29 -39 -29 -66 0 -48 44 -95 90 -95 46 0 90 47 90 95 0 27 -8 44 -29 66 -40 39 -82 39 -122 0z"
+                        fill="#838383"
                       />
                     </g>
                   </svg>
@@ -632,24 +625,15 @@ const Selector: FunctionComponent<SelectorProps> = ({
               <div className="bubble_button_button">
                 <ExplodeIcon>
                   <svg
-                    width="143px"
-                    height="143px"
-                    viewBox="0 0 48 48"
-                    version="1.1"
+                    viewBox="0 0 32 32"
                     xmlns="http://www.w3.org/2000/svg"
-                    // xmlns:xlink="http://www.w3.org/1999/xlink"
-                    fill="#9b979a"
-                    stroke="#9b979a"
+                    stroke="#838383"
+                    fill="#838383"
+                    stroke-width=".2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                   >
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                    <g id="SVGRepo_iconCarrier">
-                      <g id="ic_fluent_print_48_regular" fill="#9b979a" fill-rule="nonzero">
-                        <path
-                          d="M16.25,8 L31.75,8 C33.483,8 34.899,9.356 34.995,11.066 L35,11.25 L35,14 L36.75,14 C39.649,14 42,16.351 42,19.25 L42,32.75 C42,34.545 40.545,36 38.75,36 L35,36 L35,37.75 C35,39.545 33.545,41 31.75,41 L16.25,41 C14.455,41 13,39.545 13,37.75 L13,36 L9.25,36 C7.455,36 6,34.545 6,32.75 L6,19.25 C6,16.351 8.351,14 11.25,14 L13,14 L13,11.25 C13,9.517 14.356,8.101 16.066,8.005 L16.25,8 Z M31.75,28.5 L16.25,28.5 C15.836,28.5 15.5,28.836 15.5,29.25 L15.5,37.75 C15.5,38.164 15.836,38.5 16.25,38.5 L31.75,38.5 C32.164,38.5 32.5,38.164 32.5,37.75 L32.5,29.25 C32.5,28.836 32.164,28.5 31.75,28.5 Z M36.75,16.5 L11.25,16.5 C9.731,16.5 8.5,17.731 8.5,19.25 L8.5,32.75 C8.5,33.164 8.836,33.5 9.25,33.5 L13,33.5 L13,29.25 C13,27.455 14.455,26 16.25,26 L31.75,26 C33.545,26 35,27.455 35,29.25 L35,33.5 L38.75,33.5 C39.164,33.5 39.5,33.164 39.5,32.75 L39.5,19.25 C39.5,17.731 38.269,16.5 36.75,16.5 Z M31.75,10.5 L16.25,10.5 C15.87,10.5 15.557,10.782 15.507,11.148 L15.5,11.25 L15.5,14 L32.5,14 L32.5,11.25 C32.5,10.87 32.218,10.557 31.852,10.507 L31.75,10.5 Z"
-                        ></path>
-                      </g>
-                    </g>
+                    <path d="M28,9H25V3H7V9H4a2,2,0,0,0-2,2V21a2,2,0,0,0,2,2H7v6H25V23h3a2,2,0,0,0,2-2V11A2,2,0,0,0,28,9ZM9,5H23V9H9ZM23,27H9V17H23Zm5-6H25V15H7v6H4V11H28Z" fill="#838383" stroke="#838383" />
                   </svg>
                 </ExplodeIcon>
               </div>
@@ -666,11 +650,21 @@ const Selector: FunctionComponent<SelectorProps> = ({
               onClick={handleShareClick}
             >
               <div className="bubble_button_button">
-                <ExplodeIcon>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path fill="none" stroke="#9b979a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 15 L3 19 L21 19 L21 15 M12 3 L12 15 M6 9 L12 3 L18 9" />
-                  </svg>
-                </ExplodeIcon>
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  stroke="#838383"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 15v10a2 2 0 002 2h18a2 2 0 002-2v-10" />
+                  <path d="M16 20V3.5" />
+                  <path d="M22 9l-6-6-6 6" />
+                </svg>
               </div>
 
               <div className="bubble_button_text">Share</div>
@@ -824,7 +818,6 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
                       <div className="menu_options"
                         style={{
-                          maxHeight: closeAttribute && step.id === selectedStepId ? "500px" : "0px",
                           opacity: closeAttribute && step.id === selectedStepId ? 1 : 0,
                           transform: closeAttribute && step.id === selectedStepId ? "translateY(0)" : "translateY(-10px)",
                           overflow: "hidden",
@@ -844,13 +837,12 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                   style={{
                                     backgroundColor: attribute.selected ? '#7f8c9d' : 'white',
                                     color: attribute.selected ? 'white' : 'inherit',
-                                    borderRadius: '14px',
-                                    border: isNoBorderStep ? "none" : (attribute.selected ? '2px solid rgb(121 136 156)' : '2px solid lightGray'),
+                                    borderRadius: '11px',
+                                    border: (attribute.selected ? '2px solid rgb(121 136 156)' : '2.5px solid lightGray'),
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     position: 'relative',
-                                    padding: '2px',
                                     fontWeight: isShadeSize ? '600' : '600',
                                     fontSize: isShadeSize ? '26px !important' : 'auto',
                                     height: isShadeSize ? '85px' : 'auto',

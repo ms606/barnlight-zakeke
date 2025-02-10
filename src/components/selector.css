@@ -95,7 +95,8 @@ div {
     /* /border: 1px solid lightgray; */
     border-radius: 50px;
     padding: 9px;
-    box-shadow: 0 4px 8px var(--template-default-box-shadow-color);
+    background-color: #f2f2f2;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
     ;
 }
 
@@ -113,6 +114,7 @@ div {
 }
 
 .bubble_buttons {
+    cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;

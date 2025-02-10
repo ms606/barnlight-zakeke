@@ -48,7 +48,7 @@ const FooterMobileIcon = styled.div<{
 	display: inline-flex;
 	min-height: 38px;
 	border: none;
-	border-right: 3px #f4f4f4 solid;
+	border-right: 3px #f2f2f2 solid;
 	cursor: pointer;
 
 	svg {

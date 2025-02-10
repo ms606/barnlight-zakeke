@@ -24,7 +24,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #f4f4f4 !important;
+  background-color: #f2f2f2 !important;
 }
 
 html {
@@ -119,7 +119,7 @@ html {
 }
 
 .popup-buttons button:hover {
-  background-color: #f4f4f4;
+  background-color: #f2f2f2;
 }
 
 .sup {
