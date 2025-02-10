@@ -738,15 +738,13 @@ const Selector: FunctionComponent<SelectorProps> = ({
               <>
                 {filteredAttributes.map((step) => {
                   const normalizedStepName = String(step.name).trim().toUpperCase();
-                  const isSpecialStep = ["SOURCE", "BRIGHTNESS", "SHADE SIZE","SHADE FINISH TYPE","MOUNTING FINISH TYPE",].includes(normalizedStepName);
+                  const isSpecialStep = ["SOURCE", "BRIGHTNESS", "SHADE SIZE","SHADE FINISH TYPE","MOUNTING FINISH TYPE","MOUNTING ACCESSORY FINISH TYPE","SHADE ACCESSORY FINISH TYPE",].includes(normalizedStepName);
                   const noBorderSteps = [
                     "COLOR TEMPERATURE",                    
                     "SHADE FINISH",
                     "MOUNTING FINISH",
-                    "MOUNTING ACCESSORY FINISH TYPE",
                     "MOUNTING ACCESSORY FINISH",
                     "LENS STYLE",
-                    "SHADE ACCESSORY FINISH TYPE",
                     "SHADE ACCESSORY FINISH",
                   ];
                   const isNoBorderStep = noBorderSteps.includes(normalizedStepName);
