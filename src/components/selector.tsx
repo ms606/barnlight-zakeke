@@ -176,35 +176,94 @@ const Selector: FunctionComponent<SelectorProps> = ({
   }, [selectStepName, selectStep, selectOptionName]);
 
   const handleOptionClick = useCallback((attribute: any) => {
+    console.log(`Selected Attribute: ${attribute.name}`);
     selectOption(attribute.id);
     selectOptionName(attribute.name);
   }, [selectOption, selectOptionName]);
 
   const filteredAttributes = useMemo(() => {
-    if (!selectedGroup) return [];
+    if (!selectedGroup?.attributes) return [];
+
+    console.log("Selected Group:", selectedGroup);
+
+    // Handling SHADE group logic
+    if (selectedGroup.name === "SHADE") {
+      const lightSourceGroup = groups.find((group) => group.name === "LIGHT SOURCE");
+
+      if (!lightSourceGroup?.attributes) {
+        return selectedGroup.attributes.filter((step) => step.enabled);
+      }
+
+      const sourceStep = lightSourceGroup.attributes.find(
+        (step) => step.name?.trim().toUpperCase() === "SOURCE"
+      );
+
+      const isNauticalLEDSelected = sourceStep?.options?.some(
+        (option) => option.selected && option.name?.trim().toUpperCase() === "NAUTICAL LED"
+      );
+
+      return selectedGroup.attributes.filter((step) => {
+        if (!step.enabled) return false;
+        const stepName = step.name.trim().toUpperCase();
+
+        // Hide Shade Accessory and related attributes if Nautical LED is selected
+        if (
+          isNauticalLEDSelected &&
+          ["SHADE ACCESSORY", "SHADE ACCESSORY FINISH TYPE", "SHADE ACCESSORY FINISH"].includes(stepName)
+        ) {
+          console.log("Hiding Shade Accessory from SHADE group");
+          return false;
+        }
+
+        return true;
+      });
+    }
+
+    // Handling LIGHT SOURCE group logic
+    if (selectedGroup.name === "LIGHT SOURCE") {
+      const sourceStep = selectedGroup.attributes.find(
+        (step) => step.name?.trim().toUpperCase() === "SOURCE"
+      );
+
+      const isNauticalLEDSelected = sourceStep?.options?.some(
+        (option) => option.selected && option.name?.trim().toUpperCase() === "NAUTICAL LED"
+      );
+
+      return selectedGroup.attributes.filter((step) => {
+        if (!step.enabled) return false;
+        if (isNauticalLEDSelected && step.name.trim().toUpperCase() === "SHADE ACCESSORY") {
+          console.log("Hiding Shade Accessory");
+          return false;
+        }
+        return true;
+      });
+    }
+
+    // General filtering for other groups
     return selectedGroup.attributes.filter((step) => {
       if (!step.enabled) return false;
 
       const mountingAccessoryStep = selectedGroup?.attributes.find(
-        (attr) => attr.name.trim().toUpperCase() === "MOUNTING ACCESSORY"
+        (attr) => attr.name?.trim().toUpperCase() === "MOUNTING ACCESSORY"
       );
 
       const isMountingAccessoryNone = mountingAccessoryStep?.options?.some(
-        (option) => option.selected && option.name.trim().toUpperCase() === "NONE"
+        (option) => option.selected && option.name?.trim().toUpperCase() === "NONE"
       );
 
       if (
         isMountingAccessoryNone &&
-        ["MOUNTING ACCESSORY FINISH TYPE", "MOUNTING ACCESSORY FINISH"].includes(
-          step.name.trim().toUpperCase()
-        )
+        ["MOUNTING ACCESSORY FINISH TYPE", "MOUNTING ACCESSORY FINISH"].includes(step.name.trim().toUpperCase())
       ) {
         return false;
       }
 
       return true;
     });
-  }, [selectedGroup]);
+  }, [selectedGroup, groups]);
+
+  // Rest of your JSX remains the same
+
   const handleArClick = async (arOnFlyUrl: string) => {
     if (IS_ANDROID || IS_IOS) {
       setIsLoading(true);
@@ -235,6 +294,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
     }
   };
 
+
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -250,7 +311,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
   }, [groups]);
 
   useEffect(() => {
-    //console.log(selectedStepName, "selectStepName");
+    console.log(selectedStepName, "selectStepName");
 
     const previewImage = attributes.forEach((attr) => {
       attr.options.forEach((option) => {
@@ -451,6 +512,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
   // -- steps
   // -- -- attributes
   // -- -- -- options
+
 
   return (
     <Container>
@@ -733,14 +795,22 @@ const Selector: FunctionComponent<SelectorProps> = ({
           </div>
           <br />
           {/* NEW CODE */}
-          <div className="" style={{ background: 'white', padding: '20px 18px' }}>
+          <div className="" style={{ background: "white", padding: "20px 18px" }}>
             {selectedGroup && (
               <>
                 {filteredAttributes.map((step) => {
                   const normalizedStepName = String(step.name).trim().toUpperCase();
-                  const isSpecialStep = ["SOURCE", "BRIGHTNESS", "SHADE SIZE","SHADE FINISH TYPE","MOUNTING FINISH TYPE","MOUNTING ACCESSORY FINISH TYPE","SHADE ACCESSORY FINISH TYPE",].includes(normalizedStepName);
+                  const isSpecialStep = [
+                    "SOURCE",
+                    "BRIGHTNESS",
+                    "SHADE SIZE",
+                    "SHADE FINISH TYPE",
+                    "MOUNTING FINISH TYPE",
+                    "MOUNTING ACCESSORY FINISH TYPE",
+                    "SHADE ACCESSORY FINISH TYPE",
+                  ].includes(normalizedStepName);
                   const noBorderSteps = [
-                    "COLOR TEMPERATURE",                    
+                    "COLOR TEMPERATURE",
                     "SHADE FINISH",
                     "MOUNTING FINISH",
                     "MOUNTING ACCESSORY FINISH",
@@ -769,7 +839,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                           style={{
                             paddingBottom: ".5em",
                             marginRight: "auto",
-                            textTransform: 'uppercase'
+                            textTransform: "uppercase",
                           }}
                         >
                           {step.name}
@@ -778,11 +848,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
                           className="menu_choice_step_toggle"
                           style={{
                             display: "flex",
-                            paddingBottom: '.5em',
+                            paddingBottom: ".5em",
                             justifyContent: "center",
                             alignItems: "center",
                             fontSize: "14px",
-                            fontWeight: '600',
+                            fontWeight: "600",
                             lineHeight: "16px",
                             textTransform: "uppercase",
                             color: "#b4b5b8",
@@ -812,13 +882,14 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         </div>
                       </div>
 
-                      <div className="menu_options"
+                      <div
+                        className="menu_options"
                         style={{
                           opacity: closeAttribute && step.id === selectedStepId ? 1 : 0,
                           transform: closeAttribute && step.id === selectedStepId ? "translateY(0)" : "translateY(-10px)",
                           overflow: "hidden",
                           transition: "all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)",
-                          transitionDelay: closeAttribute && step.id === selectedStepId ? "0.2s" : "0s"
+                          transitionDelay: closeAttribute && step.id === selectedStepId ? "0.2s" : "0s",
                         }}
                       >
                         {closeAttribute && step.id === selectedStepId && (
@@ -831,34 +902,35 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                   onClick={() => handleOptionClick(attribute)}
                                   selected={attribute.selected}
                                   style={{
-                                    backgroundColor: attribute.selected ? '#7f8c9d' : 'white',
-                                    color: attribute.selected ? 'white' : 'inherit',
-                                    borderRadius: '11px',
-                                    border: (attribute.selected ? '2px solid rgb(121 136 156)' : '2.5px solid lightGray'),
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    position: 'relative',
-                                    fontWeight: isShadeSize ? '600' : '600',
-                                    fontSize: isShadeSize ? '26px !important' : 'auto',
-                                    height: isShadeSize ? '85px' : 'auto',
-                                    width: isShadeSize ? '85px' : 'auto',
-                                    textAlign: isShadeSize ? 'center' : 'inherit',
+                                    backgroundColor: attribute.selected ? "#7f8c9d" : "white",
+                                    color: attribute.selected ? "white" : "inherit",
+                                    borderRadius: "11px",
+                                    border: attribute.selected ? "2px solid rgb(121 136 156)" : "2.5px solid lightGray",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    position: "relative",
+                                    fontWeight: isShadeSize ? "600" : "600",
+                                    fontSize: isShadeSize ? "26px !important" : "auto",
+                                    height: isShadeSize ? "85px" : "auto",
+                                    width: isShadeSize ? "85px" : "auto",
+                                    textAlign: isShadeSize ? "center" : "inherit",
                                   }}
                                 >
                                   {isSpecialStep ? (
-                                    <div className="menu_choice_option_description"
+                                    <div
+                                      className="menu_choice_option_description"
                                       style={{
-                                        borderRadius: '14px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        padding: '8px 18px',
-                                        fontSize: isShadeSize ? '26px' : '15px',
-                                        textAlign: isShadeSize ? 'center' : 'inherit',
+                                        borderRadius: "14px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        padding: "8px 18px",
+                                        fontSize: isShadeSize ? "26px" : "15px",
+                                        textAlign: isShadeSize ? "center" : "inherit",
                                       }}
                                     >
-                                      {isShadeSize ? attribute.name.replace(/[a-zA-Z]/g, '') : attribute.name}
+                                      {isShadeSize ? attribute.name.replace(/[a-zA-Z]/g, "") : attribute.name}
                                     </div>
                                   ) : (
                                     <div className="menu_choice_option_image_container">
@@ -870,12 +942,12 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                     <div
                                       className="backgroundSvg"
                                       style={{
-                                        position: 'absolute',
-                                        borderRadius: '8px',
-                                        backgroundColor: 'rgb(121 136 156)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
+                                        position: "absolute",
+                                        borderRadius: "8px",
+                                        backgroundColor: "rgb(121 136 156)",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
                                       }}
                                     >
                                       <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
