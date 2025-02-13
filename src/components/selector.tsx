@@ -209,7 +209,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         // Hide Shade Accessory and related attributes if Nautical LED is selected
         if (
           isNauticalLEDSelected &&
-          ["SHADE ACCESSORY", "SHADE ACCESSORY FINISH TYPE", "SHADE ACCESSORY FINISH"].includes(stepName)
+          ["SHADE ACCESSORY"].includes(stepName)
         ) {
           console.log("Hiding Shade Accessory from SHADE group");
           return false;
