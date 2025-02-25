@@ -184,7 +184,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
   const filteredAttributes = useMemo(() => {
     if (!selectedGroup?.attributes) return [];
 
-    console.log("Selected Group:", selectedGroup);
+    // console.log("Selected Group:", selectedGroup);
 
     // Handling SHADE group logic
     if (selectedGroup.name === "SHADE") {
@@ -311,7 +311,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
   }, [groups]);
 
   useEffect(() => {
-    console.log(selectedStepName, "selectStepName");
+    // console.log(selectedStepName, "selectStepName");
 
     const previewImage = attributes.forEach((attr) => {
       attr.options.forEach((option) => {
@@ -537,9 +537,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
               X
             </button>
             <div className="popup-buttons">
-              {sellerSettings?.canUndoRedo && (
-                <button key={'reset'} onClick={reset}>Reset View</button>
-              )}
+              {/* {sellerSettings?.canUndoRedo && ( */}
+                <button onClick={() => { if (resetCameraID) setCamera(resetCameraID)}} >Reset View</button>
+              {/* )} */}
               {/* <button
                 onClick={() => {
                   const element = refViewer.current;
@@ -847,6 +847,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         <div
                           className="menu_choice_step_toggle"
                           style={{
+                            textAlign: 'right',
                             display: "flex",
                             paddingBottom: ".5em",
                             justifyContent: "center",
