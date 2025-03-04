@@ -91,6 +91,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
     openArMobile,
     isSceneArEnabled,
     productName,
+    getOnlineScreenshot,
   } = useZakeke();
 
   const { showDialog, closeDialog } = useDialogManager();
@@ -264,35 +265,35 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
   // Rest of your JSX remains the same
 
-  const handleArClick = async (arOnFlyUrl: string) => {
-    if (IS_ANDROID || IS_IOS) {
-      setIsLoading(true);
-      const link = new URL(arOnFlyUrl, window.location.href);
-      const url = await getMobileArUrl(link.href);
-      setIsLoading(false);
-      if (url)
-        if (IS_IOS) {
-          openArMobile(url as string);
-        } else if (IS_ANDROID) {
-          showDialog(
-            "open-ar",
-            <Dialog>
-              <button
-                style={{ display: "block", width: "100%" }}
-                onClick={() => {
-                  closeDialog("open-ar");
-                  openArMobile(url as string);
-                }}
-              >
-                See your product in AR
-              </button>
-            </Dialog>
-          );
-        }
-    } else {
-      showDialog("select-ar", <ArDeviceSelectionDialog />);
-    }
-  };
+  // const handleArClick = async (arOnFlyUrl: string) => {
+  //   if (IS_ANDROID || IS_IOS) {
+  //     setIsLoading(true);
+  //     const link = new URL(arOnFlyUrl, window.location.href);
+  //     // const url = await getMobileArUrl(link?.href);
+  //     setIsLoading(false);
+  //     if (url)
+  //       if (IS_IOS) {
+  //         openArMobile(url as string);
+  //       } else if (IS_ANDROID) {
+  //         showDialog(
+  //           "open-ar",
+  //           <Dialog>
+  //             <button
+  //               style={{ display: "block", width: "100%" }}
+  //               onClick={() => {
+  //                 closeDialog("open-ar");
+  //                 openArMobile(url as string);
+  //               }}
+  //             >
+  //               See your product in AR
+  //             </button>
+  //           </Dialog>
+  //         );
+  //       }
+  //   } else {
+  //     showDialog("select-ar", <ArDeviceSelectionDialog />);
+  //   }
+  // };
 
 
 
@@ -434,6 +435,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
     setIsPopupOpen(!isPopupOpen);
   };
 
+  console.log('first', groups)
+  console.log('Groups', groups1)
+
   const handleShareClick = async () => {
     setCameraByName('buy_screenshot_camera', false, false);
     showDialog('share', <ShareDialog />);
@@ -442,64 +446,192 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
   const canvas = document.querySelector("canvas");
 
-  const handlePrint = () => {
+  const handlePrint = async () => {
+    try {
+      const width = 829;
+      const height = 608;
+      const screenshot = await getOnlineScreenshot(width, height);
+      if (!screenshot || !screenshot.rewrittenUrl) {
+        console.error("Failed to capture screenshot");
+        return;
+      }
 
-    const canvas = document.querySelector("canvas");
-    // const context = canvas?.getContext("2d");
+      const screenshotUrl = screenshot.rewrittenUrl;
 
-    if (canvas) {
+      // Collect unique selected options by attribute name
+      const selectedOptionsMap = new Map<string, string>();
 
-      // Save the original dimensions
-      const originalDimensions = {
-        width: canvas.width,
-        height: canvas.height,
-        styleWidth: canvas.style.width,
-        styleHeight: canvas.style.height,
-      };
+      groups1.forEach((group) => {
+        group.attributes.forEach((attribute) => {
+          const selectedOption = attribute.options.find((option) => option.selected);
+          if (selectedOption && !selectedOptionsMap.has(attribute.name)) {
+            selectedOptionsMap.set(attribute.name, `${attribute.name}: ${selectedOption.name}`);
+          }
+        });
 
+        group.steps.forEach((step) => {
+          step.attributes.forEach((attribute) => {
+            const selectedOption = attribute.options.find((option) => option.selected);
+            if (selectedOption && !selectedOptionsMap.has(`${step.name} - ${attribute.name}`)) {
+              selectedOptionsMap.set(`${step.name} - ${attribute.name}`, `${step.name} - ${attribute.name}: ${selectedOption.name}`);
+            }
+          });
+        });
+      });
 
-      const adjustViewerForPrint = () => {
+      const selectedOptions = Array.from(selectedOptionsMap.values());
 
-        // Set the canvas dimensions to fill the page
-        // const printWidth = window.innerWidth;
-        // const printHeight = window.innerHeight;
+      if (selectedOptions.length === 0) {
+        console.error("No options selected for printing.");
+        return;
+      }
 
-        // // Adjust canvas rendering dimensions
-        // canvas.width = printWidth;
-        // canvas.height = printHeight;
-        // console.log(canvas.width,canvas.height,'canvas.height');
+      const printWindow = window.open("", "_blank");
+      if (!printWindow) {
+        console.error("Failed to open print window");
+        return;
+      }
 
-        // Adjust canvas CSS dimensions
-        canvas.style.width = '829px' //`${printWidth}px`;
-        canvas.style.height = '608px' //`${printHeight}px`;
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Print Your Design - ${productName || "Custom Design"}</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+              body {
+                margin: 0;
+                padding: 10px;
+                font-family: 'Arial', sans-serif;
+                color: #333;
+                background: #f4f4f4;
+              }
+              .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                border: 1px solid #ddd;
+                padding: 20px;
+                background: #fff;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+              }
+              .header {
+                text-align: center;
+                margin-bottom: 15px;
+              }
+              .header h1 {
+                font-size: 22px;
+                font-weight: 600;
+                margin: 0;
+              }
+              .screenshot-container {
+                text-align: center;
+                margin-bottom: 15px;
+              }
+              .screenshot {
+                max-width: 100%;
+                border: 1px solid #ccc;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+              }
+              .options-list {
+                padding: 15px;
+                background: #f9f9f9;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 14px;
+              }
+              .options-list h2 {
+                font-size: 16px;
+                margin: 0 0 10px 0;
+                font-weight: 600;
+                color: #444;
+              }
+              .options-list ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+              }
+              .options-list li {
+                padding: 6px 0;
+                border-bottom: 1px solid #eee;
+                font-size: 14px;
+              }
+              .options-list li:last-child {
+                border-bottom: none;
+              }
+              
+              /* Mobile Responsive */
+              @media (max-width: 600px) {
+                .container {
+                  padding: 15px;
+                  box-shadow: none;
+                }
+                .header h1 {
+                  font-size: 18px;
+                }
+                .screenshot {
+                  max-width: 100%;
+                }
+                .options-list h2 {
+                  font-size: 14px;
+                }
+                .options-list li {
+                  font-size: 12px;
+                }
+              }
+              
+              @media print {
+                body {
+                  padding: 0;
+                  background: white;
+                }
+                .container {
+                  border: none;
+                  padding: 10px;
+                  box-shadow: none;
+                }
+                .screenshot {
+                  max-width: 100%;
+                }
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>${productName || "Custom Design"} Configuration</h1>
+              </div>
+              <div class="screenshot-container">
+                <img class="screenshot" src="${screenshotUrl}" alt="Design Screenshot" />
+              </div>
+              <div class="options-list">
+                <h2>Selected Options</h2>
+                <ul>
+                  ${selectedOptions.map((option) => `<li>${option}</li>`).join("")}
+                </ul>
+              </div>
+            </div>
+            <script>
+              window.onload = function() {
+                window.print();
+                window.close();
+              }
+            </script>
+          </body>
+        </html>
+      `);
 
-        return originalDimensions; // Return the original dimensions for restoration
-      };
-
-      const restoreViewerAfterPrint = (originalDimensions: any) => {
-
-        // Restore the original canvas dimensions
-        canvas.width = originalDimensions.width;
-        canvas.height = originalDimensions.height;
-
-        // Restore the original CSS dimensions
-        canvas.style.width = originalDimensions.styleWidth;
-        canvas.style.height = originalDimensions.styleHeight;
-      };
-
-      // Adjust the canvas for printing
-      const originalDimensions_save = adjustViewerForPrint();
-
-      // Trigger the print dialog
-      window.print();
-
-      // Restore the canvas after printing
-      restoreViewerAfterPrint(originalDimensions_save);
-
+      printWindow.document.close();
+      togglePopup();
+    } catch (error) {
+      console.error("Error capturing screenshot for print:", error);
+      showDialog("error", (
+        <ErrorDialog
+          error="Failed to capture screenshot for printing."
+          onCloseClick={() => closeDialog("error")}
+        />
+      ));
     }
-
-    togglePopup(); // Close the popup after printing
   };
+
 
 
 
@@ -538,7 +670,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
             </button>
             <div className="popup-buttons">
               {/* {sellerSettings?.canUndoRedo && ( */}
-                <button onClick={() => { if (resetCameraID) setCamera(resetCameraID)}} >Reset View</button>
+              <button onClick={() => { if (resetCameraID) setCamera(resetCameraID) }} >Reset View</button>
               {/* )} */}
               {/* <button
                 onClick={() => {

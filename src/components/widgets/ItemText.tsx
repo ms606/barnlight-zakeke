@@ -183,7 +183,7 @@ const ItemText: FC<{
   fonts?: FontFamily[];
   hideRemoveButton?: boolean;
 }> = ({ item, handleItemPropChange, hideRemoveButton }) => {
-  const { removeItem, fonts, disableTextColors, textColors } = useZakeke();
+  const { removeItem, fonts } = useZakeke();
 
   console.log(fonts, "fonts");
 
