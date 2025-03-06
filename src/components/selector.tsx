@@ -102,6 +102,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
   const [mountingSelectedOption, setMountingSelectedOption] = useState<string | null>('None');
   const viewFooter = useRef<HTMLDivElement | null>(null);
 
+  
   useEffect(() => {
     if (sellerSettings && sellerSettings?.isCompositionRecapVisibleFromStart)
       setRecapPanelOpened(sellerSettings.isCompositionRecapVisibleFromStart);
