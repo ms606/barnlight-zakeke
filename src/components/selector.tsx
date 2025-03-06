@@ -131,9 +131,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
     selectOptionName(attribute.name);
   }, [selectOption, selectOptionName]);
 
-  console.log('selectoption', mountingSelectedOption)
+  // console.log('selectoption', mountingSelectedOption)
 
-  console.log('mouunting')
+  // console.log('mouunting')
   const filteredAttributes = useMemo(() => {
     if (!selectedGroup?.attributes) return [];
 
@@ -185,7 +185,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
       return selectedGroup.attributes.filter((step) => {
         if (!step.enabled) return false;
         if (isNauticalLEDSelected && step.name.trim().toUpperCase() === "SHADE ACCESSORY") {
-          console.log("Hiding Shade Accessory");
+          // console.log("Hiding Shade Accessory");
           return false;
         }
         return true;
@@ -200,11 +200,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
       const mountingAccessory = attributes.find(
         (step) => step.name === "Mounting Accessory"
       );
-      console.log('mounting ccessory', mountingAccessory)
+      // console.log('mounting ccessory', mountingAccessory)
       // const selectedOption = mountingAccessory?.options?.find((opt) => opt.name === 'None');
       const isNoneSelected = mountingSelectedOption === "None";
 
-      console.log("Selected Mounting Accessory Option:", isNoneSelected);
+      // console.log("Selected Mounting Accessory Option:", isNoneSelected);
       // console.log("Is 'None' selected:", isNoneSelected);
 
       // Track whether we have seen MOUNTING ACCESSORY to avoid duplicates
@@ -212,7 +212,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
 
       return attributes.filter((step) => {
         if (!step.enabled) {
-          console.log(`Step ${step.name} is disabled`);
+          // console.log(`Step ${step.name} is disabled`);
           return false;
         }
 
@@ -345,7 +345,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         const defaultOption = attribute.options.find((option) => option.enabled) || attribute.options[0];
         if (defaultOption) {
           selectOption(defaultOption.id); // Select the first enabled option of each attribute in the hidden group
-          console.log(`Reset: Selected hidden attribute ${attribute.name} with option ${defaultOption.name}`);
+          // console.log(`Reset: Selected hidden attribute ${attribute.name} with option ${defaultOption.name}`);
         }
       });
     }
@@ -353,6 +353,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
     if (visibleGroups.length > 0 && resetCameraID) {
       setCamera(resetCameraID);
     }
+    togglePopup()
   }, [hiddenGroup, selectOption, visibleGroups, resetCameraID, setCamera]);
 
   if (isSceneLoading || !visibleGroups || visibleGroups.length === 0 || isLoading)
@@ -546,9 +547,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
           </body>
         </html>
       `);
-
-      printWindow.document.close();
       togglePopup();
+      printWindow.document.close();
     } catch (error) {
       console.error("Error capturing screenshot for print:", error);
       showDialog("error", (
@@ -558,6 +558,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
         />
       ));
     }
+    togglePopup()
   };
 
   return (
