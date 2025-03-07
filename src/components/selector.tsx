@@ -102,7 +102,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
   const [mountingSelectedOption, setMountingSelectedOption] = useState<string | null>('None');
   const viewFooter = useRef<HTMLDivElement | null>(null);
 
-  
+
   useEffect(() => {
     if (sellerSettings && sellerSettings?.isCompositionRecapVisibleFromStart)
       setRecapPanelOpened(sellerSettings.isCompositionRecapVisibleFromStart);
@@ -757,18 +757,24 @@ const Selector: FunctionComponent<SelectorProps> = ({
                     <div
                       className="menu_choice_step_step"
                       key={step.id}
-                      onClick={() => handleStepClick(step)}
+                      onClick={() => {
+                        handleStepClick(step); // Select the step
+                        setCloseAttribute(step.id === selectedStepId ? !closeAttribute : true); // Toggle options visibility
+                      }}
+                      style={{ cursor: "pointer" }} // Make the entire area look clickable
                     >
                       <div
                         className="menu_choice_step_title"
                         style={{
                           display: "flex",
-                          borderBottom: selectedStepId !== step.id || !closeAttribute ? "1px solid var(--template-primary--400)" : "",
+                          borderBottom:
+                            selectedStepId !== step.id || !closeAttribute
+                              ? "1px solid var(--template-primary--400)"
+                              : "",
                         }}
                       >
                         <div
                           className="menu_choice_step_description"
-                          onClick={() => setCloseAttribute(true)}
                           style={{
                             paddingBottom: ".5em",
                             marginRight: "auto",
@@ -780,7 +786,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         <div
                           className="menu_choice_step_toggle"
                           style={{
-                            textAlign: 'right',
+                            textAlign: "right",
                             display: "flex",
                             paddingBottom: ".5em",
                             justifyContent: "center",
@@ -790,9 +796,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                             lineHeight: "16px",
                             textTransform: "uppercase",
                             color: "#b4b5b8",
-                            cursor: "pointer",
                           }}
-                          onClick={() => setCloseAttribute(!closeAttribute)}
                         >
                           {step.options.some((option) => option.selected)
                             ? step.options.find((option) => option.selected)?.name
@@ -818,15 +822,21 @@ const Selector: FunctionComponent<SelectorProps> = ({
                         className="menu_options"
                         style={{
                           opacity: closeAttribute && step.id === selectedStepId ? 1 : 0,
-                          transform: closeAttribute && step.id === selectedStepId ? "translateY(0)" : "translateY(-10px)",
+                          transform:
+                            closeAttribute && step.id === selectedStepId
+                              ? "translateY(0)"
+                              : "translateY(-10px)",
                           overflow: "hidden",
                           transition: "all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)",
-                          transitionDelay: closeAttribute && step.id === selectedStepId ? "0.2s" : "0s",
+                          transitionDelay:
+                            closeAttribute && step.id === selectedStepId ? "0.2s" : "0s",
                         }}
                       >
                         {closeAttribute && step.id === selectedStepId && (
                           <>
-                            {Array.from(new Map(step.options.map((attribute) => [attribute.id, attribute])).values())
+                            {Array.from(
+                              new Map(step.options.map((attribute) => [attribute.id, attribute])).values()
+                            )
                               .filter((attribute) => attribute.enabled !== false)
                               .map((attribute) => (
                                 <ListItem
@@ -837,7 +847,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                     backgroundColor: attribute.selected ? "#7f8c9d" : "white",
                                     color: attribute.selected ? "white" : "inherit",
                                     borderRadius: "11px",
-                                    border: attribute.selected ? "2px solid rgb(121 136 156)" : "2.5px solid lightGray",
+                                    border: attribute.selected
+                                      ? "2px solid rgb(121 136 156)"
+                                      : "2.5px solid lightGray",
                                     display: "flex",
                                     alignItems: "center",
                                     justifyContent: "center",
@@ -862,7 +874,9 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                         textAlign: isShadeSize ? "center" : "inherit",
                                       }}
                                     >
-                                      {isShadeSize ? attribute.name.replace(/[a-zA-Z]/g, "") : attribute.name}
+                                      {isShadeSize
+                                        ? attribute.name.replace(/[a-zA-Z]/g, "")
+                                        : attribute.name}
                                     </div>
                                   ) : (
                                     <div className="menu_choice_option_image_container">
