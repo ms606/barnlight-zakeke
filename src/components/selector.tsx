@@ -100,6 +100,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [resetCameraID, setResetCameraID] = useState<string | null>(null);
   const [mountingSelectedOption, setMountingSelectedOption] = useState<string | null>('None');
+  const [openSteps, setOpenSteps] = useState<Set<number>>(new Set());
   const viewFooter = useRef<HTMLDivElement | null>(null);
 
 
@@ -122,14 +123,36 @@ const Selector: FunctionComponent<SelectorProps> = ({
     selectStepName(step.name);
     selectStep(step.id);
     selectOptionName("");
+    setOpenSteps((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(step.id)) {
+        newSet.delete(step.id);
+      } else {
+        newSet.add(step.id);
+      }
+      return newSet;
+    });
   }, [selectStepName, selectStep, selectOptionName]);
 
-  const handleOptionClick = useCallback((attribute: any) => {
-    console.log(`Selected Attribute: ${attribute.name}`);
-    setMountingSelectedOption(attribute.name);
-    selectOption(attribute.id);
-    selectOptionName(attribute.name);
-  }, [selectOption, selectOptionName]);
+  const handleOptionClick = useCallback(
+    (mouseEvent: React.MouseEvent<HTMLElement>, attribute: any) => {
+      mouseEvent.stopPropagation(); // Prevent the click from
+      console.log(`Selected Attribute: ${attribute.name}`);
+      setMountingSelectedOption(attribute.name);
+      selectOption(attribute.id);
+      selectOptionName(attribute.name);
+    },
+    [selectOption, selectOptionName]
+  )
+
+  // const handleOptionClick = useCallback((attribute: any) => {
+  //   console.log(`Selected Attribute: ${attribute.name}`);
+  //   setMountingSelectedOption(attribute.name);
+  //   selectOption(attribute.id);
+  //   selectOptionName(attribute.name);
+  //   setCloseAttribute(true); 
+  // }, [selectOption, selectOptionName]);
+  
 
   // console.log('selectoption', mountingSelectedOption)
 
@@ -841,7 +864,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                               .map((attribute) => (
                                 <ListItem
                                   key={attribute.id}
-                                  onClick={() => handleOptionClick(attribute)}
+                                  onClick={(mouseEvent: React.MouseEvent<HTMLElement>) => handleOptionClick(mouseEvent, attribute)}
                                   selected={attribute.selected}
                                   style={{
                                     backgroundColor: attribute.selected ? "#7f8c9d" : "white",
