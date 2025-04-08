@@ -74,8 +74,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
   const groups1 = groups.filter((obj) => !idsToRemove.includes(obj.id));
 
   // Permanently exclude the first group from the visible groups
-  const visibleGroups = groups1.slice(0, 3); // Skip the first group (index 0)
-  const hiddenGroup = groups1[3]; // Reference to the hidden first group
+  const visibleGroups = groups1.slice(0, 3); 
+  const hiddenGroup = groups1[3]; 
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isRecapPanelOpened, setRecapPanelOpened] = useState(
@@ -392,197 +392,199 @@ const Selector: FunctionComponent<SelectorProps> = ({
     togglePopup();
   };
 
+
+  
+  
   const handlePrint = async () => {
-    try {
-      const width = 829;
-      const height = 608;
-      const screenshot = await getOnlineScreenshot(width, height);
-      if (!screenshot || !screenshot.rewrittenUrl) {
-        console.error("Failed to capture screenshot");
-        return;
-      }
-
-      const screenshotUrl = screenshot.rewrittenUrl;
-
-      const selectedOptionsMap = new Map<string, string>();
-
-      // Include hidden group attributes in the print output
-      if (hiddenGroup) {
-        hiddenGroup.attributes.forEach((attribute) => {
-          const selectedOption = attribute.options.find((option) => option.selected);
-          if (selectedOption && !selectedOptionsMap.has(attribute.name)) {
-            selectedOptionsMap.set(attribute.name, `${attribute.name}: ${selectedOption.name}`);
-          }
-        });
-      }
-
-      visibleGroups.forEach((group) => {
-        group.attributes.forEach((attribute) => {
-          const selectedOption = attribute.options.find((option) => option.selected);
-          if (selectedOption && !selectedOptionsMap.has(attribute.name)) {
-            selectedOptionsMap.set(attribute.name, `${attribute.name}: ${selectedOption.name}`);
-          }
-        });
-
-        group.steps.forEach((step) => {
-          step.attributes.forEach((attribute) => {
+      try {
+        const width = 829;
+        const height = 608;
+        const screenshot = await getOnlineScreenshot(width, height);
+        if (!screenshot || !screenshot.rewrittenUrl) {
+          console.error("Failed to capture screenshot");
+          return;
+        }
+  
+        const screenshotUrl = screenshot.rewrittenUrl;
+  
+        const selectedOptionsMap = new Map<string, string>();
+  
+        // Only include visible groups (first three groups) and their selected options
+        visibleGroups.forEach((group) => {
+          group.attributes.forEach((attribute) => {
             const selectedOption = attribute.options.find((option) => option.selected);
-            if (selectedOption && !selectedOptionsMap.has(`${step.name} - ${attribute.name}`)) {
-              selectedOptionsMap.set(`${step.name} - ${attribute.name}`, `${step.name} - ${attribute.name}: ${selectedOption.name}`);
+            if (selectedOption && !selectedOptionsMap.has(attribute.name)) {
+              selectedOptionsMap.set(attribute.name, toTitleCase(`${attribute.name}: ${selectedOption.name}`));
             }
           });
+  
+          group.steps.forEach((step) => {
+            step.attributes.forEach((attribute) => {
+              const selectedOption = attribute.options.find((option) => option.selected);
+              if (selectedOption && !selectedOptionsMap.has(`${step.name} - ${attribute.name}`)) {
+                selectedOptionsMap.set(`${step.name} - ${attribute.name}`, toTitleCase(`${step.name} - ${attribute.name}: ${selectedOption.name}`));
+              }
+            });
+          });
         });
-      });
-
-      const selectedOptions = Array.from(selectedOptionsMap.values());
-
-      if (selectedOptions.length === 0) {
-        console.error("No options selected for printing.");
-        return;
-      }
-
-      const printWindow = window.open("", "_blank");
-      if (!printWindow) {
-        console.error("Failed to open print window");
-        return;
-      }
-
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Print Your Design - ${productName || "Custom Design"}</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <style>
-              body {
-                margin: 0;
-                padding: 10px;
-                font-family: 'Arial', sans-serif;
-                color: #333;
-                background: #f4f4f4;
-              }
-              .container {
-                max-width: 1000px;
-                margin: 0 auto;
-                border: 1px solid #ddd;
-                padding: 20px;
-                background: #fff;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-              }
-              .header {
-                text-align: center;
-                margin-bottom: 15px;
-              }
-              .header h1 {
-                font-size: 22px;
-                font-weight: 600;
-                margin: 0;
-              }
-              .screenshot-container {
-                text-align: center;
-                margin-bottom: 15px;
-              }
-              .screenshot {
-                max-width: 100%;
-                border: 1px solid #ccc;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-              }
-              .options-list {
-                padding: 15px;
-                background: #f9f9f9;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                font-size: 14px;
-              }
-              .options-list h2 {
-                font-size: 16px;
-                margin: 0 0 10px 0;
-                font-weight: 600;
-                color: #444;
-              }
-              .options-list ul {
-                list-style-type: none;
-                padding: 0;
-                margin: 0;
-              }
-              .options-list li {
-                padding: 6px 0;
-                border-bottom: 1px solid #eee;
-                font-size: 14px;
-              }
-              .options-list li:last-child {
-                border-bottom: none;
-              }
-              @media (max-width: 600px) {
+  
+        const selectedOptions = Array.from(selectedOptionsMap.values());
+  
+        if (selectedOptions.length === 0) {
+          console.error("No options selected for printing.");
+          return;
+        }
+  
+        const printWindow = window.open("", "_blank");
+        if (!printWindow) {
+          console.error("Failed to open print window");
+          return;
+        }
+  
+        printWindow.document.write(`
+          <html>
+            <head>
+               <title>${productName || "Custom Design"}</title>
+              <meta name="" content="width=device-width, initial-scale=1">
+              <style>
+                body {
+                  margin: 0;
+                  padding: 10px;
+                  font-family: 'Arial', sans-serif;
+                  color: #333;
+                  background: #f4f4f4;
+                }
                 .container {
-                  padding: 15px;
-                  box-shadow: none;
+                  max-width: 1000px;
+                  margin: 0 auto;
+                  border: 1px solid #ddd;
+                  padding: 20px;
+                  background: #fff;
+                  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                }
+                .header {
+                  text-align: center;
+                  margin-bottom: 15px;
                 }
                 .header h1 {
-                  font-size: 18px;
+                  font-size: 22px;
+                  font-weight: 600;
+                  margin: 0;
+                }
+                .screenshot-container {
+                  text-align: center;
+                  margin-bottom: 15px;
                 }
                 .screenshot {
                   max-width: 100%;
+                  border: 1px solid #ccc;
+                  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
                 }
-                .options-list h2 {
+                .options-list {
+                  padding: 15px;
+                  background: #f9f9f9;
+                  border: 1px solid #ddd;
+                  border-radius: 4px;
                   font-size: 14px;
                 }
-                .options-list li {
-                  font-size: 12px;
+                .options-list h2 {
+                  font-size: 16px;
+                  margin: 0 0 10px 0;
+                  font-weight: 600;
+                  color: #444;
                 }
-              }
-              @media print {
-                body {
+                .options-list ul {
+                  list-style-type: none;
                   padding: 0;
-                  background: white;
+                  margin: 0;
                 }
-                .container {
-                  border: none;
-                  padding: 10px;
-                  box-shadow: none;
+                .options-list li {
+                  padding: 6px 0;
+                  border-bottom: 1px solid #eee;
+                  font-size: 14px;
                 }
-                .screenshot {
-                  max-width: 100%;
+                .options-list li:last-child {
+                  border-bottom: none;
                 }
-              }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <div class="header">
-                <h1>${productName || "Custom Design"} Configuration</h1>
+                @media (max-width: 600px) {
+                  .container {
+                    padding: 15px;
+                    box-shadow: none;
+                  }
+                  .header h1 {
+                    font-size: 18px;
+                  }
+                  .screenshot {
+                    max-width: 100%;
+                  }
+                  .options-list h2 {
+                    font-size: 14px;
+                  }
+                  .options-list li {
+                    font-size: 12px;
+                  }
+                }
+                @media print {
+                  body {
+                    padding: 0;
+                    background: white;
+                  }
+                  .container {
+                    border: none;
+                    padding: 10px;
+                    box-shadow: none;
+                  }
+                  .screenshot {
+                    max-width: 100%;
+                  }
+                }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h1>${productName}</h1>
+                </div>
+                <div class="screenshot-container">
+                  <img class="screenshot" src="${screenshotUrl}" alt="Design Screenshot" />
+                </div>
+                <div class="options-list">
+                  <h2>Selected Options</h2>
+                  <ul>
+                    ${selectedOptions.map((option) => `<li>${option}</li>`).join("")}
+                  </ul>
+                </div>
               </div>
-              <div class="screenshot-container">
-                <img class="screenshot" src="${screenshotUrl}" alt="Design Screenshot" />
-              </div>
-              <div class="options-list">
-                <h2>Selected Options</h2>
-                <ul>
-                  ${selectedOptions.map((option) => `<li>${option}</li>`).join("")}
-                </ul>
-              </div>
-            </div>
-            <script>
-              window.onload = function() {
-                window.print();
-                window.close();
-              }
-            </script>
-          </body>
-        </html>
-      `);
+              <script>
+                window.onload = function() {
+                  window.print();
+                  window.close();
+                }
+              </script>
+            </body>
+          </html>
+        `);
+        togglePopup();
+        printWindow.document.close();
+      } catch (error) {
+        console.error("Error capturing screenshot for print:", error);
+        showDialog("error", (
+          <ErrorDialog
+            error="Failed to capture screenshot for printing."
+            onCloseClick={() => closeDialog("error")}
+          />
+        ));
+      }
       togglePopup();
-      printWindow.document.close();
-    } catch (error) {
-      console.error("Error capturing screenshot for print:", error);
-      showDialog("error", (
-        <ErrorDialog
-          error="Failed to capture screenshot for printing."
-          onCloseClick={() => closeDialog("error")}
-        />
-      ));
-    }
-    togglePopup()
-  };
+    };
+  
+  // Helper function to convert text to title case
+  function toTitleCase(str:string) {
+    return str.replace(
+      /\w\S*/g,
+      (text) => text.charAt(0).toUpperCase() + text.substr(1).toLowerCase()
+    );
+  }
 
   return (
     <Container>
