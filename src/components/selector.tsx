@@ -543,7 +543,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
             <body>
               <div class="container">
                 <div class="header">
-                  <h1>${productName}</h1>
+                  <h1>>${productName || "Custom Design"}</h1>
                 </div>
                 <div class="screenshot-container">
                   <img class="screenshot" src="${screenshotUrl}" alt="Design Screenshot" />
