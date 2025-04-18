@@ -349,7 +349,9 @@ div {
     .options_style {
         background-color: white;
         padding: 20px 18px;
-        overflow: auto;
+        overflow: hidden;
+        max-height: fit-content;
+        height: 100%;
     }
 }
 
@@ -368,7 +370,9 @@ div {
     .options_style {
         background-color: white;
         padding: 20px 18px;
-        overflow: auto;
+        overflow: hidden;
+        max-height: fit-content;
+        height: 100%;
     }
 
     .menu_actions {
