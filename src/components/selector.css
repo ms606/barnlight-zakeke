@@ -177,7 +177,7 @@ div {
     font-weight: 600;
     background-color: #4f5b6c !important;
     color: #ffffffff;
-    border: 2px solid gray
+    /* border: 2px solid gray */
 }
 
 .menu_btn_cart:hover {
