@@ -103,7 +103,7 @@ export const Button = styled.button<{
 	padding: ${(props) => (props.outline ? '' : '5px 10px 5px 10px')};
 	text-align: center;
 	text-transform: ${(props) => (props.uppercase ? 'uppercase' : 'none')};
-	border: ${(props) => (props.outline ? '1px solid lightgray' : '1px solid #313c46')};
+	// border: ${(props) => (props.outline ? '1px solid lightgray' : '1px solid #313c46')};
 	cursor: ${(props) => (!props.disabled ? 'pointer' : 'auto')};
 
 	${(props) =>
