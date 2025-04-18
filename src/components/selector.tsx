@@ -731,7 +731,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
       </div>
 
       <div className="" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', gap: '12px' }}>
-        <div className="menu">
+        <div className="menu" >
           <div className="menu_group">
             {visibleGroups.map((group) => {
               const handleGroupClick = (group: any) => {
@@ -753,7 +753,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
             })}
           </div>
           <br />
-          <div className="" style={{ background: "white", padding: "20px 18px" }}>
+          <div className="options_style">
             {selectedGroup && (
               <>
                 {filteredAttributes.map((step) => {

@@ -96,7 +96,7 @@ div {
     border-radius: 50px;
     padding: 9px;
     background-color: #f2f2f2;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
     ;
 }
 
@@ -211,6 +211,36 @@ div {
 }
 
 
+.options_style {
+    background-color: white;
+    padding: 20px 18px;
+    max-height: 550px;
+    overflow-y: auto;
+  
+    /* For Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #aaa #f1f1f1;
+  }
+  
+  /* WebKit-based browsers (Chrome, Safari, Edge) */
+  .options_style::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .options_style::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .options_style::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 10px;
+  }
+  
+  .options_style::-webkit-scrollbar-thumb:hover {
+    background: #888;
+  }
+  
 
 
 @media (min-width: 61.25em) {
@@ -245,11 +275,11 @@ div {
     }
 
     .menu_btn_list {
-        width: 164px;
+        width: 160px;
     }
 
     .menu_btn_cart {
-        width: 170px;
+        width: 160px;
     }
 
     .bubble_button_ar {
@@ -316,7 +346,14 @@ div {
         justify-content: center;
         width: 100%;
     }
+
+    .options_style {
+        background-color: white;
+        padding: 20px 18px;
+        overflow: hidden;
+    }
 }
+
 
 @media screen and (max-width: 600px) {
     .left-keys {
@@ -329,6 +366,11 @@ div {
     }
 
 
+    .options_style {
+        background-color: white;
+        padding: 20px 18px;
+        overflow: hidden;
+    }
 
     .menu_actions {
         margin: 0% !important;

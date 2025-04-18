@@ -144,6 +144,9 @@ export const Button = styled.button<{
 
 export const AddToCartButton = styled(Button)`
 	min-width: 200px;
+	@media screen and (max-width: 786px) {
+	min-width:160px;
+	}
 `;
 
 export const Columns = styled.div<{ columns: number }>`
