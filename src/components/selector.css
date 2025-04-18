@@ -61,7 +61,7 @@ div {
     /* border-radius: 16px; */
 }
 
-.btn.btn-primary,
+/* .btn.btn-primary, */
 .btn.btn-secondary {
     border: 1px solid var(--template-primary--900);
 }
