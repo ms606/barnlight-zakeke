@@ -158,6 +158,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
 
         {/* {isBuyVisibleForQuoteRule && !isViewerMode && ( */}
         <AddToCartButton
+        style={{border:'none'}}
           className="btn btn-primary menu_btn_cart"
           ref={addToCartButtonRef}
           onPointerEnter={() => {
