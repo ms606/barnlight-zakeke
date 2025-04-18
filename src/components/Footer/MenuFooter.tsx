@@ -128,7 +128,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
       {/* <div className="price_text">Price: </div> */}
 
       {/* Price */}
-      {/* {price !== null && price > 0 && (!sellerSettings || !sellerSettings.hidePrice) && ( */}
+      {price !== null && price > 0 && (!sellerSettings || !sellerSettings.hidePrice) && (
         <PriceContainer>
           {!isOutOfStock && priceFormatter.format(price)}
           {sellerSettings && sellerSettings.priceInfoText && (
@@ -137,7 +137,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
             />
           )}
         </PriceContainer>
-      {/* )} */}
+      )}
       {/* <div className="price_value" >{priceFormatter.format(price)}</div> */}
     </div>
     <div className="menu_footer" ref={viewFooter}>
@@ -156,7 +156,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
         {/* )} */}
 
 
-        {/* {isBuyVisibleForQuoteRule && !isViewerMode && ( */}
+        {isBuyVisibleForQuoteRule && !isViewerMode && (
         <AddToCartButton
           className="btn btn-primary menu_btn_cart"
           ref={addToCartButtonRef}
@@ -181,7 +181,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
           )}
           {!isAddToCartLoading && isOutOfStock && <span>{T._('OUT OF STOCK', 'Composer')}</span>}
         </AddToCartButton>
-        {/* )} */}
+         )} 
 
         {/* {isAddToCartLoading ? (
           "Adding to cart..."
