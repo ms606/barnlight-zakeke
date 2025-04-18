@@ -1,8 +1,8 @@
 //import { UndoRedoStep } from 'Interfaces';
 import React from 'react';
 import create from 'zustand';
-//import { Notification } from './components/widgets/Notifications';
-//import { TryOnMode, ZakekeTryOnExposedMethods } from 'zakeke-configurator-react';
+// import { Notification } from './components/widgets/Notifications';
+import { TryOnMode, ZakekeTryOnExposedMethods } from 'zakeke-configurator-react';
 
 export const MOBILE_BREAKPOINT = 1024;
 
@@ -50,14 +50,14 @@ interface Store {
 	lastSelectedItem: { type: string; id: number | null };
 	setLastSelectedItem: (lastSelectedItem: { type: string; id: number | null }) => void;
 
-	// tryOnRef?: React.RefObject<ZakekeTryOnExposedMethods>;
-	// setTryOnRef: (ref: React.RefObject<ZakekeTryOnExposedMethods>) => void;
+	tryOnRef?: React.RefObject<ZakekeTryOnExposedMethods>;
+	setTryOnRef: (ref: React.RefObject<ZakekeTryOnExposedMethods>) => void;
 	pdValue: number;
 	setPdValue: (pdValue: number) => void;
 	isPDStartedFromCart: boolean;
 	setIsPDStartedFromCart: (isPDStartedFromCart: boolean) => void;
-	// modeTryOn: TryOnMode;
-	// setTryOnMode: (modeTryOn: TryOnMode) => void;
+	modeTryOn: TryOnMode;
+	setTryOnMode: (modeTryOn: TryOnMode) => void;
 	notifications: Notification[];
 	setNotifications: (notifications: Notification[]) => void;
 	removeNotification: (id: number) => void;
@@ -160,19 +160,19 @@ const useStore = create<Store>((set) => ({
 		});
 	},
 
-	// tryOnRef: undefined,
-	// setTryOnRef: (ref: React.RefObject<ZakekeTryOnExposedMethods>) => {
-	// 	set(() => ({
-	// 		tryOnRef: ref
-	// 	}));
-	// },
+	tryOnRef: undefined,
+	setTryOnRef: (ref: React.RefObject<ZakekeTryOnExposedMethods>) => {
+		set(() => ({
+			tryOnRef: ref
+		}));
+	},
 
-	// modeTryOn: TryOnMode.TryOn,
-	// setTryOnMode: (modeTryOn: TryOnMode) => {
-	// 	set(() => ({
-	// 		modeTryOn
-	// 	}));
-	// },
+	modeTryOn: TryOnMode.TryOn,
+	setTryOnMode: (modeTryOn: TryOnMode) => {
+		set(() => ({
+			modeTryOn
+		}));
+	},
 
 	pdValue: 0,
 	setPdValue: (pdValue: number) => {

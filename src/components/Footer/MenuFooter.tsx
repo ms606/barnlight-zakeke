@@ -27,7 +27,7 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
   const [disableButtonsByVisibleMessages, setDisableButtonsByVisibleMessages] = useState(false);
   const [openOutOfStockTooltip, closeOutOfStockTooltip,] = useDropdown();
   const { isAddToCartLoading, addToCart, price, useLegacyScreenshot, setQuantity, product, isMandatoryPD, quantity, nftSettings, eventMessages, isOutOfStock, visibleEventMessages,sellerSettings } = useZakeke();
-  const { priceFormatter, pdValue, setIsPDStartedFromCart, isDraftEditor, isEditorMode, isViewerMode } = useStore();
+  const { priceFormatter, pdValue, setIsPDStartedFromCart, isDraftEditor, isEditorMode, isViewerMode,tryOnRef,setTryOnMode } = useStore();
   const [quantityValue, setQuantityValue] = useState(
     product?.quantityRule && product.quantityRule?.minQuantity ? product.quantityRule.minQuantity : quantity
   );
@@ -44,9 +44,9 @@ const MenuFooter: React.FC<MenuFooterProps> = ({ viewFooter }) => {
     // Check if the product has mandatory personalization data and the value is less than 1
     if (isMandatoryPD && pdValue < 1) {
       setIsPDStartedFromCart(true);
-      // tryOnRef?.current?.setVisible?.(true);
-      // tryOnRef?.current?.changeMode?.(TryOnMode.PDTool);
-      // setTryOnMode(TryOnMode.PDTool);
+      tryOnRef?.current?.setVisible?.(true);
+      tryOnRef?.current?.changeMode?.(TryOnMode.PDTool);
+      setTryOnMode(TryOnMode.PDTool);
       return;
     }
 
