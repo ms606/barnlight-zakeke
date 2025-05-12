@@ -869,7 +869,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                   onClick={(mouseEvent: React.MouseEvent<HTMLElement>) => handleOptionClick(mouseEvent, attribute)}
                                   selected={attribute.selected}
                                   style={{
-                                    // backgroundColor: attribute.selected ? "#7f8c9d" : "white",
+                                    backgroundColor: attribute.selected ? "#7f8c9d" : "white",
                                     color: attribute.selected ? "white" : "inherit",
                                     borderRadius: "11px",
                                     border: attribute.selected
@@ -910,7 +910,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                   )}
                                   {!isSpecialStep && attribute.selected && (
                                     <div
-                                      // className="backgroundSvg"
+                                      className="backgroundSvg"
                                       style={{
                                         right: '0px',
                                         height:'25px',
