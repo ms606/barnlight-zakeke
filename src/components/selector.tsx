@@ -74,8 +74,8 @@ const Selector: FunctionComponent<SelectorProps> = ({
   const groups1 = groups.filter((obj) => !idsToRemove.includes(obj.id));
 
   // Permanently exclude the first group from the visible groups
-  const visibleGroups = groups1.slice(0, 3); 
-  const hiddenGroup = groups1[3]; 
+  const visibleGroups = groups1.slice(0, 3);
+  const hiddenGroup = groups1[3];
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [isRecapPanelOpened, setRecapPanelOpened] = useState(
@@ -152,7 +152,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
   //   selectOptionName(attribute.name);
   //   setCloseAttribute(true); 
   // }, [selectOption, selectOptionName]);
-  
+
 
   // console.log('selectoption', mountingSelectedOption)
 
@@ -393,55 +393,55 @@ const Selector: FunctionComponent<SelectorProps> = ({
   };
 
 
-  
-  
+
+
   const handlePrint = async () => {
-      try {
-        const width = 829;
-        const height = 608;
-        const screenshot = await getOnlineScreenshot(width, height);
-        if (!screenshot || !screenshot.rewrittenUrl) {
-          console.error("Failed to capture screenshot");
-          return;
-        }
-  
-        const screenshotUrl = screenshot.rewrittenUrl;
-  
-        const selectedOptionsMap = new Map<string, string>();
-  
-        // Only include visible groups (first three groups) and their selected options
-        visibleGroups.forEach((group) => {
-          group.attributes.forEach((attribute) => {
+    try {
+      const width = 829;
+      const height = 608;
+      const screenshot = await getOnlineScreenshot(width, height);
+      if (!screenshot || !screenshot.rewrittenUrl) {
+        console.error("Failed to capture screenshot");
+        return;
+      }
+
+      const screenshotUrl = screenshot.rewrittenUrl;
+
+      const selectedOptionsMap = new Map<string, string>();
+
+      // Only include visible groups (first three groups) and their selected options
+      visibleGroups.forEach((group) => {
+        group.attributes.forEach((attribute) => {
+          const selectedOption = attribute.options.find((option) => option.selected);
+          if (selectedOption && !selectedOptionsMap.has(attribute.name)) {
+            selectedOptionsMap.set(attribute.name, toTitleCase(`${attribute.name}: ${selectedOption.name}`));
+          }
+        });
+
+        group.steps.forEach((step) => {
+          step.attributes.forEach((attribute) => {
             const selectedOption = attribute.options.find((option) => option.selected);
-            if (selectedOption && !selectedOptionsMap.has(attribute.name)) {
-              selectedOptionsMap.set(attribute.name, toTitleCase(`${attribute.name}: ${selectedOption.name}`));
+            if (selectedOption && !selectedOptionsMap.has(`${step.name} - ${attribute.name}`)) {
+              selectedOptionsMap.set(`${step.name} - ${attribute.name}`, toTitleCase(`${step.name} - ${attribute.name}: ${selectedOption.name}`));
             }
           });
-  
-          group.steps.forEach((step) => {
-            step.attributes.forEach((attribute) => {
-              const selectedOption = attribute.options.find((option) => option.selected);
-              if (selectedOption && !selectedOptionsMap.has(`${step.name} - ${attribute.name}`)) {
-                selectedOptionsMap.set(`${step.name} - ${attribute.name}`, toTitleCase(`${step.name} - ${attribute.name}: ${selectedOption.name}`));
-              }
-            });
-          });
         });
-  
-        const selectedOptions = Array.from(selectedOptionsMap.values());
-  
-        if (selectedOptions.length === 0) {
-          console.error("No options selected for printing.");
-          return;
-        }
-  
-        const printWindow = window.open("", "_blank");
-        if (!printWindow) {
-          console.error("Failed to open print window");
-          return;
-        }
-  
-        printWindow.document.write(`
+      });
+
+      const selectedOptions = Array.from(selectedOptionsMap.values());
+
+      if (selectedOptions.length === 0) {
+        console.error("No options selected for printing.");
+        return;
+      }
+
+      const printWindow = window.open("", "_blank");
+      if (!printWindow) {
+        console.error("Failed to open print window");
+        return;
+      }
+
+      printWindow.document.write(`
           <html>
             <head>
                <title>${productName || "Custom Design"}</title>
@@ -564,22 +564,22 @@ const Selector: FunctionComponent<SelectorProps> = ({
             </body>
           </html>
         `);
-        togglePopup();
-        printWindow.document.close();
-      } catch (error) {
-        console.error("Error capturing screenshot for print:", error);
-        showDialog("error", (
-          <ErrorDialog
-            error="Failed to capture screenshot for printing."
-            onCloseClick={() => closeDialog("error")}
-          />
-        ));
-      }
       togglePopup();
-    };
-  
+      printWindow.document.close();
+    } catch (error) {
+      console.error("Error capturing screenshot for print:", error);
+      showDialog("error", (
+        <ErrorDialog
+          error="Failed to capture screenshot for printing."
+          onCloseClick={() => closeDialog("error")}
+        />
+      ));
+    }
+    togglePopup();
+  };
+
   // Helper function to convert text to title case
-  function toTitleCase(str:string) {
+  function toTitleCase(str: string) {
     return str.replace(
       /\w\S*/g,
       (text) => text.charAt(0).toUpperCase() + text.substr(1).toLowerCase()
@@ -869,11 +869,11 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                   onClick={(mouseEvent: React.MouseEvent<HTMLElement>) => handleOptionClick(mouseEvent, attribute)}
                                   selected={attribute.selected}
                                   style={{
-                                    backgroundColor: attribute.selected ? "#7f8c9d" : "white",
+                                    // backgroundColor: attribute.selected ? "#7f8c9d" : "white",
                                     color: attribute.selected ? "white" : "inherit",
                                     borderRadius: "11px",
                                     border: attribute.selected
-                                      ? "2px solid rgb(121 136 156)"
+                                      ? "2.5px solid lightGray"
                                       : "2.5px solid lightGray",
                                     display: "flex",
                                     alignItems: "center",
@@ -910,10 +910,15 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                   )}
                                   {!isSpecialStep && attribute.selected && (
                                     <div
-                                      className="backgroundSvg"
+                                      // className="backgroundSvg"
                                       style={{
+                                        right: '0px',
+                                        height:'25px',
+                                        width:'25px',
+                                        bottom: '0px',
                                         position: "absolute",
                                         borderRadius: "8px",
+                                        border:'2px solid rgb(121 136 156)',
                                         backgroundColor: "rgb(121 136 156)",
                                         display: "flex",
                                         alignItems: "center",
