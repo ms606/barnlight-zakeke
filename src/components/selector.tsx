@@ -910,7 +910,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                   )}
                                   {!isSpecialStep && attribute.selected && (
                                     <div
-                                      className="backgroundSvg"
+                                      // className="backgroundSvg"
                                       style={{
                                         right: '0px',
                                         height:'25px',
