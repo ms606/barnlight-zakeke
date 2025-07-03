@@ -760,12 +760,14 @@ const Selector: FunctionComponent<SelectorProps> = ({
                   const normalizedStepName = String(step.name).trim().toUpperCase();
                   const isSpecialStep = [
                     "SOURCE",
+                    "LIGHT SOURCE",
                     "BRIGHTNESS",
                     "SHADE SIZE",
                     "SHADE FINISH TYPE",
                     "MOUNTING FINISH TYPE",
                     "MOUNTING ACCESSORY FINISH TYPE",
                     "SHADE ACCESSORY FINISH TYPE",
+                    "MOUNTING OPTIONS",
                   ].includes(normalizedStepName);
                   const noBorderSteps = [
                     "COLOR TEMPERATURE",
@@ -913,12 +915,12 @@ const Selector: FunctionComponent<SelectorProps> = ({
                                       // className="backgroundSvg"
                                       style={{
                                         right: '0px',
-                                        height:'25px',
-                                        width:'25px',
+                                        height: '25px',
+                                        width: '25px',
                                         bottom: '0px',
                                         position: "absolute",
                                         borderRadius: "8px",
-                                        border:'2px solid rgb(121 136 156)',
+                                        border: '2px solid rgb(121 136 156)',
                                         backgroundColor: "rgb(121 136 156)",
                                         display: "flex",
                                         alignItems: "center",
