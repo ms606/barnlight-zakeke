@@ -14,8 +14,10 @@
     "@types/react-dom": "^18.2.4",
     "@types/styled-components": "^5.1.26",
     "cpy-cli": "^4.2.0",
+    "dotenv": "^8.2.0",
     "immutable": "^5.0.0-beta.4",
     "lodash": "^4.17.21",
+    "node-fetch": "^3.3.2",
     "nuka-carousel": "^6.0.3",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
@@ -32,8 +34,8 @@
   },
   "scripts": {
     "copy": "cpy node_modules/zakeke-configurator-react/dist/globals*.js public/",
-    "start": "npm run copy && react-scripts start",
-    "build": "npm run copy && react-scripts build",
+    "start": "node init && npm run copy && react-scripts start",
+    "build": "node init && npm run copy && react-scripts build",
     "test": "npm run copy && react-scripts test",
     "eject": "npm run copy && react-scripts eject"
   },

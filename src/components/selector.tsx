@@ -768,6 +768,7 @@ const Selector: FunctionComponent<SelectorProps> = ({
                     "MOUNTING ACCESSORY FINISH TYPE",
                     "SHADE ACCESSORY FINISH TYPE",
                     "MOUNTING OPTIONS",
+                    "CANOPY"
                   ].includes(normalizedStepName);
                   const noBorderSteps = [
                     "COLOR TEMPERATURE",
